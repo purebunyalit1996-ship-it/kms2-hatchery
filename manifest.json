@@ -1,0 +1,9 @@
+{
+  "name": "KMS2 เวรตู้ฟัก",
+  "short_name": "KMS2 เวร",
+  "start_url": "employee.html",
+  "display": "standalone",
+  "background_color": "#eef3ef",
+  "theme_color": "#0f5132",
+  "icons": []
+}

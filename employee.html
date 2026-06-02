@@ -1,0 +1,206 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+<link rel="manifest" href="manifest.json">
+<meta name="theme-color" content="#0f5132">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>KMS2 เวรพนักงาน</title>
+<style>
+*{box-sizing:border-box;font-family:system-ui,sans-serif}
+body{margin:0;background:#eef3ef;color:#1f2933}
+header{background:#0f5132;color:white;padding:22px;text-align:center}
+.container{max-width:1100px;margin:auto;padding:16px}
+.card{background:white;border-radius:18px;padding:16px;margin-bottom:16px;box-shadow:0 6px 20px #0001}
+.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:12px}
+h2{margin:0 0 12px;color:#0f5132;font-size:18px}
+input,button{width:100%;padding:12px;border-radius:12px;border:1px solid #d0d7de;margin-top:6px}
+button{background:#198754;color:white;border:0;font-weight:800}
+.calendar{display:grid;grid-template-columns:repeat(7,1fr);gap:8px}
+.dayname{background:#dff3e8;text-align:center;font-weight:900;color:#0f5132;padding:10px;border-radius:10px}
+.cell{min-height:120px;background:#f8faf9;border:1px solid #d8e3dc;border-radius:12px;padding:8px}
+.date{font-weight:900;color:#0f5132;margin-bottom:5px}
+.chip{background:white;border-left:5px solid #198754;margin-top:6px;padding:7px;border-radius:9px;font-size:12px;box-shadow:0 1px 5px #0001}
+.notice{background:#ecfdf5;border:1px solid #bbf7d0;border-radius:14px;padding:12px;color:#166534}
+@media(max-width:700px){.calendar{grid-template-columns:repeat(2,1fr)}.dayname{display:none}}
+</style>
+</head>
+<body>
+
+<header>
+<h1>เวรตู้ฟัก โรงฟักคลองมือไทร 2</h1>
+<p>หน้าพนักงาน: ดูเวรและปฏิทินเท่านั้น</p>
+</header>
+
+<div class="container">
+
+<div class="card">
+<h2>เวรวันนี้</h2>
+<div id="todayDuty" class="notice">กำลังโหลดข้อมูล...</div>
+</div>
+
+<div class="card">
+<h2>ดูเวรของฉัน</h2>
+<div class="grid">
+<input id="myName" list="staffList" placeholder="พิมพ์ชื่อ เช่น ยูร">
+<input type="month" id="myMonth">
+<button onclick="renderMyDuty()">ดูเวรของฉัน</button>
+</div>
+<br>
+<div id="myDutyBox" class="notice">พิมพ์ชื่อ แล้วกดดูเวรของฉัน</div>
+</div>
+
+<div class="card">
+<h2>ปฏิทินเวรรายเดือน</h2>
+<div class="grid">
+<input type="month" id="monthPicker" onchange="renderCalendar()">
+<button onclick="loadData()">รีเฟรชข้อมูล</button>
+</div>
+<br>
+<div id="calendarArea"></div>
+</div>
+
+<datalist id="staffList"></datalist>
+
+</div>
+
+<script>
+const API_URL="https://script.google.com/macros/s/AKfycbxyvvxC1lO6cpWwJ5EUtkhpzm2WvheLhJHBAq_W9u_FHhfPVP_HMGEewAm9BXES2u7ALQ/exec";
+
+let staff=[];
+let duties=[];
+
+function q(id){return document.getElementById(id)}
+function val(id){return q(id).value.trim()}
+
+function jsonp(url){
+return new Promise((resolve,reject)=>{
+const cb="cb_"+Date.now()+"_"+Math.floor(Math.random()*1000);
+window[cb]=data=>{resolve(data);delete window[cb];script.remove()};
+const script=document.createElement("script");
+script.src=url+(url.includes("?")?"&":"?")+"callback="+cb;
+script.onerror=reject;
+document.body.appendChild(script);
+});
+}
+
+function staffName(r){
+return r["ชื่อ"]||r["พนักงาน"]||r["Name"]||r["name"]||"";
+}
+
+async function loadData(){
+try{
+const data=await jsonp(API_URL+"?action=getData");
+staff=data.staff||[];
+duties=data.duties||[];
+renderAll();
+}catch(e){
+q("todayDuty").innerHTML="โหลดข้อมูลไม่สำเร็จ";
+}
+}
+
+function renderStaffList(){
+q("staffList").innerHTML=staff
+.map(staffName)
+.filter(Boolean)
+.map(n=>`<option value="${n}">`)
+.join("");
+}
+
+function renderToday(){
+const today=new Date().toISOString().slice(0,10);
+const list=duties.filter(x=>String(x["วันที่"]).startsWith(today));
+
+q("todayDuty").innerHTML=list.length?list.map(x=>`
+<div class="chip">
+📅 <b>${x["วันที่"]||""}</b><br>
+👤 ${x["พนักงาน"]||""}<br>
+🕒 ${x["กะเวร"]||""}<br>
+🐣 ${x["ตู้"]||""}<br>
+📝 ${x["หมายเหตุ"]||"-"}
+</div>
+`).join(""):`วันนี้ยังไม่มีข้อมูลเวร`;
+}
+
+function renderMyDuty(){
+const name=val("myName");
+const month=val("myMonth");
+
+if(!name)return alert("กรุณาพิมพ์ชื่อพนักงาน");
+
+const list=duties.filter(x=>{
+const okName=String(x["พนักงาน"]||"").includes(name);
+const okMonth=month ? String(x["วันที่"]||"").startsWith(month) : true;
+return okName && okMonth;
+});
+
+q("myDutyBox").innerHTML=list.length?list.map(x=>`
+<div class="chip">
+📅 <b>${x["วันที่"]||""}</b><br>
+👤 ${x["พนักงาน"]||""}<br>
+🕒 ${x["กะเวร"]||""}<br>
+🐣 ${x["ตู้"]||""}<br>
+📝 ${x["หมายเหตุ"]||"-"}
+</div>
+`).join(""):`ไม่พบเวรของ ${name} ในเดือนที่เลือก`;
+}
+
+function renderCalendar(){
+const month=val("monthPicker");
+if(!month)return;
+
+const [y,m]=month.split("-").map(Number);
+const first=new Date(y,m-1,1);
+const last=new Date(y,m,0).getDate();
+const start=first.getDay();
+const names=["อา","จ","อ","พ","พฤ","ศ","ส"];
+
+let html=`<div class="calendar">`;
+names.forEach(n=>html+=`<div class="dayname">${n}</div>`);
+for(let i=0;i<start;i++)html+=`<div></div>`;
+
+for(let d=1;d<=last;d++){
+const date=`${y}-${String(m).padStart(2,"0")}-${String(d).padStart(2,"0")}`;
+const list=duties.filter(x=>String(x["วันที่"]).startsWith(date));
+
+html+=`
+<div class="cell">
+<div class="date">${d}</div>
+${
+list.length?list.map(x=>`
+<div class="chip">
+👤 <b>${x["พนักงาน"]||""}</b><br>
+🕒 ${x["กะเวร"]||""}<br>
+🐣 ${x["ตู้"]||""}<br>
+<small>${x["หมายเหตุ"]||""}</small>
+</div>
+`).join(""):`<small style="color:#94a3b8">ไม่มีเวร</small>`
+}
+</div>`;
+}
+
+html+=`</div>`;
+q("calendarArea").innerHTML=html;
+}
+
+function renderAll(){
+renderStaffList();
+renderToday();
+renderCalendar();
+}
+
+function setToday(){
+const now=new Date();
+const today=now.toISOString().slice(0,10);
+q("monthPicker").value=today.slice(0,7);
+q("myMonth").value=today.slice(0,7);
+}
+
+setToday();
+loadData();
+</script>
+if ("serviceWorker" in navigator) {
+  navigator.serviceWorker.register("./service-worker.js");
+}
+</body>
+</html>
