@@ -1,0 +1,284 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+<link rel="manifest" href="manifest.json">
+<meta name="theme-color" content="#0f5132">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>KMS2 Admin เวรตู้ฟัก</title>
+<style>
+*{box-sizing:border-box;font-family:system-ui,sans-serif}
+body{margin:0;background:#eef3ef;color:#1f2933}
+header{background:#0f5132;color:white;padding:22px;text-align:center}
+header h1{margin:0;font-size:28px}
+header p{margin:8px 0 0}
+.nav{display:flex;gap:10px;justify-content:center;flex-wrap:wrap;margin-top:14px}
+.nav a,.nav button{width:auto;text-decoration:none;background:#ffffff22;color:white;border:1px solid #ffffff55;padding:9px 14px;border-radius:999px;font-weight:800;cursor:pointer}
+.nav a:hover,.nav button:hover{background:#ffffff33}
+.container{max-width:1200px;margin:auto;padding:16px}
+.card{background:white;border-radius:18px;padding:16px;margin-bottom:16px;box-shadow:0 6px 20px #0001}
+.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:12px}
+h2{margin:0 0 12px;color:#0f5132;font-size:18px}
+label{font-weight:700;font-size:13px;margin-top:8px;display:block}
+input,select,textarea,button{width:100%;padding:11px;border-radius:11px;border:1px solid #d0d7de;margin-top:6px}
+button{background:#198754;color:white;border:0;font-weight:800;cursor:pointer}
+button.danger{background:#dc2626}
+button.gray{background:#64748b}
+.statgrid{display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:10px}
+.stat{background:#f4faf6;border:1px solid #d8e8dc;border-radius:14px;padding:12px}
+.stat b{font-size:22px;color:#0f5132}
+.calendar{display:grid;grid-template-columns:repeat(7,1fr);gap:8px}
+.dayname{background:#dff3e8;text-align:center;font-weight:900;color:#0f5132;padding:10px;border-radius:10px}
+.cell{min-height:125px;background:#f8faf9;border:1px solid #d8e3dc;border-radius:12px;padding:8px}
+.date{font-weight:900;color:#0f5132;margin-bottom:5px}
+.chip{background:white;border-left:5px solid #198754;margin-top:6px;padding:7px;border-radius:9px;font-size:12px;box-shadow:0 1px 5px #0001}
+.badge{display:inline-block;padding:3px 8px;border-radius:999px;font-size:12px;font-weight:800}
+.green{background:#dcfce7;color:#166534}.yellow{background:#fef3c7;color:#92400e}.red{background:#fee2e2;color:#991b1b}.blue{background:#dbeafe;color:#1e40af}
+table{width:100%;border-collapse:collapse}
+th,td{padding:9px;border-bottom:1px solid #e5e7eb;font-size:14px;text-align:left}
+th{background:#e8f5ee;color:#0f5132}
+.actions{display:flex;gap:6px}
+.notice{background:#ecfdf5;border:1px solid #bbf7d0;border-radius:14px;padding:12px;color:#166534}
+@media(max-width:700px){header h1{font-size:24px}.calendar{grid-template-columns:repeat(2,1fr)}.dayname{display:none}table{display:block;overflow-x:auto}}
+</style>
+</head>
+<body>
+
+<header>
+<h1>เวรตู้ฟัก โรงฟักคลองมือไทร 2</h1>
+<p>หน้าแอดมิน: จัดเวร แก้ไข ลบ และบันทึกสถานะ</p>
+<div class="nav">
+<a href="index.html">🏠 Admin</a>
+<a href="employee.html">👷 หน้าพนักงาน</a>
+<button onclick="loadData()">🔄 รีเฟรชข้อมูล</button>
+</div>
+</header>
+
+<div class="container">
+
+<div class="card">
+<h2>แดชบอร์ดวันนี้</h2>
+<div class="statgrid">
+<div class="stat">เวรทั้งหมด<br><b id="totalDuty">0</b></div>
+<div class="stat">บันทึกสถานะ<br><b id="totalLog">0</b></div>
+<div class="stat">ต้องติดตาม<br><b id="totalWarn">0</b></div>
+<div class="stat">ผิดปกติ<br><b id="totalDanger">0</b></div>
+</div>
+</div>
+
+<div class="card">
+<h2>หน้าเวรของพนักงาน</h2>
+<div class="grid">
+<div><label>เลือกพนักงาน</label><select id="myName"></select></div>
+<div><label>เดือนที่ต้องการดู</label><input type="month" id="myMonth"></div>
+<div><label>&nbsp;</label><button onclick="renderMyDuty()">ดูเวรของฉัน</button></div>
+</div><br>
+<div id="myDutyBox" class="notice">เลือกชื่อพนักงาน แล้วกด “ดูเวรของฉัน”</div>
+</div>
+
+<div class="card"><h2>เวรวันนี้</h2><div id="todayDuty"></div></div>
+
+<div class="card">
+<h2>ปฏิทินเวรรายเดือน</h2>
+<div class="grid">
+<input type="month" id="monthPicker" onchange="renderCalendar()">
+<button onclick="loadData()">รีเฟรชข้อมูล</button>
+</div><br>
+<div id="calendarArea"></div>
+</div>
+
+<div class="card">
+<h2 id="dutyTitle">เพิ่มเวรตู้</h2>
+<input type="hidden" id="dutyRow">
+<div class="grid">
+<div><label>วันที่</label><input type="date" id="dutyDate"></div>
+<div><label>พนักงาน</label><select id="dutyStaff"></select></div>
+<div><label>กะเวร</label><select id="dutyShift"></select></div>
+<div><label>ตู้</label><input id="dutyMachine" placeholder="เช่น ตู้ฟัก 1"></div>
+</div>
+<label>หมายเหตุ / ฉุกเฉิน</label>
+<textarea id="dutyNote"></textarea>
+<button onclick="saveDuty()">บันทึกเวร</button>
+<button class="gray" onclick="resetDuty()">ยกเลิกการแก้ไข</button>
+</div>
+
+<div class="card">
+<h2 id="logTitle">บันทึกสถานะเวร</h2>
+<input type="hidden" id="logRow">
+<div class="grid">
+<div><label>วันที่</label><input type="date" id="logDate"></div>
+<div><label>เวลา</label><input type="time" id="logTime"></div>
+<div><label>พนักงาน</label><select id="logStaff"></select></div>
+<div><label>กะเวร</label><select id="logShift"></select></div>
+<div><label>ตู้</label><input id="logMachine" placeholder="เช่น ตู้ฟัก 1"></div>
+<div><label>สถานะ</label><select id="logStatus"><option>ปกติ</option><option>ต้องติดตาม</option><option>ผิดปกติ</option><option>แก้ไขแล้ว</option></select></div>
+</div>
+<label>หมายเหตุ</label>
+<textarea id="logNote"></textarea>
+<button onclick="saveLog()">บันทึกสถานะ</button>
+<button class="gray" onclick="resetLog()">ยกเลิกการแก้ไข</button>
+</div>
+
+<div class="card">
+<h2>ค้นหา / กรองตารางเวร</h2>
+<div class="grid">
+<select id="filterStaff"></select>
+<input id="filterMachine" placeholder="กรองตามตู้">
+<button onclick="renderTables()">ค้นหา</button>
+<button class="gray" onclick="clearFilters()">ล้างตัวกรอง</button>
+</div>
+</div>
+
+<div class="card"><h2>ตารางเวรทั้งหมด</h2><div id="dutyTable"></div></div>
+<div class="card"><h2>บันทึกสถานะทั้งหมด</h2><div id="logTable"></div></div>
+
+</div>
+
+<script>
+const API_URL="https://script.google.com/macros/s/AKfycbxyvvxC1lO6cpWwJ5EUtkhpzm2WvheLhJHBAq_W9u_FHhfPVP_HMGEewAm9BXES2u7ALQ/exec";
+let staff=[],shifts=[],duties=[],logs=[];
+
+function q(id){return document.getElementById(id)}
+function val(id){return q(id).value.trim()}
+
+function jsonp(url){
+return new Promise((resolve,reject)=>{
+const cb="cb_"+Date.now()+"_"+Math.floor(Math.random()*1000);
+window[cb]=data=>{resolve(data);delete window[cb];script.remove()};
+const script=document.createElement("script");
+script.src=url+(url.includes("?")?"&":"?")+"callback="+cb;
+script.onerror=reject;
+document.body.appendChild(script);
+});
+}
+
+function staffName(r){return r["ชื่อ"]||r["พนักงาน"]||r["Name"]||r["name"]||""}
+function shiftName(r){return r["ชื่อกะ"]||r["กะเวร"]||""}
+function shiftLabel(r){const n=shiftName(r),s=r["เริ่ม"]||"",e=r["สิ้นสุด"]||"";return n ? `${n} (${s} - ${e})` : "";}
+function cleanShift(s){return String(s||"").split("(")[0].trim()}
+
+async function loadData(){
+try{
+const data=await jsonp(API_URL+"?action=getData");
+staff=data.staff||[];shifts=data.shifts||[];duties=data.duties||[];logs=data.logs||[];
+renderAll();
+}catch(e){alert("โหลดข้อมูลไม่สำเร็จ")}
+}
+
+function optionList(arr, firstText="", withBlank=false){
+let html=withBlank?`<option value="">${firstText}</option>`:"";
+html+=arr.map(n=>`<option value="${n}">${n}</option>`).join("");
+return html;
+}
+
+function renderLists(){
+const staffNames=staff.map(staffName).filter(Boolean);
+const shiftNames=shifts.map(shiftLabel).filter(Boolean);
+
+q("myName").innerHTML=optionList(staffNames,"เลือกพนักงาน",true);
+q("filterStaff").innerHTML=optionList(staffNames,"กรองตามพนักงาน",true);
+q("dutyStaff").innerHTML=optionList(staffNames);
+q("logStaff").innerHTML=optionList(staffNames);
+q("dutyShift").innerHTML=optionList(shiftNames);
+q("logShift").innerHTML=optionList(shiftNames);
+}
+
+function badge(s){
+if(s==="ต้องติดตาม")return `<span class="badge yellow">ต้องติดตาม</span>`;
+if(s==="ผิดปกติ")return `<span class="badge red">ผิดปกติ</span>`;
+if(s==="แก้ไขแล้ว")return `<span class="badge blue">แก้ไขแล้ว</span>`;
+return `<span class="badge green">ปกติ</span>`;
+}
+
+function renderDashboard(){
+q("totalDuty").textContent=duties.length;
+q("totalLog").textContent=logs.length;
+q("totalWarn").textContent=logs.filter(x=>x["สถานะ"]==="ต้องติดตาม").length;
+q("totalDanger").textContent=logs.filter(x=>x["สถานะ"]==="ผิดปกติ").length;
+}
+
+function renderMyDuty(){
+const name=val("myName"),month=val("myMonth");
+if(!name)return alert("กรุณาเลือกชื่อพนักงาน");
+const list=duties.filter(x=>(String(x["พนักงาน"]||"").includes(name))&&(month?String(x["วันที่"]||"").startsWith(month):true));
+q("myDutyBox").innerHTML=list.length?list.map(x=>`<div class="chip">📅 <b>${x["วันที่"]||""}</b><br>👤 ${x["พนักงาน"]||""}<br>🕒 ${x["กะเวร"]||""}<br>🐣 ${x["ตู้"]||""}<br>📝 ${x["หมายเหตุ"]||"-"}</div>`).join(""):`ไม่พบเวรของ ${name} ในเดือนที่เลือก`;
+}
+
+function renderToday(){
+const today=new Date().toISOString().slice(0,10);
+const list=duties.filter(x=>String(x["วันที่"]).startsWith(today));
+q("todayDuty").innerHTML=list.length?list.map(x=>`<div class="chip">👤 <b>${x["พนักงาน"]||""}</b><br>🕒 ${x["กะเวร"]||""}<br>🐣 ${x["ตู้"]||""}<br>📝 ${x["หมายเหตุ"]||"-"}</div>`).join(""):`<p style="color:#64748b">วันนี้ยังไม่มีข้อมูลเวร</p>`;
+}
+
+function renderCalendar(){
+const month=val("monthPicker"); if(!month)return;
+const [y,m]=month.split("-").map(Number);
+const first=new Date(y,m-1,1), last=new Date(y,m,0).getDate(), start=first.getDay();
+const names=["อา","จ","อ","พ","พฤ","ศ","ส"];
+let html=`<div class="calendar">`;
+names.forEach(n=>html+=`<div class="dayname">${n}</div>`);
+for(let i=0;i<start;i++)html+=`<div></div>`;
+for(let d=1;d<=last;d++){
+const date=`${y}-${String(m).padStart(2,"0")}-${String(d).padStart(2,"0")}`;
+const list=duties.filter(x=>String(x["วันที่"]).startsWith(date));
+html+=`<div class="cell"><div class="date">${d}</div>${list.length?list.map(x=>`<div class="chip">👤 <b>${x["พนักงาน"]||""}</b><br>🕒 ${x["กะเวร"]||""}<br>🐣 ${x["ตู้"]||""}<br><small>${x["หมายเหตุ"]||""}</small></div>`).join(""):`<small style="color:#94a3b8">ไม่มีเวร</small>`}</div>`;
+}
+html+=`</div>`;q("calendarArea").innerHTML=html;
+}
+
+function filteredDuties(){
+const fs=val("filterStaff"),fm=val("filterMachine");
+return duties.filter(x=>(fs?String(x["พนักงาน"]||"").includes(fs):true)&&(fm?String(x["ตู้"]||"").includes(fm):true));
+}
+
+function renderTables(){
+const dutyList=filteredDuties();
+q("dutyTable").innerHTML=`<table><thead><tr><th>วันที่</th><th>พนักงาน</th><th>กะเวร</th><th>ตู้</th><th>หมายเหตุ</th><th>จัดการ</th></tr></thead><tbody>${dutyList.map(d=>`<tr><td>${d["วันที่"]||""}</td><td>${d["พนักงาน"]||""}</td><td>${d["กะเวร"]||""}</td><td>${d["ตู้"]||""}</td><td>${d["หมายเหตุ"]||""}</td><td><div class="actions"><button onclick="editDutyByRow('${d._row}')">แก้ไข</button><button class="danger" onclick="deleteDuty('${d._row}')">ลบ</button></div></td></tr>`).join("")}</tbody></table>`;
+q("logTable").innerHTML=`<table><thead><tr><th>วันที่</th><th>เวลา</th><th>พนักงาน</th><th>กะเวร</th><th>ตู้</th><th>สถานะ</th><th>หมายเหตุ</th><th>จัดการ</th></tr></thead><tbody>${logs.map(l=>`<tr><td>${l["วันที่"]||""}</td><td>${l["เวลา"]||""}</td><td>${l["พนักงาน"]||""}</td><td>${l["กะเวร"]||""}</td><td>${l["ตู้"]||""}</td><td>${badge(l["สถานะ"])}</td><td>${l["หมายเหตุ"]||""}</td><td><div class="actions"><button onclick="editLogByRow('${l._row}')">แก้ไข</button><button class="danger" onclick="deleteLog('${l._row}')">ลบ</button></div></td></tr>`).join("")}</tbody></table>`;
+}
+
+function clearFilters(){q("filterStaff").value="";q("filterMachine").value="";renderTables();}
+
+async function saveDuty(){
+if(!val("dutyDate"))return alert("กรุณาเลือกวันที่");
+const action=val("dutyRow")?"updateDuty":"addDuty";
+let url=API_URL+`?action=${action}&date=${encodeURIComponent(val("dutyDate"))}&staff=${encodeURIComponent(val("dutyStaff"))}&shift=${encodeURIComponent(cleanShift(val("dutyShift")))}&machine=${encodeURIComponent(val("dutyMachine"))}&note=${encodeURIComponent(val("dutyNote"))}`;
+if(val("dutyRow"))url+=`&row=${val("dutyRow")}`;
+await jsonp(url);alert("บันทึกเวรแล้ว");resetDuty();await loadData();
+}
+
+function editDutyByRow(row){
+const d=duties.find(x=>String(x._row)===String(row)); if(!d)return;
+q("dutyRow").value=d._row;q("dutyTitle").textContent="แก้ไขเวรตู้";q("dutyDate").value=d["วันที่"]||"";q("dutyStaff").value=d["พนักงาน"]||"";q("dutyShift").value=d["กะเวร"]||"";q("dutyMachine").value=d["ตู้"]||"";q("dutyNote").value=d["หมายเหตุ"]||"";
+window.scrollTo({top:q("dutyTitle").offsetTop-20,behavior:"smooth"});
+}
+
+async function deleteDuty(row){if(!confirm("ลบเวรนี้ใช่หรือไม่?"))return;await jsonp(API_URL+`?action=deleteDuty&row=${row}`);await loadData();}
+
+async function saveLog(){
+if(!val("logDate"))return alert("กรุณาเลือกวันที่");
+const action=val("logRow")?"updateLog":"addLog";
+let url=API_URL+`?action=${action}&date=${encodeURIComponent(val("logDate"))}&time=${encodeURIComponent(val("logTime"))}&staff=${encodeURIComponent(val("logStaff"))}&shift=${encodeURIComponent(cleanShift(val("logShift")))}&machine=${encodeURIComponent(val("logMachine"))}&status=${encodeURIComponent(val("logStatus"))}&note=${encodeURIComponent(val("logNote"))}`;
+if(val("logRow"))url+=`&row=${val("logRow")}`;
+await jsonp(url);alert("บันทึกสถานะแล้ว");resetLog();await loadData();
+}
+
+function editLogByRow(row){
+const l=logs.find(x=>String(x._row)===String(row)); if(!l)return;
+q("logRow").value=l._row;q("logTitle").textContent="แก้ไขบันทึกสถานะ";q("logDate").value=l["วันที่"]||"";q("logTime").value=l["เวลา"]||"";q("logStaff").value=l["พนักงาน"]||"";q("logShift").value=l["กะเวร"]||"";q("logMachine").value=l["ตู้"]||"";q("logStatus").value=l["สถานะ"]||"ปกติ";q("logNote").value=l["หมายเหตุ"]||"";
+window.scrollTo({top:q("logTitle").offsetTop-20,behavior:"smooth"});
+}
+
+async function deleteLog(row){if(!confirm("ลบบันทึกนี้ใช่หรือไม่?"))return;await jsonp(API_URL+`?action=deleteLog&row=${row}`);await loadData();}
+
+function resetDuty(){q("dutyRow").value="";q("dutyTitle").textContent="เพิ่มเวรตู้";q("dutyMachine").value="";q("dutyNote").value="";}
+function resetLog(){q("logRow").value="";q("logTitle").textContent="บันทึกสถานะเวร";q("logMachine").value="";q("logNote").value="";}
+function renderAll(){renderLists();renderDashboard();renderToday();renderCalendar();renderTables();}
+function setToday(){const now=new Date();const today=now.toISOString().slice(0,10);q("monthPicker").value=today.slice(0,7);q("myMonth").value=today.slice(0,7);q("dutyDate").value=today;q("logDate").value=today;q("logTime").value=now.toTimeString().slice(0,5);}
+setToday();loadData();
+</script>
+<script>
+if ("serviceWorker" in navigator) {navigator.serviceWorker.register("./service-worker.js");}
+</script>
+</body>
+</html>
