@@ -136,7 +136,16 @@ if(q("logDate")) q("logDate").value=today;
 if(q("logTime")) q("logTime").value=now.toTimeString().slice(0,5);
 }
 
-function renderStaffList(){const names=staff.map(staffName).filter(Boolean);const html=`<option value="">เลือกพนักงาน</option>`+names.map(n=>`<option value="${n}">${n}</option>`).join("");q("myName").innerHTML=html;q("requestStaff").innerHTML=html;}
+function renderStaffList(){
+  const names = staff.map(staffName).filter(Boolean);
+
+  const html =
+    `<option value="">เลือกพนักงาน</option>` +
+    names.map(n => `<option value="${n}">${n}</option>`).join("");
+
+  q("myName").innerHTML = html;
+  q("requestStaff").innerHTML = html;
+}
 function renderMyDuty(){const name=val("myName"),month=val("myMonth");if(!name)return alert("กรุณาเลือกชื่อพนักงาน");const list=duties.filter(x=>String(x["พนักงาน"]||"").includes(name)&&(month?String(x["วันที่"]||"").startsWith(month):true));q("myDutyBox").innerHTML=list.length?list.map(x=>`<div class="chip">📅 <b>${x["วันที่"]||""}</b><br>👤 ${x["พนักงาน"]||""}<br>🕒 ${x["กะเวร"]||""}<br>🐣 ${x["ตู้"]||""}<br>📝 ${x["หมายเหตุ"]||"-"}</div>`).join(""):`ไม่พบเวรของ ${name} ในเดือนที่เลือก`;renderMyRequests();}
 function renderMyRequests(){const name=val("myName")||val("requestStaff");if(!name){q("myRequestBox").innerHTML="เลือกชื่อพนักงานเพื่อดูคำขอ";return;}const list=requests.filter(r=>String(r["พนักงาน"]||"").includes(name)).slice(-10).reverse();q("myRequestBox").innerHTML=list.length?list.map(r=>`<div class="chip">📅 วันที่เกี่ยวข้อง: <b>${r["วันที่เกี่ยวข้อง"]||""}</b><br>📋 ${r["ประเภทคำขอ"]||""}<br>📝 ${r["รายละเอียด"]||""}<br>สถานะ: ${badge(r["สถานะ"])}</div>`).join(""):`ยังไม่มีคำขอของ ${name}`;}
 async function sendRequest(){if(!val("requestStaff"))return alert("กรุณาเลือกพนักงาน");if(!val("requestDate"))return alert("กรุณาเลือกวันที่");const url=API_URL+`?action=addRequest&staff=${encodeURIComponent(val("requestStaff"))}&date=${encodeURIComponent(val("requestDate"))}&type=${encodeURIComponent(val("requestType"))}&detail=${encodeURIComponent(val("requestDetail"))}`;await jsonp(url);alert("ส่งคำขอแล้ว");q("requestDetail").value="";q("myName").value=val("requestStaff");await loadData();}
