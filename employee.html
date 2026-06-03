@@ -57,38 +57,18 @@ th{background:#e8f5ee;color:#0f5132}
 </style>
 </head>
 <body>
-<header>
-<h1>เวรตู้ฟัก โรงฟักคลองมือไทร 2</h1>
-<p>หน้าพนักงาน: ดูเวรและปฏิทินเท่านั้น</p>
-<div class="nav">
-<a href="employee.html">📅 ดูเวร</a>
-<button onclick="loadData()">🔄 รีเฟรช</button>
-</div>
-</header>
+<header><h1>เวรตู้ฟัก โรงฟักคลองมือไทร 2</h1><p>หน้าพนักงาน: ดูเวร ปฏิทิน และส่งคำขอ</p><div class="nav"><a href="employee.html">📅 ดูเวร</a><button onclick="loadData()">🔄 รีเฟรช</button></div></header>
 <div class="container">
 <div class="card"><h2>เวรวันนี้</h2><div id="todayDuty" class="notice">กำลังโหลดข้อมูล...</div></div>
-<div class="card">
-<h2>ดูเวรของฉัน</h2>
-<div class="grid">
-<div><label>เลือกพนักงาน</label><select id="myName"></select></div>
-<div><label>เดือนที่ต้องการดู</label><input type="month" id="myMonth"></div>
-<div><label>&nbsp;</label><button onclick="renderMyDuty()">ดูเวรของฉัน</button></div>
-</div><br>
-<div id="myDutyBox" class="notice">เลือกชื่อ แล้วกดดูเวรของฉัน</div>
-</div>
-<div class="card">
-<h2>ปฏิทินเวรรายเดือน</h2>
-<div class="grid">
-<input type="month" id="monthPicker" onchange="renderCalendar()">
-<button onclick="loadData()">รีเฟรชข้อมูล</button>
-</div><br>
-<div id="calendarArea"></div>
-</div>
+<div class="card"><h2>ดูเวรของฉัน</h2><div class="grid"><div><label>เลือกพนักงาน</label><select id="myName"></select></div><div><label>เดือนที่ต้องการดู</label><input type="month" id="myMonth"></div><div><label>&nbsp;</label><button onclick="renderMyDuty()">ดูเวรของฉัน</button></div></div><br><div id="myDutyBox" class="notice">เลือกชื่อ แล้วกดดูเวรของฉัน</div></div>
+<div class="card"><h2>ส่งคำขอลา / เปลี่ยนเวร</h2><div class="grid"><div><label>พนักงาน</label><select id="requestStaff"></select></div><div><label>วันที่เกี่ยวข้อง</label><input type="date" id="requestDate"></div><div><label>ประเภทคำขอ</label><select id="requestType"><option>ขอลา</option><option>ขอเปลี่ยนเวร</option></select></div></div><label>รายละเอียด</label><textarea id="requestDetail" placeholder="เช่น ขอเปลี่ยนเวรกับป๋อ / ลาป่วย / ติดธุระ"></textarea><button onclick="sendRequest()">ส่งคำขอ</button></div>
+<div class="card"><h2>คำขอของฉัน</h2><div id="myRequestBox" class="notice">เลือกชื่อพนักงานเพื่อดูคำขอ</div></div>
+<div class="card"><h2>ปฏิทินเวรรายเดือน</h2><div class="grid"><input type="month" id="monthPicker" onchange="renderCalendar()"><button onclick="loadData()">รีเฟรชข้อมูล</button></div><br><div id="calendarArea"></div></div>
 </div>
 <script>
 
 const API_URL="https://script.google.com/macros/s/AKfycbxyvvxC1lO6cpWwJ5EUtkhpzm2WvheLhJHBAq_W9u_FHhfPVP_HMGEewAm9BXES2u7ALQ/exec";
-let staff=[],shifts=[],duties=[],logs=[];
+let staff=[],shifts=[],duties=[],logs=[],requests=[];
 function q(id){return document.getElementById(id)}
 function val(id){return q(id).value.trim()}
 function jsonp(url){
@@ -108,7 +88,7 @@ function cleanShift(s){return String(s||"").split("(")[0].trim()}
 async function loadData(){
 try{
 const data=await jsonp(API_URL+"?action=getData");
-staff=data.staff||[];shifts=data.shifts||[];duties=data.duties||[];logs=data.logs||[];
+staff=data.staff||[];shifts=data.shifts||[];duties=data.duties||[];logs=data.logs||[];requests=data.requests||[];
 renderAll();
 }catch(e){alert("โหลดข้อมูลไม่สำเร็จ")}
 }
@@ -118,6 +98,9 @@ html+=arr.map(n=>`<option value="${n}">${n}</option>`).join("");
 return html;
 }
 function badge(s){
+if(s==="รออนุมัติ")return `<span class="badge yellow">รออนุมัติ</span>`;
+if(s==="อนุมัติ")return `<span class="badge green">อนุมัติ</span>`;
+if(s==="ปฏิเสธ")return `<span class="badge red">ปฏิเสธ</span>`;
 if(s==="ต้องติดตาม")return `<span class="badge yellow">ต้องติดตาม</span>`;
 if(s==="ผิดปกติ")return `<span class="badge red">ผิดปกติ</span>`;
 if(s==="แก้ไขแล้ว")return `<span class="badge blue">แก้ไขแล้ว</span>`;
@@ -147,14 +130,17 @@ function setTodayBase(){
 const now=new Date(); const today=now.toISOString().slice(0,10);
 if(q("monthPicker")) q("monthPicker").value=today.slice(0,7);
 if(q("myMonth")) q("myMonth").value=today.slice(0,7);
+if(q("requestDate")) q("requestDate").value=today;
 if(q("dutyDate")) q("dutyDate").value=today;
 if(q("logDate")) q("logDate").value=today;
 if(q("logTime")) q("logTime").value=now.toTimeString().slice(0,5);
 }
 
-function renderStaffList(){const names=staff.map(staffName).filter(Boolean);q("myName").innerHTML=`<option value="">เลือกพนักงาน</option>`+names.map(n=>`<option value="${n}">${n}</option>`).join("");}
-function renderMyDuty(){const name=val("myName"),month=val("myMonth");if(!name)return alert("กรุณาเลือกชื่อพนักงาน");const list=duties.filter(x=>String(x["พนักงาน"]||"").includes(name)&&(month?String(x["วันที่"]||"").startsWith(month):true));q("myDutyBox").innerHTML=list.length?list.map(x=>`<div class="chip">📅 <b>${x["วันที่"]||""}</b><br>👤 ${x["พนักงาน"]||""}<br>🕒 ${x["กะเวร"]||""}<br>🐣 ${x["ตู้"]||""}<br>📝 ${x["หมายเหตุ"]||"-"}</div>`).join(""):`ไม่พบเวรของ ${name} ในเดือนที่เลือก`;}
-function renderAll(){renderStaffList();renderToday();renderCalendar();}
+function renderStaffList(){const names=staff.map(staffName).filter(Boolean);const html=`<option value="">เลือกพนักงาน</option>`+names.map(n=>`<option value="${n}">${n}</option>`).join("");q("myName").innerHTML=html;q("requestStaff").innerHTML=html;}
+function renderMyDuty(){const name=val("myName"),month=val("myMonth");if(!name)return alert("กรุณาเลือกชื่อพนักงาน");const list=duties.filter(x=>String(x["พนักงาน"]||"").includes(name)&&(month?String(x["วันที่"]||"").startsWith(month):true));q("myDutyBox").innerHTML=list.length?list.map(x=>`<div class="chip">📅 <b>${x["วันที่"]||""}</b><br>👤 ${x["พนักงาน"]||""}<br>🕒 ${x["กะเวร"]||""}<br>🐣 ${x["ตู้"]||""}<br>📝 ${x["หมายเหตุ"]||"-"}</div>`).join(""):`ไม่พบเวรของ ${name} ในเดือนที่เลือก`;renderMyRequests();}
+function renderMyRequests(){const name=val("myName")||val("requestStaff");if(!name){q("myRequestBox").innerHTML="เลือกชื่อพนักงานเพื่อดูคำขอ";return;}const list=requests.filter(r=>String(r["พนักงาน"]||"").includes(name)).slice(-10).reverse();q("myRequestBox").innerHTML=list.length?list.map(r=>`<div class="chip">📅 วันที่เกี่ยวข้อง: <b>${r["วันที่เกี่ยวข้อง"]||""}</b><br>📋 ${r["ประเภทคำขอ"]||""}<br>📝 ${r["รายละเอียด"]||""}<br>สถานะ: ${badge(r["สถานะ"])}</div>`).join(""):`ยังไม่มีคำขอของ ${name}`;}
+async function sendRequest(){if(!val("requestStaff"))return alert("กรุณาเลือกพนักงาน");if(!val("requestDate"))return alert("กรุณาเลือกวันที่");const url=API_URL+`?action=addRequest&staff=${encodeURIComponent(val("requestStaff"))}&date=${encodeURIComponent(val("requestDate"))}&type=${encodeURIComponent(val("requestType"))}&detail=${encodeURIComponent(val("requestDetail"))}`;await jsonp(url);alert("ส่งคำขอแล้ว");q("requestDetail").value="";q("myName").value=val("requestStaff");await loadData();}
+function renderAll(){renderStaffList();renderToday();renderCalendar();renderMyRequests();}
 setTodayBase();loadData();
 </script>
 <script>if ("serviceWorker" in navigator) {navigator.serviceWorker.register("./service-worker.js");}</script>

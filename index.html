@@ -57,10 +57,9 @@ th{background:#e8f5ee;color:#0f5132}
 </style>
 </head>
 <body>
-
 <header>
 <h1>เวรตู้ฟัก โรงฟักคลองมือไทร 2</h1>
-<p>Admin v2.0: จัดเวร แก้ไข ลบ บันทึกสถานะ รายงาน และ PDF</p>
+<p>Admin v2.1: จัดเวร แก้ไข ลบ บันทึกสถานะ คำขอลา/เปลี่ยนเวร</p>
 <div class="nav noPrint">
 <a href="index.html">🏠 Admin</a>
 <a href="employee.html">👷 หน้าพนักงาน</a>
@@ -69,98 +68,35 @@ th{background:#e8f5ee;color:#0f5132}
 <button onclick="logoutAdmin()">ออกจากระบบ</button>
 </div>
 </header>
-
 <div class="container">
-
 <div class="card">
 <h2>Dashboard Pro</h2>
 <div class="statgrid">
 <div class="stat">เวรทั้งหมด<br><b id="totalDuty">0</b></div>
 <div class="stat">เวรวันนี้<br><b id="todayCount">0</b></div>
 <div class="stat">บันทึกสถานะ<br><b id="totalLog">0</b></div>
+<div class="stat">คำขอรออนุมัติ<br><b id="pendingCount">0</b></div>
 <div class="stat">ต้องติดตาม<br><b id="totalWarn">0</b></div>
 <div class="stat">ผิดปกติ<br><b id="totalDanger">0</b></div>
-<div class="stat">พนักงานทั้งหมด<br><b id="totalStaff">0</b></div>
 </div>
 </div>
-
+<div class="card"><h2>คำขอลา / เปลี่ยนเวร</h2><div id="requestTable"></div></div>
 <div class="card"><h2>เวรล่าสุด</h2><div id="latestDuty"></div></div>
-
-<div class="card noPrint">
-<h2>ดูเวรของพนักงาน</h2>
-<div class="grid">
-<div><label>เลือกพนักงาน</label><select id="myName"></select></div>
-<div><label>เดือนที่ต้องการดู</label><input type="month" id="myMonth"></div>
-<div><label>&nbsp;</label><button onclick="renderMyDuty()">ดูเวร</button></div>
-</div><br>
-<div id="myDutyBox" class="notice">เลือกชื่อพนักงาน แล้วกดดูเวร</div>
-</div>
-
+<div class="card noPrint"><h2>ดูเวรของพนักงาน</h2><div class="grid"><div><label>เลือกพนักงาน</label><select id="myName"></select></div><div><label>เดือนที่ต้องการดู</label><input type="month" id="myMonth"></div><div><label>&nbsp;</label><button onclick="renderMyDuty()">ดูเวร</button></div></div><br><div id="myDutyBox" class="notice">เลือกชื่อพนักงาน แล้วกดดูเวร</div></div>
 <div class="card"><h2>เวรวันนี้</h2><div id="todayDuty"></div></div>
-
-<div class="card">
-<h2>ปฏิทินเวรรายเดือน</h2>
-<div class="grid noPrint">
-<input type="month" id="monthPicker" onchange="renderCalendar()">
-<button onclick="loadData()">รีเฟรชข้อมูล</button>
-<button class="print" onclick="window.print()">Export PDF / Print</button>
-</div><br>
-<div id="calendarArea"></div>
-</div>
-
-<div class="card noPrint">
-<h2 id="dutyTitle">เพิ่มเวรตู้</h2>
-<input type="hidden" id="dutyRow">
-<div class="grid">
-<div><label>วันที่</label><input type="date" id="dutyDate"></div>
-<div><label>พนักงาน</label><select id="dutyStaff"></select></div>
-<div><label>กะเวร</label><select id="dutyShift"></select></div>
-<div><label>ตู้</label><input id="dutyMachine" placeholder="เช่น ตู้ฟัก 1"></div>
-</div>
-<label>หมายเหตุ / ฉุกเฉิน</label>
-<textarea id="dutyNote"></textarea>
-<button onclick="saveDuty()">บันทึกเวร</button>
-<button class="gray" onclick="resetDuty()">ยกเลิกการแก้ไข</button>
-</div>
-
-<div class="card noPrint">
-<h2 id="logTitle">บันทึกสถานะเวร</h2>
-<input type="hidden" id="logRow">
-<div class="grid">
-<div><label>วันที่</label><input type="date" id="logDate"></div>
-<div><label>เวลา</label><input type="time" id="logTime"></div>
-<div><label>พนักงาน</label><select id="logStaff"></select></div>
-<div><label>กะเวร</label><select id="logShift"></select></div>
-<div><label>ตู้</label><input id="logMachine" placeholder="เช่น ตู้ฟัก 1"></div>
-<div><label>สถานะ</label><select id="logStatus"><option>ปกติ</option><option>ต้องติดตาม</option><option>ผิดปกติ</option><option>แก้ไขแล้ว</option></select></div>
-</div>
-<label>หมายเหตุ</label>
-<textarea id="logNote"></textarea>
-<button onclick="saveLog()">บันทึกสถานะ</button>
-<button class="gray" onclick="resetLog()">ยกเลิกการแก้ไข</button>
-</div>
-
-<div class="card noPrint">
-<h2>ค้นหา / กรองตารางเวร</h2>
-<div class="grid">
-<select id="filterStaff"></select>
-<input id="filterMachine" placeholder="กรองตามตู้">
-<button onclick="renderTables()">ค้นหา</button>
-<button class="gray" onclick="clearFilters()">ล้างตัวกรอง</button>
-</div>
-</div>
-
+<div class="card"><h2>ปฏิทินเวรรายเดือน</h2><div class="grid noPrint"><input type="month" id="monthPicker" onchange="renderCalendar()"><button onclick="loadData()">รีเฟรชข้อมูล</button><button class="print" onclick="window.print()">Export PDF / Print</button></div><br><div id="calendarArea"></div></div>
+<div class="card noPrint"><h2 id="dutyTitle">เพิ่มเวรตู้</h2><input type="hidden" id="dutyRow"><div class="grid"><div><label>วันที่</label><input type="date" id="dutyDate"></div><div><label>พนักงาน</label><select id="dutyStaff"></select></div><div><label>กะเวร</label><select id="dutyShift"></select></div><div><label>ตู้</label><input id="dutyMachine" placeholder="เช่น ตู้ฟัก 1"></div></div><label>หมายเหตุ / ฉุกเฉิน</label><textarea id="dutyNote"></textarea><button onclick="saveDuty()">บันทึกเวร</button><button class="gray" onclick="resetDuty()">ยกเลิกการแก้ไข</button></div>
+<div class="card noPrint"><h2 id="logTitle">บันทึกสถานะเวร</h2><input type="hidden" id="logRow"><div class="grid"><div><label>วันที่</label><input type="date" id="logDate"></div><div><label>เวลา</label><input type="time" id="logTime"></div><div><label>พนักงาน</label><select id="logStaff"></select></div><div><label>กะเวร</label><select id="logShift"></select></div><div><label>ตู้</label><input id="logMachine" placeholder="เช่น ตู้ฟัก 1"></div><div><label>สถานะ</label><select id="logStatus"><option>ปกติ</option><option>ต้องติดตาม</option><option>ผิดปกติ</option><option>แก้ไขแล้ว</option></select></div></div><label>หมายเหตุ</label><textarea id="logNote"></textarea><button onclick="saveLog()">บันทึกสถานะ</button><button class="gray" onclick="resetLog()">ยกเลิกการแก้ไข</button></div>
+<div class="card noPrint"><h2>ค้นหา / กรองตารางเวร</h2><div class="grid"><select id="filterStaff"></select><input id="filterMachine" placeholder="กรองตามตู้"><button onclick="renderTables()">ค้นหา</button><button class="gray" onclick="clearFilters()">ล้างตัวกรอง</button></div></div>
 <div class="card"><h2>ตารางเวรทั้งหมด</h2><div id="dutyTable"></div></div>
 <div class="card"><h2>บันทึกสถานะทั้งหมด</h2><div id="logTable"></div></div>
-
 </div>
-
 <script>
 if(sessionStorage.getItem("kms2Admin")!=="yes") location.href="login.html";
 function logoutAdmin(){sessionStorage.removeItem("kms2Admin");location.href="login.html";}
 
 const API_URL="https://script.google.com/macros/s/AKfycbxyvvxC1lO6cpWwJ5EUtkhpzm2WvheLhJHBAq_W9u_FHhfPVP_HMGEewAm9BXES2u7ALQ/exec";
-let staff=[],shifts=[],duties=[],logs=[];
+let staff=[],shifts=[],duties=[],logs=[],requests=[];
 function q(id){return document.getElementById(id)}
 function val(id){return q(id).value.trim()}
 function jsonp(url){
@@ -180,7 +116,7 @@ function cleanShift(s){return String(s||"").split("(")[0].trim()}
 async function loadData(){
 try{
 const data=await jsonp(API_URL+"?action=getData");
-staff=data.staff||[];shifts=data.shifts||[];duties=data.duties||[];logs=data.logs||[];
+staff=data.staff||[];shifts=data.shifts||[];duties=data.duties||[];logs=data.logs||[];requests=data.requests||[];
 renderAll();
 }catch(e){alert("โหลดข้อมูลไม่สำเร็จ")}
 }
@@ -190,6 +126,9 @@ html+=arr.map(n=>`<option value="${n}">${n}</option>`).join("");
 return html;
 }
 function badge(s){
+if(s==="รออนุมัติ")return `<span class="badge yellow">รออนุมัติ</span>`;
+if(s==="อนุมัติ")return `<span class="badge green">อนุมัติ</span>`;
+if(s==="ปฏิเสธ")return `<span class="badge red">ปฏิเสธ</span>`;
 if(s==="ต้องติดตาม")return `<span class="badge yellow">ต้องติดตาม</span>`;
 if(s==="ผิดปกติ")return `<span class="badge red">ผิดปกติ</span>`;
 if(s==="แก้ไขแล้ว")return `<span class="badge blue">แก้ไขแล้ว</span>`;
@@ -219,49 +158,21 @@ function setTodayBase(){
 const now=new Date(); const today=now.toISOString().slice(0,10);
 if(q("monthPicker")) q("monthPicker").value=today.slice(0,7);
 if(q("myMonth")) q("myMonth").value=today.slice(0,7);
+if(q("requestDate")) q("requestDate").value=today;
 if(q("dutyDate")) q("dutyDate").value=today;
 if(q("logDate")) q("logDate").value=today;
 if(q("logTime")) q("logTime").value=now.toTimeString().slice(0,5);
 }
 
-function renderLists(){
-const staffNames=staff.map(staffName).filter(Boolean);
-const shiftNames=shifts.map(shiftLabel).filter(Boolean);
-q("myName").innerHTML=optionList(staffNames,"เลือกพนักงาน",true);
-q("filterStaff").innerHTML=optionList(staffNames,"กรองตามพนักงาน",true);
-q("dutyStaff").innerHTML=optionList(staffNames);
-q("logStaff").innerHTML=optionList(staffNames);
-q("dutyShift").innerHTML=optionList(shiftNames);
-q("logShift").innerHTML=optionList(shiftNames);
-}
-function renderDashboard(){
-const today=new Date().toISOString().slice(0,10);
-q("totalDuty").textContent=duties.length;
-q("todayCount").textContent=duties.filter(x=>String(x["วันที่"]).startsWith(today)).length;
-q("totalLog").textContent=logs.length;
-q("totalWarn").textContent=logs.filter(x=>x["สถานะ"]==="ต้องติดตาม").length;
-q("totalDanger").textContent=logs.filter(x=>x["สถานะ"]==="ผิดปกติ").length;
-q("totalStaff").textContent=staff.map(staffName).filter(Boolean).length;
-}
-function renderLatestDuty(){
-const list=[...duties].slice(-5).reverse();
-q("latestDuty").innerHTML=list.length?list.map(x=>`<div class="chip">📅 <b>${x["วันที่"]||""}</b> | 👤 ${x["พนักงาน"]||""} | 🕒 ${x["กะเวร"]||""} | 🐣 ${x["ตู้"]||""}</div>`).join(""):`<p style="color:#64748b">ยังไม่มีข้อมูลเวรล่าสุด</p>`;
-}
-function renderMyDuty(){
-const name=val("myName"),month=val("myMonth");
-if(!name)return alert("กรุณาเลือกชื่อพนักงาน");
-const list=duties.filter(x=>(String(x["พนักงาน"]||"").includes(name))&&(month?String(x["วันที่"]||"").startsWith(month):true));
-q("myDutyBox").innerHTML=list.length?list.map(x=>`<div class="chip">📅 <b>${x["วันที่"]||""}</b><br>👤 ${x["พนักงาน"]||""}<br>🕒 ${x["กะเวร"]||""}<br>🐣 ${x["ตู้"]||""}<br>📝 ${x["หมายเหตุ"]||"-"}</div>`).join(""):`ไม่พบเวรของ ${name} ในเดือนที่เลือก`;
-}
-function filteredDuties(){
-const fs=val("filterStaff"),fm=val("filterMachine");
-return duties.filter(x=>(fs?String(x["พนักงาน"]||"").includes(fs):true)&&(fm?String(x["ตู้"]||"").includes(fm):true));
-}
-function renderTables(){
-const dutyList=filteredDuties();
-q("dutyTable").innerHTML=`<table><thead><tr><th>วันที่</th><th>พนักงาน</th><th>กะเวร</th><th>ตู้</th><th>หมายเหตุ</th><th class="noPrint">จัดการ</th></tr></thead><tbody>${dutyList.map(d=>`<tr><td>${d["วันที่"]||""}</td><td>${d["พนักงาน"]||""}</td><td>${d["กะเวร"]||""}</td><td>${d["ตู้"]||""}</td><td>${d["หมายเหตุ"]||""}</td><td class="noPrint"><div class="actions"><button onclick="editDutyByRow('${d._row}')">แก้ไข</button><button class="danger" onclick="deleteDuty('${d._row}')">ลบ</button></div></td></tr>`).join("")}</tbody></table>`;
-q("logTable").innerHTML=`<table><thead><tr><th>วันที่</th><th>เวลา</th><th>พนักงาน</th><th>กะเวร</th><th>ตู้</th><th>สถานะ</th><th>หมายเหตุ</th><th class="noPrint">จัดการ</th></tr></thead><tbody>${logs.map(l=>`<tr><td>${l["วันที่"]||""}</td><td>${l["เวลา"]||""}</td><td>${l["พนักงาน"]||""}</td><td>${l["กะเวร"]||""}</td><td>${l["ตู้"]||""}</td><td>${badge(l["สถานะ"])}</td><td>${l["หมายเหตุ"]||""}</td><td class="noPrint"><div class="actions"><button onclick="editLogByRow('${l._row}')">แก้ไข</button><button class="danger" onclick="deleteLog('${l._row}')">ลบ</button></div></td></tr>`).join("")}</tbody></table>`;
-}
+function renderLists(){const staffNames=staff.map(staffName).filter(Boolean);const shiftNames=shifts.map(shiftLabel).filter(Boolean);q("myName").innerHTML=optionList(staffNames,"เลือกพนักงาน",true);q("filterStaff").innerHTML=optionList(staffNames,"กรองตามพนักงาน",true);q("dutyStaff").innerHTML=optionList(staffNames);q("logStaff").innerHTML=optionList(staffNames);q("dutyShift").innerHTML=optionList(shiftNames);q("logShift").innerHTML=optionList(shiftNames);}
+function renderDashboard(){const today=new Date().toISOString().slice(0,10);q("totalDuty").textContent=duties.length;q("todayCount").textContent=duties.filter(x=>String(x["วันที่"]).startsWith(today)).length;q("totalLog").textContent=logs.length;q("pendingCount").textContent=requests.filter(x=>x["สถานะ"]==="รออนุมัติ").length;q("totalWarn").textContent=logs.filter(x=>x["สถานะ"]==="ต้องติดตาม").length;q("totalDanger").textContent=logs.filter(x=>x["สถานะ"]==="ผิดปกติ").length;}
+function renderLatestDuty(){const list=[...duties].slice(-5).reverse();q("latestDuty").innerHTML=list.length?list.map(x=>`<div class="chip">📅 <b>${x["วันที่"]||""}</b> | 👤 ${x["พนักงาน"]||""} | 🕒 ${x["กะเวร"]||""} | 🐣 ${x["ตู้"]||""}</div>`).join(""):`<p style="color:#64748b">ยังไม่มีข้อมูลเวรล่าสุด</p>`;}
+function renderRequests(){q("requestTable").innerHTML=`<table><thead><tr><th>วันที่ส่ง</th><th>พนักงาน</th><th>วันที่เกี่ยวข้อง</th><th>ประเภท</th><th>รายละเอียด</th><th>สถานะ</th><th class="noPrint">จัดการ</th></tr></thead><tbody>${requests.map(r=>`<tr><td>${r["วันที่ส่งคำขอ"]||""}</td><td>${r["พนักงาน"]||""}</td><td>${r["วันที่เกี่ยวข้อง"]||""}</td><td>${r["ประเภทคำขอ"]||""}</td><td>${r["รายละเอียด"]||""}</td><td>${badge(r["สถานะ"])}</td><td class="noPrint">${r["สถานะ"]==="รออนุมัติ"?`<div class="actions"><button onclick="approveRequest('${r._row}')">อนุมัติ</button><button class="danger" onclick="rejectRequest('${r._row}')">ปฏิเสธ</button></div>`:"-"}</td></tr>`).join("")}</tbody></table>`;}
+async function approveRequest(row){await jsonp(API_URL+`?action=approveRequest&row=${row}`);await loadData();}
+async function rejectRequest(row){await jsonp(API_URL+`?action=rejectRequest&row=${row}`);await loadData();}
+function renderMyDuty(){const name=val("myName"),month=val("myMonth");if(!name)return alert("กรุณาเลือกชื่อพนักงาน");const list=duties.filter(x=>(String(x["พนักงาน"]||"").includes(name))&&(month?String(x["วันที่"]||"").startsWith(month):true));q("myDutyBox").innerHTML=list.length?list.map(x=>`<div class="chip">📅 <b>${x["วันที่"]||""}</b><br>👤 ${x["พนักงาน"]||""}<br>🕒 ${x["กะเวร"]||""}<br>🐣 ${x["ตู้"]||""}<br>📝 ${x["หมายเหตุ"]||"-"}</div>`).join(""):`ไม่พบเวรของ ${name} ในเดือนที่เลือก`;}
+function filteredDuties(){const fs=val("filterStaff"),fm=val("filterMachine");return duties.filter(x=>(fs?String(x["พนักงาน"]||"").includes(fs):true)&&(fm?String(x["ตู้"]||"").includes(fm):true));}
+function renderTables(){const dutyList=filteredDuties();q("dutyTable").innerHTML=`<table><thead><tr><th>วันที่</th><th>พนักงาน</th><th>กะเวร</th><th>ตู้</th><th>หมายเหตุ</th><th class="noPrint">จัดการ</th></tr></thead><tbody>${dutyList.map(d=>`<tr><td>${d["วันที่"]||""}</td><td>${d["พนักงาน"]||""}</td><td>${d["กะเวร"]||""}</td><td>${d["ตู้"]||""}</td><td>${d["หมายเหตุ"]||""}</td><td class="noPrint"><div class="actions"><button onclick="editDutyByRow('${d._row}')">แก้ไข</button><button class="danger" onclick="deleteDuty('${d._row}')">ลบ</button></div></td></tr>`).join("")}</tbody></table>`;q("logTable").innerHTML=`<table><thead><tr><th>วันที่</th><th>เวลา</th><th>พนักงาน</th><th>กะเวร</th><th>ตู้</th><th>สถานะ</th><th>หมายเหตุ</th><th class="noPrint">จัดการ</th></tr></thead><tbody>${logs.map(l=>`<tr><td>${l["วันที่"]||""}</td><td>${l["เวลา"]||""}</td><td>${l["พนักงาน"]||""}</td><td>${l["กะเวร"]||""}</td><td>${l["ตู้"]||""}</td><td>${badge(l["สถานะ"])}</td><td>${l["หมายเหตุ"]||""}</td><td class="noPrint"><div class="actions"><button onclick="editLogByRow('${l._row}')">แก้ไข</button><button class="danger" onclick="deleteLog('${l._row}')">ลบ</button></div></td></tr>`).join("")}</tbody></table>`;}
 function clearFilters(){q("filterStaff").value="";q("filterMachine").value="";renderTables();}
 async function saveDuty(){if(!val("dutyDate"))return alert("กรุณาเลือกวันที่");const action=val("dutyRow")?"updateDuty":"addDuty";let url=API_URL+`?action=${action}&date=${encodeURIComponent(val("dutyDate"))}&staff=${encodeURIComponent(val("dutyStaff"))}&shift=${encodeURIComponent(cleanShift(val("dutyShift")))}&machine=${encodeURIComponent(val("dutyMachine"))}&note=${encodeURIComponent(val("dutyNote"))}`;if(val("dutyRow"))url+=`&row=${val("dutyRow")}`;await jsonp(url);alert("บันทึกเวรแล้ว");resetDuty();await loadData();}
 function editDutyByRow(row){const d=duties.find(x=>String(x._row)===String(row)); if(!d)return;q("dutyRow").value=d._row;q("dutyTitle").textContent="แก้ไขเวรตู้";q("dutyDate").value=d["วันที่"]||"";q("dutyStaff").value=d["พนักงาน"]||"";q("dutyShift").value=d["กะเวร"]||"";q("dutyMachine").value=d["ตู้"]||"";q("dutyNote").value=d["หมายเหตุ"]||"";window.scrollTo({top:q("dutyTitle").offsetTop-20,behavior:"smooth"});}
@@ -271,7 +182,7 @@ function editLogByRow(row){const l=logs.find(x=>String(x._row)===String(row)); i
 async function deleteLog(row){if(!confirm("ลบบันทึกนี้ใช่หรือไม่?"))return;await jsonp(API_URL+`?action=deleteLog&row=${row}`);await loadData();}
 function resetDuty(){q("dutyRow").value="";q("dutyTitle").textContent="เพิ่มเวรตู้";q("dutyMachine").value="";q("dutyNote").value="";}
 function resetLog(){q("logRow").value="";q("logTitle").textContent="บันทึกสถานะเวร";q("logMachine").value="";q("logNote").value="";}
-function renderAll(){renderLists();renderDashboard();renderLatestDuty();renderToday();renderCalendar();renderTables();}
+function renderAll(){renderLists();renderDashboard();renderRequests();renderLatestDuty();renderToday();renderCalendar();renderTables();}
 setTodayBase();loadData();
 </script>
 <script>if ("serviceWorker" in navigator) {navigator.serviceWorker.register("./service-worker.js");}</script>

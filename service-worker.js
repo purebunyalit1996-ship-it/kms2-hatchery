@@ -1,16 +1,8 @@
-const CACHE_NAME = "kms2-duty-v2";
-const FILES_TO_CACHE = [
-  "./",
-  "./index.html",
-  "./employee.html",
-  "./login.html",
-  "./manifest.json"
-];
-
+const CACHE_NAME = "kms2-duty-v21";
+const FILES_TO_CACHE = ["./","./index.html","./employee.html","./login.html","./manifest.json"];
 self.addEventListener("install", event => {
   event.waitUntil(caches.open(CACHE_NAME).then(cache => cache.addAll(FILES_TO_CACHE)));
 });
-
 self.addEventListener("fetch", event => {
   event.respondWith(caches.match(event.request).then(response => response || fetch(event.request)));
 });
