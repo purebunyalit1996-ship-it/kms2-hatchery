@@ -16,6 +16,8 @@ header p{margin:8px 0 0}
 .nav a,.nav button{width:auto;text-decoration:none;background:#ffffff22;color:white;border:1px solid #ffffff55;padding:9px 14px;border-radius:999px;font-weight:800;cursor:pointer}
 .container{max-width:1200px;margin:auto;padding:16px}
 .card{background:white;border-radius:18px;padding:16px;margin-bottom:16px;box-shadow:0 6px 20px #0001}
+.card.hot{border:2px solid #f59e0b;background:#fffdf5}
+.card.alert{border:2px solid #dc2626;background:#fff7f7}
 .grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:12px}
 h2{margin:0 0 12px;color:#0f5132;font-size:18px}
 label{font-weight:700;font-size:13px;margin-top:8px;display:block}
@@ -26,12 +28,17 @@ button.gray{background:#64748b}
 button.print{background:#0f766e}
 .statgrid{display:grid;grid-template-columns:repeat(auto-fit,minmax(170px,1fr));gap:10px}
 .stat{background:#f4faf6;border:1px solid #d8e8dc;border-radius:14px;padding:12px}
-.stat b{font-size:22px;color:#0f5132}
+.stat b{font-size:24px;color:#0f5132}
+.stat.warn{background:#fffbeb;border-color:#fde68a}
+.stat.danger{background:#fef2f2;border-color:#fecaca}
 .calendar{display:grid;grid-template-columns:repeat(7,1fr);gap:8px}
 .dayname{background:#dff3e8;text-align:center;font-weight:900;color:#0f5132;padding:10px;border-radius:10px}
 .cell{min-height:125px;background:#f8faf9;border:1px solid #d8e3dc;border-radius:12px;padding:8px}
 .date{font-weight:900;color:#0f5132;margin-bottom:5px}
 .chip{background:white;border-left:5px solid #198754;margin-top:6px;padding:7px;border-radius:9px;font-size:12px;box-shadow:0 1px 5px #0001}
+.chip.pending{border-left-color:#f59e0b;background:#fffbeb}
+.chip.approved{border-left-color:#16a34a;background:#f0fdf4}
+.chip.rejected{border-left-color:#dc2626;background:#fef2f2}
 .badge{display:inline-block;padding:3px 8px;border-radius:999px;font-size:12px;font-weight:800}
 .green{background:#dcfce7;color:#166534}.yellow{background:#fef3c7;color:#92400e}.red{background:#fee2e2;color:#991b1b}.blue{background:#dbeafe;color:#1e40af}
 table{width:100%;border-collapse:collapse}
@@ -39,21 +46,14 @@ th,td{padding:9px;border-bottom:1px solid #e5e7eb;font-size:14px;text-align:left
 th{background:#e8f5ee;color:#0f5132}
 .actions{display:flex;gap:6px}
 .notice{background:#ecfdf5;border:1px solid #bbf7d0;border-radius:14px;padding:12px;color:#166534}
+.notice.warn{background:#fffbeb;border-color:#fde68a;color:#92400e}
+.notice.danger{background:#fef2f2;border-color:#fecaca;color:#991b1b}
 .loginWrap{min-height:100vh;display:flex;align-items:center;justify-content:center;background:#0f5132;padding:20px}
 .loginBox{background:white;border-radius:22px;padding:24px;max-width:420px;width:100%;box-shadow:0 20px 60px #0004}
 .loginBox h1{color:#0f5132;margin-top:0}
 .small{font-size:13px;color:#64748b}
-@media print{
-  header,.nav,.noPrint{display:none!important}
-  body{background:white}
-  .card{box-shadow:none;border:1px solid #ddd}
-}
-@media(max-width:700px){
-  header h1{font-size:24px}
-  .calendar{grid-template-columns:repeat(2,1fr)}
-  .dayname{display:none}
-  table{display:block;overflow-x:auto}
-}
+@media print{header,.nav,.noPrint{display:none!important}body{background:white}.card{box-shadow:none;border:1px solid #ddd}}
+@media(max-width:700px){header h1{font-size:24px}.calendar{grid-template-columns:repeat(2,1fr)}.dayname{display:none}table{display:block;overflow-x:auto}}
 </style>
 </head>
 <body>
@@ -61,23 +61,19 @@ th{background:#e8f5ee;color:#0f5132}
   <div class="loginBox">
     <h1>🔐 KMS2 Admin Login</h1>
     <p>เข้าสู่ระบบผู้ดูแลเวรตู้ฟัก</p>
-    <label>Username</label>
-    <input id="user" placeholder="admin">
-    <label>Password</label>
-    <input id="pass" type="password" placeholder="1234">
+    <label>Username</label><input id="user" placeholder="admin">
+    <label>Password</label><input id="pass" type="password" placeholder="1234">
     <button onclick="login()">เข้าสู่ระบบ</button>
     <p class="small">ค่าเริ่มต้น: admin / 1234</p>
-    <button class="gray" onclick="location.href='employee.html'">ไปหน้าพนักงาน</button>
+    <button class="gray" onclick="location.href='employee.html?v=23'">ไปหน้าพนักงาน</button>
   </div>
 </div>
 <script>
 function login(){
   const u=document.getElementById("user").value.trim();
   const p=document.getElementById("pass").value.trim();
-  if(u==="admin" && p==="1234"){
-    sessionStorage.setItem("kms2Admin","yes");
-    location.href="index.html";
-  }else{ alert("Username หรือ Password ไม่ถูกต้อง"); }
+  if(u==="admin" && p==="1234"){sessionStorage.setItem("kms2Admin","yes");location.href="index.html?v=23";}
+  else alert("Username หรือ Password ไม่ถูกต้อง");
 }
 </script>
 </body>
