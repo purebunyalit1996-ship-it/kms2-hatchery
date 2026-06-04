@@ -1,5 +1,5 @@
-const CACHE_NAME = "kms2-duty-v23";
-const FILES_TO_CACHE = ["./","./index.html?v=23","./employee.html?v=23","./login.html","./manifest.json"];
+const CACHE_NAME = "kms2-duty-v25";
+const FILES_TO_CACHE = ["./","./index.html?v=25","./employee.html?v=25","./login.html","./manifest.json"];
 self.addEventListener("install", event => {
   self.skipWaiting();
   event.waitUntil(caches.open(CACHE_NAME).then(cache => cache.addAll(FILES_TO_CACHE)));

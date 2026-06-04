@@ -18,8 +18,10 @@ header p{margin:8px 0 0}
 .card{background:white;border-radius:18px;padding:16px;margin-bottom:16px;box-shadow:0 6px 20px #0001}
 .card.hot{border:2px solid #f59e0b;background:#fffdf5}
 .card.alert{border:2px solid #dc2626;background:#fff7f7}
+.card.executive{border:2px solid #0f766e;background:#f0fdfa}
 .grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:12px}
 h2{margin:0 0 12px;color:#0f5132;font-size:18px}
+h3{margin:10px 0;color:#0f5132;font-size:15px}
 label{font-weight:700;font-size:13px;margin-top:8px;display:block}
 input,select,textarea,button{width:100%;padding:11px;border-radius:11px;border:1px solid #d0d7de;margin-top:6px}
 button{background:#198754;color:white;border:0;font-weight:800;cursor:pointer}
@@ -48,16 +50,16 @@ th{background:#e8f5ee;color:#0f5132}
 .notice{background:#ecfdf5;border:1px solid #bbf7d0;border-radius:14px;padding:12px;color:#166534}
 .notice.warn{background:#fffbeb;border-color:#fde68a;color:#92400e}
 .notice.danger{background:#fef2f2;border-color:#fecaca;color:#991b1b}
+.small{font-size:13px;color:#64748b}
 .loginWrap{min-height:100vh;display:flex;align-items:center;justify-content:center;background:#0f5132;padding:20px}
 .loginBox{background:white;border-radius:22px;padding:24px;max-width:420px;width:100%;box-shadow:0 20px 60px #0004}
 .loginBox h1{color:#0f5132;margin-top:0}
-.small{font-size:13px;color:#64748b}
-@media print{header,.nav,.noPrint{display:none!important}body{background:white}.card{box-shadow:none;border:1px solid #ddd}}
+@media print{header,.nav,.noPrint{display:none!important}body{background:white}.card{box-shadow:none;border:1px solid #ddd}.executive{background:white}}
 @media(max-width:700px){header h1{font-size:24px}.calendar{grid-template-columns:repeat(2,1fr)}.dayname{display:none}table{display:block;overflow-x:auto}}
 </style>
 </head>
 <body>
-<header><h1>เวรตู้ฟัก โรงฟักคลองมือไทร 2</h1><p>หน้าพนักงาน: ดูเวร ปฏิทิน และส่งคำขอ</p><div class="nav"><a href="employee.html?v=23">📅 ดูเวร</a><button onclick="loadData()">🔄 รีเฟรช</button></div></header>
+<header><h1>เวรตู้ฟัก โรงฟักคลองมือไทร 2</h1><p>หน้าพนักงาน: ดูเวร ปฏิทิน และส่งคำขอ</p><div class="nav"><a href="employee.html?v=25">📅 ดูเวร</a><button onclick="loadData()">🔄 รีเฟรช</button></div></header>
 <div class="container">
 <div class="card"><h2>เวรวันนี้</h2><div id="todayDuty" class="notice">กำลังโหลดข้อมูล...</div></div>
 <div class="card"><h2>ดูเวรของฉัน</h2><div class="grid"><div><label>พิมพ์ชื่อพนักงาน</label><input id="myName" list="staffList" placeholder="พิมพ์ชื่อ เช่น ยูร"></div><div><label>เดือนที่ต้องการดู</label><input type="month" id="myMonth"></div><div><label>&nbsp;</label><button onclick="renderMyDuty()">ดูเวรของฉัน</button></div></div><datalist id="staffList"></datalist><br><div id="myDutyBox" class="notice">พิมพ์ชื่อ แล้วกดดูเวรของฉัน</div></div>
@@ -118,6 +120,11 @@ function requestClass(status){
  if(status==="ปฏิเสธ") return "rejected";
  return "pending";
 }
+function countBy(list, keyFn){
+  const map={};
+  list.forEach(x=>{const k=keyFn(x)||"ไม่ระบุ"; map[k]=(map[k]||0)+1;});
+  return Object.entries(map).sort((a,b)=>b[1]-a[1]);
+}
 function renderCalendar(){
 const month=val("monthPicker"); if(!month)return;
 const [y,m]=month.split("-").map(Number);
@@ -141,6 +148,8 @@ q("todayDuty").innerHTML=list.length?list.map(x=>`<div class="chip">👤 <b>${x[
 function setTodayBase(){
 const now=new Date(); const today=now.toISOString().slice(0,10);
 if(q("monthPicker")) q("monthPicker").value=today.slice(0,7);
+if(q("summaryMonth")) q("summaryMonth").value=today.slice(0,7);
+if(q("execMonth")) q("execMonth").value=today.slice(0,7);
 if(q("myMonth")) q("myMonth").value=today.slice(0,7);
 if(q("requestDate")) q("requestDate").value=today;
 if(q("dutyDate")) q("dutyDate").value=today;

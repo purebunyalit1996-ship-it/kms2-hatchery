@@ -18,8 +18,10 @@ header p{margin:8px 0 0}
 .card{background:white;border-radius:18px;padding:16px;margin-bottom:16px;box-shadow:0 6px 20px #0001}
 .card.hot{border:2px solid #f59e0b;background:#fffdf5}
 .card.alert{border:2px solid #dc2626;background:#fff7f7}
+.card.executive{border:2px solid #0f766e;background:#f0fdfa}
 .grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:12px}
 h2{margin:0 0 12px;color:#0f5132;font-size:18px}
+h3{margin:10px 0;color:#0f5132;font-size:15px}
 label{font-weight:700;font-size:13px;margin-top:8px;display:block}
 input,select,textarea,button{width:100%;padding:11px;border-radius:11px;border:1px solid #d0d7de;margin-top:6px}
 button{background:#198754;color:white;border:0;font-weight:800;cursor:pointer}
@@ -48,21 +50,22 @@ th{background:#e8f5ee;color:#0f5132}
 .notice{background:#ecfdf5;border:1px solid #bbf7d0;border-radius:14px;padding:12px;color:#166534}
 .notice.warn{background:#fffbeb;border-color:#fde68a;color:#92400e}
 .notice.danger{background:#fef2f2;border-color:#fecaca;color:#991b1b}
+.small{font-size:13px;color:#64748b}
 .loginWrap{min-height:100vh;display:flex;align-items:center;justify-content:center;background:#0f5132;padding:20px}
 .loginBox{background:white;border-radius:22px;padding:24px;max-width:420px;width:100%;box-shadow:0 20px 60px #0004}
 .loginBox h1{color:#0f5132;margin-top:0}
-.small{font-size:13px;color:#64748b}
-@media print{header,.nav,.noPrint{display:none!important}body{background:white}.card{box-shadow:none;border:1px solid #ddd}}
+@media print{header,.nav,.noPrint{display:none!important}body{background:white}.card{box-shadow:none;border:1px solid #ddd}.executive{background:white}}
 @media(max-width:700px){header h1{font-size:24px}.calendar{grid-template-columns:repeat(2,1fr)}.dayname{display:none}table{display:block;overflow-x:auto}}
 </style>
 </head>
 <body>
 <header>
 <h1>เวรตู้ฟัก โรงฟักคลองมือไทร 2</h1>
-<p>Admin v2.3: Dashboard Alert + Monthly Summary</p>
+<p>Admin v2.5: Executive Dashboard + Monthly PDF Report</p>
 <div class="nav noPrint">
-<a href="index.html?v=23">🏠 Admin</a>
-<a href="employee.html?v=23">👷 หน้าพนักงาน</a>
+<a href="index.html?v=25">🏠 Admin</a>
+<a href="#executiveDashboard">📊 ผู้บริหาร</a>
+<a href="employee.html?v=25">👷 หน้าพนักงาน</a>
 <button onclick="loadData()">🔄 รีเฟรช</button>
 <button onclick="window.print()">📄 Export PDF</button>
 <button onclick="logoutAdmin()">ออกจากระบบ</button>
@@ -71,6 +74,29 @@ th{background:#e8f5ee;color:#0f5132}
 
 <div class="container">
 <div id="systemAlert" class="card alert" style="display:none"></div>
+
+<div id="executiveDashboard" class="card executive">
+<h2>📊 Dashboard ผู้บริหาร</h2>
+<div class="grid noPrint">
+<div><label>เลือกเดือนรายงาน</label><input type="month" id="execMonth" onchange="renderExecutiveDashboard()"></div>
+<div><label>&nbsp;</label><button onclick="renderExecutiveDashboard()">อัปเดตรายงาน</button></div>
+<div><label>&nbsp;</label><button class="print" onclick="window.print()">Export Monthly PDF</button></div>
+</div>
+<br>
+<div class="statgrid">
+<div class="stat">เวรวันนี้<br><b id="execTodayDuty">0</b></div>
+<div class="stat">คำขอเดือนนี้<br><b id="execMonthRequests">0</b></div>
+<div class="stat warn">คนลามากสุด<br><b id="execTopLeave">-</b></div>
+<div class="stat danger">ผิดปกติเดือนนี้<br><b id="execAbnormal">0</b></div>
+</div>
+<br>
+<div class="grid">
+<div class="card"><h3>เวรวันนี้</h3><div id="execTodayList"></div></div>
+<div class="card"><h3>คนลาบ่อย / คำขอมากสุด</h3><div id="execFrequentLeave"></div></div>
+<div class="card"><h3>จำนวนคำขอเดือนนี้</h3><div id="execRequestSummary"></div></div>
+<div class="card"><h3>สถิติผิดปกติ</h3><div id="execStatusSummary"></div></div>
+</div>
+</div>
 
 <div class="card">
 <h2>Dashboard Pro</h2>
@@ -156,6 +182,11 @@ function requestClass(status){
  if(status==="ปฏิเสธ") return "rejected";
  return "pending";
 }
+function countBy(list, keyFn){
+  const map={};
+  list.forEach(x=>{const k=keyFn(x)||"ไม่ระบุ"; map[k]=(map[k]||0)+1;});
+  return Object.entries(map).sort((a,b)=>b[1]-a[1]);
+}
 function renderCalendar(){
 const month=val("monthPicker"); if(!month)return;
 const [y,m]=month.split("-").map(Number);
@@ -179,6 +210,8 @@ q("todayDuty").innerHTML=list.length?list.map(x=>`<div class="chip">👤 <b>${x[
 function setTodayBase(){
 const now=new Date(); const today=now.toISOString().slice(0,10);
 if(q("monthPicker")) q("monthPicker").value=today.slice(0,7);
+if(q("summaryMonth")) q("summaryMonth").value=today.slice(0,7);
+if(q("execMonth")) q("execMonth").value=today.slice(0,7);
 if(q("myMonth")) q("myMonth").value=today.slice(0,7);
 if(q("requestDate")) q("requestDate").value=today;
 if(q("dutyDate")) q("dutyDate").value=today;
@@ -209,6 +242,32 @@ if(warn>0) msg.push(`🟡 มีรายการต้องติดตาม
 const box=q("systemAlert");
 if(msg.length){box.style.display="block";box.innerHTML=`<h2>แจ้งเตือนผู้ดูแล</h2><div class="notice danger">${msg.join("<br>")}</div>`;}
 else{box.style.display="none";}
+}
+function renderExecutiveDashboard(){
+const month=val("execMonth")||new Date().toISOString().slice(0,7);
+const today=new Date().toISOString().slice(0,10);
+const todayDuties=duties.filter(x=>String(x["วันที่"]||"").startsWith(today));
+const monthReq=requests.filter(x=>String(x["วันที่เกี่ยวข้อง"]||"").startsWith(month)||String(x["วันที่ส่งคำขอ"]||"").startsWith(month));
+const monthLogs=logs.filter(x=>String(x["วันที่"]||"").startsWith(month));
+const abnormal=monthLogs.filter(x=>x["สถานะ"]==="ผิดปกติ").length;
+const leaveReq=monthReq.filter(x=>String(x["ประเภทคำขอ"]||"").includes("ลา"));
+const topLeave=countBy(leaveReq, x=>x["พนักงาน"])[0];
+
+q("execTodayDuty").textContent=todayDuties.length;
+q("execMonthRequests").textContent=monthReq.length;
+q("execTopLeave").textContent=topLeave ? `${topLeave[0]} (${topLeave[1]})` : "-";
+q("execAbnormal").textContent=abnormal;
+
+q("execTodayList").innerHTML=todayDuties.length?todayDuties.map(x=>`<div class="chip">👤 <b>${x["พนักงาน"]||""}</b><br>🕒 ${x["กะเวร"]||""}<br>🐣 ${x["ตู้"]||""}</div>`).join(""):"วันนี้ยังไม่มีเวร";
+
+const leaveRows=countBy(leaveReq, x=>x["พนักงาน"]).map(([n,c],i)=>`<tr><td>${i+1}</td><td>${n}</td><td>${c}</td></tr>`).join("");
+q("execFrequentLeave").innerHTML=leaveRows?`<table><thead><tr><th>#</th><th>พนักงาน</th><th>จำนวนลา</th></tr></thead><tbody>${leaveRows}</tbody></table>`:"ยังไม่มีข้อมูลลาเดือนนี้";
+
+const reqRows=countBy(monthReq, x=>x["ประเภทคำขอ"]).map(([n,c])=>`<tr><td>${n}</td><td>${c}</td></tr>`).join("");
+q("execRequestSummary").innerHTML=reqRows?`<table><thead><tr><th>ประเภทคำขอ</th><th>จำนวน</th></tr></thead><tbody>${reqRows}</tbody></table>`:"ยังไม่มีคำขอเดือนนี้";
+
+const statusRows=countBy(monthLogs, x=>x["สถานะ"]).map(([n,c])=>`<tr><td>${badge(n)}</td><td>${c}</td></tr>`).join("");
+q("execStatusSummary").innerHTML=statusRows?`<table><thead><tr><th>สถานะ</th><th>จำนวน</th></tr></thead><tbody>${statusRows}</tbody></table>`:"ยังไม่มีบันทึกสถานะเดือนนี้";
 }
 function renderMonthlySummary(){
 const month=val("summaryMonth")||val("monthPicker");
@@ -242,8 +301,8 @@ function editLogByRow(row){const l=logs.find(x=>String(x._row)===String(row)); i
 async function deleteLog(row){if(!confirm("ลบบันทึกนี้ใช่หรือไม่?"))return;await jsonp(API_URL+`?action=deleteLog&row=${row}`);await loadData();}
 function resetDuty(){q("dutyRow").value="";q("dutyTitle").textContent="เพิ่มเวรตู้";q("dutyMachine").value="";q("dutyNote").value="";}
 function resetLog(){q("logRow").value="";q("logTitle").textContent="บันทึกสถานะเวร";q("logMachine").value="";q("logNote").value="";}
-function renderAll(){renderLists();renderDashboard();renderPendingRequests();renderMonthlySummary();renderRequests();renderLatestDuty();renderToday();renderCalendar();renderTables();}
-setTodayBase(); if(q("summaryMonth")) q("summaryMonth").value=new Date().toISOString().slice(0,7); loadData();
+function renderAll(){renderLists();renderDashboard();renderExecutiveDashboard();renderPendingRequests();renderMonthlySummary();renderRequests();renderLatestDuty();renderToday();renderCalendar();renderTables();}
+setTodayBase();loadData();
 </script>
 <script>if ("serviceWorker" in navigator) {navigator.serviceWorker.register("./service-worker.js");}</script>
 </body>
