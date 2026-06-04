@@ -5,220 +5,250 @@
 <meta name="theme-color" content="#0f5132">
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
-<title>KMS2 เวรพนักงาน</title>
+<title>KMS2 พนักงาน v2.8</title>
 <style>
 *{box-sizing:border-box;font-family:system-ui,sans-serif}
-body{margin:0;background:#eef3ef;color:#1f2933}
-header{background:#0f5132;color:white;padding:24px;text-align:center}
-header h1{margin:0;font-size:28px}
-header p{margin:8px 0 0}
-.nav{display:flex;gap:10px;justify-content:center;flex-wrap:wrap;margin-top:14px}
-.nav a,.nav button{width:auto;text-decoration:none;background:#ffffff22;color:white;border:1px solid #ffffff55;padding:9px 14px;border-radius:999px;font-weight:800;cursor:pointer}
-.container{max-width:1200px;margin:auto;padding:16px}
-.card{background:white;border-radius:18px;padding:16px;margin-bottom:16px;box-shadow:0 6px 20px #0001}
-.card.hot{border:2px solid #f59e0b;background:#fffdf5}
-.card.alert{border:2px solid #dc2626;background:#fff7f7}
-.card.executive{border:2px solid #0f766e;background:#f0fdfa}
-.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:12px}
-h2{margin:0 0 12px;color:#0f5132;font-size:18px}
-h3{margin:10px 0;color:#0f5132;font-size:15px}
-label{font-weight:700;font-size:13px;margin-top:8px;display:block}
-input,select,textarea,button{width:100%;padding:11px;border-radius:11px;border:1px solid #d0d7de;margin-top:6px}
-button{background:#198754;color:white;border:0;font-weight:800;cursor:pointer}
-button.danger{background:#dc2626}
-button.gray{background:#64748b}
-button.print{background:#0f766e}
-.statgrid{display:grid;grid-template-columns:repeat(auto-fit,minmax(170px,1fr));gap:10px}
-.stat{background:#f4faf6;border:1px solid #d8e8dc;border-radius:14px;padding:12px}
-.stat b{font-size:24px;color:#0f5132}
-.stat.warn{background:#fffbeb;border-color:#fde68a}
-.stat.danger{background:#fef2f2;border-color:#fecaca}
-.calendar{display:grid;grid-template-columns:repeat(7,1fr);gap:8px}
-.dayname{background:#dff3e8;text-align:center;font-weight:900;color:#0f5132;padding:10px;border-radius:10px}
-.cell{min-height:125px;background:#f8faf9;border:1px solid #d8e3dc;border-radius:12px;padding:8px}
-.date{font-weight:900;color:#0f5132;margin-bottom:5px}
-.chip{background:white;border-left:5px solid #198754;margin-top:6px;padding:7px;border-radius:9px;font-size:12px;box-shadow:0 1px 5px #0001}
+html,body{margin:0;max-width:100%;overflow-x:hidden;background:#eef3ef;color:#1f2933}
+header{background:#0f5132;color:white;padding:20px 12px;text-align:center}
+header h1{margin:0;font-size:24px;line-height:1.25}
+header p{margin:8px 0 0;font-size:14px}
+.container{max-width:900px;margin:auto;padding:10px}
+.card{background:white;border-radius:18px;padding:14px;margin-bottom:14px;box-shadow:0 6px 20px #0001;overflow:hidden}
+h2{margin:0 0 12px;color:#0f5132;font-size:21px}
+label{font-weight:800;font-size:14px;margin-top:10px;display:block}
+input,select,textarea,button{width:100%;max-width:100%;box-sizing:border-box;padding:13px 14px;border-radius:14px;border:1px solid #d0d7de;margin-top:6px;font-size:16px}
+button{background:#198754;color:white;border:0;font-weight:900;min-height:46px;cursor:pointer}
+.tabs{display:grid;grid-template-columns:repeat(5,1fr);gap:7px;position:sticky;top:0;z-index:10;background:#eef3ef;padding:10px 0}
+.tabs button{font-size:13px;padding:9px 4px;border-radius:999px;min-height:42px;background:#64748b}
+.tabs button.active{background:#0f5132}
+.section{display:none}
+.section.active{display:block}
+.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:10px}
+.notice{background:#ecfdf5;border:1px solid #bbf7d0;border-radius:14px;padding:12px;color:#166534;font-size:14px;line-height:1.45}
+.notice.warn{background:#fffbeb;border-color:#fde68a;color:#92400e}
+.chip{background:white;border-left:5px solid #198754;margin-top:8px;padding:9px;border-radius:12px;font-size:13px;line-height:1.35;box-shadow:0 1px 5px #0001;word-break:break-word}
 .chip.pending{border-left-color:#f59e0b;background:#fffbeb}
 .chip.approved{border-left-color:#16a34a;background:#f0fdf4}
 .chip.rejected{border-left-color:#dc2626;background:#fef2f2}
 .badge{display:inline-block;padding:3px 8px;border-radius:999px;font-size:12px;font-weight:800}
-.green{background:#dcfce7;color:#166534}.yellow{background:#fef3c7;color:#92400e}.red{background:#fee2e2;color:#991b1b}.blue{background:#dbeafe;color:#1e40af}
-table{width:100%;border-collapse:collapse}
-th,td{padding:9px;border-bottom:1px solid #e5e7eb;font-size:14px;text-align:left}
-th{background:#e8f5ee;color:#0f5132}
-.actions{display:flex;gap:6px}
-.notice{background:#ecfdf5;border:1px solid #bbf7d0;border-radius:14px;padding:12px;color:#166534}
-.notice.warn{background:#fffbeb;border-color:#fde68a;color:#92400e}
-.notice.danger{background:#fef2f2;border-color:#fecaca;color:#991b1b}
+.green{background:#dcfce7;color:#166534}.yellow{background:#fef3c7;color:#92400e}.red{background:#fee2e2;color:#991b1b}
+.calendar{display:grid;grid-template-columns:repeat(7,minmax(0,1fr));gap:4px;width:100%}
+.dayname{background:#dff3e8;text-align:center;font-weight:900;color:#0f5132;padding:6px 1px;border-radius:7px;font-size:11px}
+.cell{min-height:48px;background:#f8faf9;border:1px solid #d8e3dc;border-radius:9px;padding:4px}
+.date{font-weight:900;color:#0f5132;font-size:12px;margin-bottom:2px}
+.cell small{font-size:9px;color:#94a3b8}
+.cell .chip{font-size:9px;line-height:1.1;padding:3px;margin-top:2px;border-left-width:3px;max-height:32px;overflow:hidden}
 .small{font-size:13px;color:#64748b}
-.loginWrap{min-height:100vh;display:flex;align-items:center;justify-content:center;background:#0f5132;padding:20px}
-.loginBox{background:white;border-radius:22px;padding:24px;max-width:420px;width:100%;box-shadow:0 20px 60px #0004}
-.loginBox h1{color:#0f5132;margin-top:0}
-@media print{header,.nav,.noPrint{display:none!important}body{background:white}.card{box-shadow:none;border:1px solid #ddd}.executive{background:white}}
-@media(max-width:700px){header h1{font-size:24px}.calendar{grid-template-columns:repeat(2,1fr)}.dayname{display:none}table{display:block;overflow-x:auto}}
-
-/* KMS2 v2.6 Mobile Pro Polish */
-html,body{max-width:100%;overflow-x:hidden}
-.card,.container,header{max-width:100%}
-.card{overflow:hidden}
-input,select,textarea,button{font-size:16px}
 @media(max-width:700px){
-  body{background:#eef3ef}
-  header{padding:22px 14px;border-bottom-left-radius:0;border-bottom-right-radius:0}
-  header h1{font-size:23px;line-height:1.25}
-  header p{font-size:14px;line-height:1.45}
-  .container{padding:12px}
-  .card{border-radius:18px;padding:14px;margin-bottom:14px}
-  h2{font-size:21px;line-height:1.25}
-  h3{font-size:16px}
-  .nav{gap:8px}
-  .nav a,.nav button{font-size:14px;padding:9px 12px}
-  .grid{grid-template-columns:1fr!important;gap:10px}
-  .statgrid{grid-template-columns:repeat(2,1fr)!important;gap:9px}
-  .stat{padding:10px;min-height:86px}
-  .stat b{font-size:26px}
-
-  /* Tables become mobile cards, no horizontal scrolling */
-  table,thead,tbody,tr,th,td{display:block;width:100%}
-  table{border-collapse:separate;border-spacing:0}
-  thead{display:none}
-  tr{background:#fff;border:1px solid #e5e7eb;border-radius:14px;margin:0 0 10px;padding:10px;box-shadow:0 2px 8px #0000000d}
-  td{border:0!important;padding:6px 0!important;font-size:14px;line-height:1.35;white-space:normal;word-break:break-word}
-  td:empty{display:none}
-  .actions{display:grid;grid-template-columns:1fr 1fr;gap:8px}
-  .actions button{margin-top:4px}
-
-  /* Compact calendar for phone */
-  .calendar{grid-template-columns:repeat(7,1fr)!important;gap:4px}
-  .dayname{display:block!important;font-size:11px;padding:6px 2px;border-radius:7px}
-  .cell{min-height:54px!important;padding:5px!important;border-radius:9px}
-  .date{font-size:13px;margin-bottom:2px}
-  .cell small{font-size:10px;line-height:1.1}
-  .cell .chip{font-size:9px;line-height:1.15;padding:3px;margin-top:2px;border-left-width:3px;border-radius:6px;max-height:34px;overflow:hidden}
-  .chip{font-size:13px;line-height:1.35;padding:9px;border-radius:12px}
-  .notice{font-size:14px;line-height:1.45}
+  header h1{font-size:22px}
+  .grid{grid-template-columns:1fr!important}
+  .tabs{grid-template-columns:repeat(3,1fr)}
+  .tabs button{font-size:12px}
 }
-
-/* Extra narrow phones */
 @media(max-width:390px){
-  .statgrid{grid-template-columns:1fr!important}
-  header h1{font-size:21px}
-  .card{padding:12px}
-  .calendar{gap:3px}
-  .cell{min-height:48px!important}
+  .tabs{grid-template-columns:repeat(2,1fr)}
 }
-
 </style>
 </head>
 <body>
-<header><h1>เวรตู้ฟัก โรงฟักคลองมือไทร 2</h1><p>หน้าพนักงาน: ดูเวร ปฏิทิน และส่งคำขอ</p><div class="nav"><a href="employee.html?v=26">📅 ดูเวร</a><button onclick="loadData()">🔄 รีเฟรช</button></div></header>
-<div class="container">
-<div class="card"><h2>เวรวันนี้</h2><div id="todayDuty" class="notice">กำลังโหลดข้อมูล...</div></div>
-<div class="card"><h2>ดูเวรของฉัน</h2><div class="grid"><div><label>พิมพ์ชื่อพนักงาน</label><input id="myName" list="staffList" placeholder="พิมพ์ชื่อ เช่น ยูร"></div><div><label>เดือนที่ต้องการดู</label><input type="month" id="myMonth"></div><div><label>&nbsp;</label><button onclick="renderMyDuty()">ดูเวรของฉัน</button></div></div><datalist id="staffList"></datalist><br><div id="myDutyBox" class="notice">พิมพ์ชื่อ แล้วกดดูเวรของฉัน</div></div>
-<div class="card"><h2>ส่งคำขอลา / เปลี่ยนเวร</h2><div class="grid"><div><label>พนักงาน</label><input id="requestStaff" list="staffList" placeholder="พิมพ์ชื่อ เช่น ยูร"></div><div><label>วันที่เกี่ยวข้อง</label><input type="date" id="requestDate"></div><div><label>ประเภทคำขอ</label><select id="requestType"><option>ขอลา</option><option>ขอเปลี่ยนเวร</option></select></div></div><label>รายละเอียด</label><textarea id="requestDetail" placeholder="เช่น ขอเปลี่ยนเวรกับป๋อ / ลาป่วย / ติดธุระ"></textarea><button onclick="sendRequest()">ส่งคำขอ</button></div>
-<div class="card hot"><h2>สถานะคำขอของฉัน</h2><div class="grid"><div><label>พิมพ์ชื่อเพื่อตรวจสถานะ</label><input id="statusName" list="staffList" placeholder="เช่น ยูร"></div><div><label>&nbsp;</label><button onclick="renderMyRequests()">ตรวจสถานะคำขอ</button></div></div><br><div id="myRequestBox" class="notice warn">พิมพ์ชื่อ แล้วกดตรวจสถานะคำขอ</div></div>
-<div class="card"><h2>ปฏิทินเวรรายเดือน</h2><div class="grid"><input type="month" id="monthPicker" onchange="renderCalendar()"><button onclick="loadData()">รีเฟรชข้อมูล</button></div><br><div id="calendarArea"></div></div>
-</div>
-<script>
+<header>
+  <h1>เวรตู้ฟัก โรงฟักคลองมือไทร 2</h1>
+  <p>หน้าพนักงาน v2.8: Compact View</p>
+</header>
 
+<div class="container">
+  <div class="tabs">
+    <button id="tab-today" class="active" onclick="showSection('today')">📌 วันนี้</button>
+    <button id="tab-myduty" onclick="showSection('myduty')">👤 ดูเวร</button>
+    <button id="tab-request" onclick="showSection('request')">📝 คำขอ</button>
+    <button id="tab-status" onclick="showSection('status')">✅ สถานะ</button>
+    <button id="tab-calendar" onclick="showSection('calendar')">📅 ปฏิทิน</button>
+  </div>
+
+  <section id="section-today" class="section active">
+    <div class="card"><h2>เวรวันนี้</h2><div id="todayDuty" class="notice">กำลังโหลดข้อมูล...</div></div>
+  </section>
+
+  <section id="section-myduty" class="section">
+    <div class="card">
+      <h2>ดูเวรของฉัน</h2>
+      <div class="grid">
+        <div><label>พิมพ์ชื่อพนักงาน</label><input id="myName" list="staffList" placeholder="เช่น ยูร"></div>
+        <div><label>เดือนที่ต้องการดู</label><input type="month" id="myMonth"></div>
+      </div>
+      <button onclick="renderMyDuty()">ดูเวรของฉัน</button>
+      <datalist id="staffList"></datalist><br><br>
+      <div id="myDutyBox" class="notice">พิมพ์ชื่อ แล้วกดดูเวรของฉัน</div>
+    </div>
+  </section>
+
+  <section id="section-request" class="section">
+    <div class="card">
+      <h2>ส่งคำขอลา / เปลี่ยนเวร</h2>
+      <div class="grid">
+        <div><label>พนักงาน</label><input id="requestStaff" list="staffList" placeholder="เช่น ยูร"></div>
+        <div><label>วันที่เกี่ยวข้อง</label><input type="date" id="requestDate"></div>
+        <div><label>ประเภทคำขอ</label><select id="requestType"><option>ขอลา</option><option>ขอเปลี่ยนเวร</option></select></div>
+      </div>
+      <label>รายละเอียด</label>
+      <textarea id="requestDetail" placeholder="เช่น ขอเปลี่ยนเวรกับป๋อ / ลาป่วย / ติดธุระ"></textarea>
+      <button onclick="sendRequest()">ส่งคำขอ</button>
+    </div>
+  </section>
+
+  <section id="section-status" class="section">
+    <div class="card">
+      <h2>สถานะคำขอของฉัน</h2>
+      <label>พิมพ์ชื่อเพื่อตรวจสถานะ</label>
+      <input id="statusName" list="staffList" placeholder="เช่น ยูร">
+      <button onclick="renderMyRequests()">ตรวจสถานะคำขอ</button><br><br>
+      <div id="myRequestBox" class="notice warn">พิมพ์ชื่อ แล้วกดตรวจสถานะคำขอ</div>
+    </div>
+  </section>
+
+  <section id="section-calendar" class="section">
+    <div class="card">
+      <h2>ปฏิทินเวรรายเดือน</h2>
+      <div class="grid">
+        <input type="month" id="monthPicker" onchange="renderCalendar()">
+        <button onclick="loadData()">รีเฟรชข้อมูล</button>
+      </div><br>
+      <div id="calendarArea"></div>
+      <p class="small">ปฏิทินถูกย่อให้กะทัดรัดสำหรับมือถือ</p>
+    </div>
+  </section>
+</div>
+
+<script>
 const API_URL="https://script.google.com/macros/s/AKfycbxyvvxC1lO6cpWwJ5EUtkhpzm2WvheLhJHBAq_W9u_FHhfPVP_HMGEewAm9BXES2u7ALQ/exec";
-let staff=[],shifts=[],duties=[],logs=[],requests=[];
+let staff=[],duties=[],requests=[];
+
 function q(id){return document.getElementById(id)}
 function val(id){return q(id).value.trim()}
+
+function showSection(name){
+  ["today","myduty","request","status","calendar"].forEach(x=>{
+    q("section-"+x).classList.remove("active");
+    q("tab-"+x).classList.remove("active");
+  });
+  q("section-"+name).classList.add("active");
+  q("tab-"+name).classList.add("active");
+  if(name==="calendar") renderCalendar();
+  if(name==="status") renderMyRequests();
+}
+
 function jsonp(url){
-return new Promise((resolve,reject)=>{
-const cb="cb_"+Date.now()+"_"+Math.floor(Math.random()*1000);
-window[cb]=data=>{resolve(data);delete window[cb];script.remove()};
-const script=document.createElement("script");
-script.src=url+(url.includes("?")?"&":"?")+"callback="+cb;
-script.onerror=reject;
-document.body.appendChild(script);
-});
+  return new Promise((resolve,reject)=>{
+    const cb="cb_"+Date.now()+"_"+Math.floor(Math.random()*1000);
+    window[cb]=data=>{resolve(data);delete window[cb];script.remove()};
+    const script=document.createElement("script");
+    script.src=url+(url.includes("?")?"&":"?")+"callback="+cb;
+    script.onerror=reject;
+    document.body.appendChild(script);
+  });
 }
-function staffName(r){return r["ชื่อ"]||r["พนักงาน"]||r["Name"]||r["name"]||""}
-function shiftName(r){return r["ชื่อกะ"]||r["กะเวร"]||""}
-function shiftLabel(r){const n=shiftName(r),s=r["เริ่ม"]||"",e=r["สิ้นสุด"]||"";return n ? `${n} (${s} - ${e})` : "";}
-function cleanShift(s){return String(s||"").split("(")[0].trim()}
+
 function getStaffNames(){
-  const fromStaff=(staff||[]).map(staffName).filter(Boolean);
-  const fromDuties=(duties||[]).map(x=>x["พนักงาน"]).filter(Boolean);
-  const fromReq=(requests||[]).map(x=>x["พนักงาน"]).filter(Boolean);
-  const fallback=["ยูร","ป๋อ","นุช","โนรา","ต๋อย"];
-  return [...new Set([...fromStaff,...fromDuties,...fromReq,...fallback])];
+  const a=(staff||[]).map(x=>x["ชื่อ"]||x["พนักงาน"]).filter(Boolean);
+  const b=(duties||[]).map(x=>x["พนักงาน"]).filter(Boolean);
+  const c=(requests||[]).map(x=>x["พนักงาน"]).filter(Boolean);
+  return [...new Set([...a,...b,...c,"ยูร","ป๋อ","นุช","โนรา","ต๋อย"])];
 }
+
 async function loadData(){
-try{
-const data=await jsonp(API_URL+"?action=getData");
-staff=data.staff||[];shifts=data.shifts||[];duties=data.duties||[];logs=data.logs||[];requests=data.requests||[];
-renderAll();
-}catch(e){alert("โหลดข้อมูลไม่สำเร็จ")}
+  try{
+    const data=await jsonp(API_URL+"?action=getData");
+    staff=data.staff||[];
+    duties=data.duties||[];
+    requests=data.requests||[];
+    renderAll();
+  }catch(e){alert("โหลดข้อมูลไม่สำเร็จ")}
 }
-function optionList(arr, firstText="", withBlank=false){
-let html=withBlank?`<option value="">${firstText}</option>`:"";
-html+=arr.map(n=>`<option value="${n}">${n}</option>`).join("");
-return html;
-}
+
 function badge(s){
-if(s==="รออนุมัติ")return `<span class="badge yellow">รออนุมัติ</span>`;
-if(s==="อนุมัติ")return `<span class="badge green">อนุมัติ</span>`;
-if(s==="ปฏิเสธ")return `<span class="badge red">ปฏิเสธ</span>`;
-if(s==="ต้องติดตาม")return `<span class="badge yellow">ต้องติดตาม</span>`;
-if(s==="ผิดปกติ")return `<span class="badge red">ผิดปกติ</span>`;
-if(s==="แก้ไขแล้ว")return `<span class="badge blue">แก้ไขแล้ว</span>`;
-return `<span class="badge green">ปกติ</span>`;
+  if(s==="รออนุมัติ")return `<span class="badge yellow">รออนุมัติ</span>`;
+  if(s==="อนุมัติ")return `<span class="badge green">อนุมัติ</span>`;
+  if(s==="ปฏิเสธ")return `<span class="badge red">ปฏิเสธ</span>`;
+  return `<span class="badge yellow">${s||"-"}</span>`;
 }
-function requestClass(status){
- if(status==="อนุมัติ") return "approved";
- if(status==="ปฏิเสธ") return "rejected";
- return "pending";
-}
-function countBy(list, keyFn){
-  const map={};
-  list.forEach(x=>{const k=keyFn(x)||"ไม่ระบุ"; map[k]=(map[k]||0)+1;});
-  return Object.entries(map).sort((a,b)=>b[1]-a[1]);
-}
-function renderCalendar(){
-const month=val("monthPicker"); if(!month)return;
-const [y,m]=month.split("-").map(Number);
-const first=new Date(y,m-1,1), last=new Date(y,m,0).getDate(), start=first.getDay();
-const names=["อา","จ","อ","พ","พฤ","ศ","ส"];
-let html=`<div class="calendar">`;
-names.forEach(n=>html+=`<div class="dayname">${n}</div>`);
-for(let i=0;i<start;i++)html+=`<div></div>`;
-for(let d=1;d<=last;d++){
-const date=`${y}-${String(m).padStart(2,"0")}-${String(d).padStart(2,"0")}`;
-const list=duties.filter(x=>String(x["วันที่"]).startsWith(date));
-html+=`<div class="cell"><div class="date">${d}</div>${list.length?list.map(x=>`<div class="chip">👤 <b>${x["พนักงาน"]||""}</b><br><span class="calendarDetail">🕒 ${x["กะเวร"]||""} ${x["ตู้"]||""}</span></div>`).join(""):`<small style="color:#94a3b8">ไม่มีเวร</small>`}</div>`;
-}
-html+=`</div>`;q("calendarArea").innerHTML=html;
-}
-function renderToday(){
-const today=new Date().toISOString().slice(0,10);
-const list=duties.filter(x=>String(x["วันที่"]).startsWith(today));
-q("todayDuty").innerHTML=list.length?list.map(x=>`<div class="chip">👤 <b>${x["พนักงาน"]||""}</b><br>🕒 ${x["กะเวร"]||""}<br>🐣 ${x["ตู้"]||""}<br>📝 ${x["หมายเหตุ"]||"-"}</div>`).join(""):`<p style="color:#64748b">วันนี้ยังไม่มีข้อมูลเวร</p>`;
-}
-function setTodayBase(){
-const now=new Date(); const today=now.toISOString().slice(0,10);
-if(q("monthPicker")) q("monthPicker").value=today.slice(0,7);
-if(q("summaryMonth")) q("summaryMonth").value=today.slice(0,7);
-if(q("execMonth")) q("execMonth").value=today.slice(0,7);
-if(q("myMonth")) q("myMonth").value=today.slice(0,7);
-if(q("requestDate")) q("requestDate").value=today;
-if(q("dutyDate")) q("dutyDate").value=today;
-if(q("logDate")) q("logDate").value=today;
-if(q("logTime")) q("logTime").value=now.toTimeString().slice(0,5);
+
+function requestClass(s){
+  if(s==="อนุมัติ")return "approved";
+  if(s==="ปฏิเสธ")return "rejected";
+  return "pending";
 }
 
 function renderStaffList(){
-  const names=getStaffNames();
-  q("staffList").innerHTML=names.map(n=>`<option value="${n}"></option>`).join("");
+  q("staffList").innerHTML=getStaffNames().map(n=>`<option value="${n}"></option>`).join("");
 }
-function renderMyDuty(){const name=val("myName"),month=val("myMonth");if(!name)return alert("กรุณาพิมพ์ชื่อพนักงาน");const list=duties.filter(x=>String(x["พนักงาน"]||"").includes(name)&&(month?String(x["วันที่"]||"").startsWith(month):true));q("myDutyBox").innerHTML=list.length?list.map(x=>`<div class="chip">📅 <b>${x["วันที่"]||""}</b><br>👤 ${x["พนักงาน"]||""}<br>🕒 ${x["กะเวร"]||""}<br>🐣 ${x["ตู้"]||""}<br>📝 ${x["หมายเหตุ"]||"-"}</div>`).join(""):`ไม่พบเวรของ ${name} ในเดือนที่เลือก`;q("statusName").value=name;renderMyRequests();}
-function renderMyRequests(){const name=val("statusName")||val("myName")||val("requestStaff");if(!name){q("myRequestBox").innerHTML="พิมพ์ชื่อ แล้วกดตรวจสถานะคำขอ";return;}const list=requests.filter(r=>String(r["พนักงาน"]||"").includes(name)).slice(-10).reverse();q("myRequestBox").innerHTML=list.length?list.map(r=>`<div class="chip ${requestClass(r["สถานะ"])}">📅 วันที่เกี่ยวข้อง: <b>${r["วันที่เกี่ยวข้อง"]||""}</b><br>📋 ${r["ประเภทคำขอ"]||""}<br>📝 ${r["รายละเอียด"]||""}<br>สถานะล่าสุด: ${badge(r["สถานะ"])}</div>`).join(""):`ยังไม่มีคำขอของ ${name}`;}
-async function sendRequest(){if(!val("requestStaff"))return alert("กรุณาพิมพ์ชื่อพนักงาน");if(!val("requestDate"))return alert("กรุณาเลือกวันที่");const url=API_URL+`?action=addRequest&staff=${encodeURIComponent(val("requestStaff"))}&date=${encodeURIComponent(val("requestDate"))}&type=${encodeURIComponent(val("requestType"))}&detail=${encodeURIComponent(val("requestDetail"))}`;await jsonp(url);alert("ส่งคำขอแล้ว กรุณากดรีเฟรชหรือตรวจสถานะคำขออีกครั้ง");q("requestDetail").value="";q("statusName").value=val("requestStaff");await loadData();renderMyRequests();}
-function renderAll(){renderStaffList();renderToday();renderCalendar();renderMyRequests();}
-setTodayBase();loadData();
+
+function renderToday(){
+  const today=new Date().toISOString().slice(0,10);
+  const list=duties.filter(x=>String(x["วันที่"]).startsWith(today));
+  q("todayDuty").innerHTML=list.length?list.map(x=>`<div class="chip">👤 <b>${x["พนักงาน"]||""}</b><br>🕒 ${x["กะเวร"]||""}<br>🐣 ${x["ตู้"]||""}<br>📝 ${x["หมายเหตุ"]||"-"}</div>`).join(""):`วันนี้ยังไม่มีข้อมูลเวร`;
+}
+
+function renderMyDuty(){
+  const name=val("myName"),month=val("myMonth");
+  if(!name)return alert("กรุณาพิมพ์ชื่อพนักงาน");
+  const list=duties.filter(x=>String(x["พนักงาน"]||"").includes(name)&&(month?String(x["วันที่"]||"").startsWith(month):true));
+  q("myDutyBox").innerHTML=list.length?list.map(x=>`<div class="chip">📅 <b>${x["วันที่"]||""}</b><br>👤 ${x["พนักงาน"]||""}<br>🕒 ${x["กะเวร"]||""}<br>🐣 ${x["ตู้"]||""}<br>📝 ${x["หมายเหตุ"]||"-"}</div>`).join(""):`ไม่พบเวรของ ${name} ในเดือนที่เลือก`;
+  q("statusName").value=name;
+}
+
+function renderMyRequests(){
+  const name=val("statusName")||val("myName")||val("requestStaff");
+  if(!name){q("myRequestBox").innerHTML="พิมพ์ชื่อ แล้วกดตรวจสถานะคำขอ";return;}
+  const list=requests.filter(r=>String(r["พนักงาน"]||"").includes(name)).slice(-10).reverse();
+  q("myRequestBox").innerHTML=list.length?list.map(r=>`<div class="chip ${requestClass(r["สถานะ"])}">📅 วันที่เกี่ยวข้อง: <b>${r["วันที่เกี่ยวข้อง"]||""}</b><br>📋 ${r["ประเภทคำขอ"]||""}<br>📝 ${r["รายละเอียด"]||""}<br>สถานะล่าสุด: ${badge(r["สถานะ"])}</div>`).join(""):`ยังไม่มีคำขอของ ${name}`;
+}
+
+async function sendRequest(){
+  if(!val("requestStaff"))return alert("กรุณาพิมพ์ชื่อพนักงาน");
+  if(!val("requestDate"))return alert("กรุณาเลือกวันที่");
+  const url=API_URL+`?action=addRequest&staff=${encodeURIComponent(val("requestStaff"))}&date=${encodeURIComponent(val("requestDate"))}&type=${encodeURIComponent(val("requestType"))}&detail=${encodeURIComponent(val("requestDetail"))}`;
+  await jsonp(url);
+  alert("ส่งคำขอแล้ว");
+  q("requestDetail").value="";
+  q("statusName").value=val("requestStaff");
+  await loadData();
+  showSection("status");
+}
+
+function renderCalendar(){
+  const month=val("monthPicker"); if(!month)return;
+  const [y,m]=month.split("-").map(Number);
+  const first=new Date(y,m-1,1), last=new Date(y,m,0).getDate(), start=first.getDay();
+  const names=["อา","จ","อ","พ","พฤ","ศ","ส"];
+  let html=`<div class="calendar">`;
+  names.forEach(n=>html+=`<div class="dayname">${n}</div>`);
+  for(let i=0;i<start;i++)html+=`<div></div>`;
+  for(let d=1;d<=last;d++){
+    const date=`${y}-${String(m).padStart(2,"0")}-${String(d).padStart(2,"0")}`;
+    const list=duties.filter(x=>String(x["วันที่"]).startsWith(date));
+    html+=`<div class="cell"><div class="date">${d}</div>${list.length?list.slice(0,2).map(x=>`<div class="chip">👤 ${x["พนักงาน"]||""}</div>`).join(""):`<small>ไม่มีเวร</small>`}</div>`;
+  }
+  html+=`</div>`;
+  q("calendarArea").innerHTML=html;
+}
+
+function setTodayBase(){
+  const today=new Date().toISOString().slice(0,10);
+  q("monthPicker").value=today.slice(0,7);
+  q("myMonth").value=today.slice(0,7);
+  q("requestDate").value=today;
+}
+
+function renderAll(){
+  renderStaffList();
+  renderToday();
+  renderCalendar();
+  renderMyRequests();
+}
+
+setTodayBase();
+loadData();
+if ("serviceWorker" in navigator) {navigator.serviceWorker.register("./service-worker.js");}
 </script>
-<script>if ("serviceWorker" in navigator) {navigator.serviceWorker.register("./service-worker.js");}</script>
 </body>
 </html>
