@@ -4,7 +4,7 @@
 <link rel="manifest" href="manifest.json">
 <meta name="theme-color" content="#0f5132">
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
 <title>KMS2 Login</title>
 <style>
 *{box-sizing:border-box;font-family:system-ui,sans-serif}
@@ -56,6 +56,58 @@ th{background:#e8f5ee;color:#0f5132}
 .loginBox h1{color:#0f5132;margin-top:0}
 @media print{header,.nav,.noPrint{display:none!important}body{background:white}.card{box-shadow:none;border:1px solid #ddd}.executive{background:white}}
 @media(max-width:700px){header h1{font-size:24px}.calendar{grid-template-columns:repeat(2,1fr)}.dayname{display:none}table{display:block;overflow-x:auto}}
+
+/* KMS2 v2.6 Mobile Pro Polish */
+html,body{max-width:100%;overflow-x:hidden}
+.card,.container,header{max-width:100%}
+.card{overflow:hidden}
+input,select,textarea,button{font-size:16px}
+@media(max-width:700px){
+  body{background:#eef3ef}
+  header{padding:22px 14px;border-bottom-left-radius:0;border-bottom-right-radius:0}
+  header h1{font-size:23px;line-height:1.25}
+  header p{font-size:14px;line-height:1.45}
+  .container{padding:12px}
+  .card{border-radius:18px;padding:14px;margin-bottom:14px}
+  h2{font-size:21px;line-height:1.25}
+  h3{font-size:16px}
+  .nav{gap:8px}
+  .nav a,.nav button{font-size:14px;padding:9px 12px}
+  .grid{grid-template-columns:1fr!important;gap:10px}
+  .statgrid{grid-template-columns:repeat(2,1fr)!important;gap:9px}
+  .stat{padding:10px;min-height:86px}
+  .stat b{font-size:26px}
+
+  /* Tables become mobile cards, no horizontal scrolling */
+  table,thead,tbody,tr,th,td{display:block;width:100%}
+  table{border-collapse:separate;border-spacing:0}
+  thead{display:none}
+  tr{background:#fff;border:1px solid #e5e7eb;border-radius:14px;margin:0 0 10px;padding:10px;box-shadow:0 2px 8px #0000000d}
+  td{border:0!important;padding:6px 0!important;font-size:14px;line-height:1.35;white-space:normal;word-break:break-word}
+  td:empty{display:none}
+  .actions{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+  .actions button{margin-top:4px}
+
+  /* Compact calendar for phone */
+  .calendar{grid-template-columns:repeat(7,1fr)!important;gap:4px}
+  .dayname{display:block!important;font-size:11px;padding:6px 2px;border-radius:7px}
+  .cell{min-height:54px!important;padding:5px!important;border-radius:9px}
+  .date{font-size:13px;margin-bottom:2px}
+  .cell small{font-size:10px;line-height:1.1}
+  .cell .chip{font-size:9px;line-height:1.15;padding:3px;margin-top:2px;border-left-width:3px;border-radius:6px;max-height:34px;overflow:hidden}
+  .chip{font-size:13px;line-height:1.35;padding:9px;border-radius:12px}
+  .notice{font-size:14px;line-height:1.45}
+}
+
+/* Extra narrow phones */
+@media(max-width:390px){
+  .statgrid{grid-template-columns:1fr!important}
+  header h1{font-size:21px}
+  .card{padding:12px}
+  .calendar{gap:3px}
+  .cell{min-height:48px!important}
+}
+
 </style>
 </head>
 <body>
@@ -67,14 +119,14 @@ th{background:#e8f5ee;color:#0f5132}
     <label>Password</label><input id="pass" type="password" placeholder="1234">
     <button onclick="login()">เข้าสู่ระบบ</button>
     <p class="small">ค่าเริ่มต้น: admin / 1234</p>
-    <button class="gray" onclick="location.href='employee.html?v=25'">ไปหน้าพนักงาน</button>
+    <button class="gray" onclick="location.href='employee.html?v=26'">ไปหน้าพนักงาน</button>
   </div>
 </div>
 <script>
 function login(){
   const u=document.getElementById("user").value.trim();
   const p=document.getElementById("pass").value.trim();
-  if(u==="admin" && p==="1234"){sessionStorage.setItem("kms2Admin","yes");location.href="index.html?v=25";}
+  if(u==="admin" && p==="1234"){sessionStorage.setItem("kms2Admin","yes");location.href="index.html?v=26";}
   else alert("Username หรือ Password ไม่ถูกต้อง");
 }
 </script>
