@@ -1,10 +1,10 @@
-const CACHE_NAME = "kms2-dual-pwa-v32";
+const CACHE_NAME = "kms2-v34-advanced-duty-tools";
 
 const FILES_TO_CACHE = [
   "./",
   "./login.html",
-  "./index.html?v=32",
-  "./employee.html?v=32",
+  "./index.html?v=34",
+  "./employee.html?v=34",
   "./manifest.json",
   "./manifest-employee.json"
 ];
