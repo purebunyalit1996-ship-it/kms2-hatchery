@@ -5,7 +5,7 @@
 <meta name="theme-color" content="#0f5132">
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
-<title>KMS2 Admin v3.4 เวรตู้ฟัก</title>
+<title>KMS2 Admin v3.8 เวรตู้ฟัก</title>
 <style>
 *{box-sizing:border-box;font-family:system-ui,sans-serif}
 body{margin:0;background:#eef3ef;color:#1f2933}
@@ -550,7 +550,7 @@ input[type="month"] {
 <body>
 <header>
 <h1>เวรตู้ฟัก โรงฟักคลองมือไทร 2</h1>
-<p id="roleText">Admin v3.6: Supervisor Permission System</p>
+<p id="roleText">Admin v3.8: Flexible Duty Range</p>
 <div id="roleBadge" class="roleBadge">กำลังตรวจสอบสิทธิ์...</div>
 <div class="nav noPrint">
 <a href="index.html?v=36">🏠 Admin</a>
@@ -616,7 +616,10 @@ input[type="month"] {
 <div class="toolBox"><h3>ประวัติการแก้ไข</h3><button class="gray" onclick="renderAuditLog()">ดูประวัติ</button><div id="auditLogBox" class="notice warn auditBox">ยังไม่มีการแสดงประวัติ</div></div>
 </div></div>
 
-<div class="card noPrint"><h2 id="dutyTitle">เพิ่มเวรตู้</h2><input type="hidden" id="dutyRow"><div class="grid"><div><label>วันที่เริ่ม</label><input type="date" id="dutyDate"></div><div><label>วันที่สิ้นสุด <span class="small">(ถ้าเวรต่อเนื่องหลายวัน)</span></label><input type="date" id="dutyEndDate"></div><div><label>พนักงานหลัก</label><input id="dutyStaff" placeholder="เช่น ยูร"></div><div><label>กะเวร</label><select id="dutyShift"></select></div><div><label>ตู้</label><input id="dutyMachine" placeholder="เช่น ตู้ฟัก 1"></div></div><p class="dateRangeHelp">ใส่วันที่เริ่มและวันที่สิ้นสุดเพื่อบันทึกเวรต่อเนื่องหลายวัน เช่น 1–12 ของเดือน ระบบจะเพิ่มเวรให้ทุกวันในช่วงนั้นอัตโนมัติ</p><div class="grid"><div><label>วันที่เป็นวันหยุด / ให้เวรแทน <span class="small">(ใส่หลายวันได้)</span></label><textarea id="subDates" placeholder="เช่น 2026-07-07, 2026-07-14 หรือใส่วันละบรรทัด"></textarea></div><div><label>เวรแทนโดย</label><input id="subStaff" placeholder="เช่น ป๋อ"><label>หมายเหตุเวรแทน</label><input id="subReason" placeholder="เช่น วันหยุดประจำสัปดาห์"></div></div><p class="dateRangeHelp">ตัวอย่าง: ยูร 1–15 แต่วันที่ 7 หยุด ให้กรอก 2026-07-07 และเวรแทนโดย ป๋อ ระบบจะแสดงในรายละเอียดวันนั้นว่า เวรหลัก: ยูร / เวรแทน: ป๋อ</p><label>หมายเหตุ / ฉุกเฉิน</label><textarea id="dutyNote"></textarea><button onclick="saveDuty()">บันทึกเวร</button><button class="gray" onclick="resetDuty()">ยกเลิกการแก้ไข</button></div>
+<div class="card noPrint"><h2 id="dutyTitle">เพิ่มเวรตู้</h2><input type="hidden" id="dutyRow"><div class="grid"><div><label>วันที่เริ่ม</label><input type="date" id="dutyDate"></div><div><label>วันที่สิ้นสุด <span class="small">(เลือกสั้น/ยาวได้อิสระ)</span></label><input type="date" id="dutyEndDate"></div><div><label>พนักงานหลัก</label><input id="dutyStaff" list="staffNameList" placeholder="เลือก/พิมพ์ชื่อใครก็ได้"><datalist id="staffNameList"></datalist></div><div><label>กะเวร</label><select id="dutyShift"></select></div><div><label>ตู้</label><input id="dutyMachine" placeholder="เช่น ตู้ฟัก 1"></div></div><p class="dateRangeHelp">เลือกช่วงวันที่ได้ทุกเดือน ทุกคน และปรับความยาวเวรได้เอง เช่น 1–5, 11–20, 1–31 ระบบจะเพิ่มเวรให้ทุกวันในช่วงนั้น</p><div class="grid"><div><label>วันหยุด/วันที่ต้องมีเวรแทนแบบกลุ่ม <span class="small">(ไม่บังคับ)</span></label><textarea id="subDates" placeholder="ถ้าคนแทนคนเดียวกันหลายวัน เช่น 7, 14, 21 หรือ 2026-07-07"></textarea></div><div><label>เวรแทนโดย <span class="small">(ใช้กับช่องซ้าย)</span></label><input id="subStaff" list="staffNameList" placeholder="เช่น ป๋อ / นุช / โนรา"><label>หมายเหตุเวรแทน</label><input id="subReason" placeholder="เช่น วันหยุดประจำสัปดาห์"></div></div><label>เวรแทนแบบกำหนดรายวัน <span class="small">(ไม่บังคับ / ใช้ได้หลายคน)</span></label><textarea id="subRules" placeholder="ตัวอย่าง:
+7=ป๋อ
+14=นุช
+2026-07-21=โนรา | วันหยุด"></textarea><p class="dateRangeHelp">ระบบไม่ล็อกชื่อและไม่ล็อกวันที่: พนักงานหลักเป็นใครก็ได้ เวรแทนเป็นใครก็ได้ และใช้ได้ทุกเดือน</p><label>หมายเหตุ / ฉุกเฉิน</label><textarea id="dutyNote"></textarea><button onclick="saveDuty()">บันทึกเวร</button><button class="gray" onclick="resetDuty()">ยกเลิกการแก้ไข</button></div>
 
 <div class="card noPrint"><h2 id="logTitle">บันทึกสถานะเวร</h2><input type="hidden" id="logRow"><div class="grid"><div><label>วันที่</label><input type="date" id="logDate"></div><div><label>เวลา</label><input type="time" id="logTime"></div><div><label>พนักงาน</label><input id="logStaff" placeholder="เช่น ยูร"></div><div><label>กะเวร</label><select id="logShift"></select></div><div><label>ตู้</label><input id="logMachine" placeholder="เช่น ตู้ฟัก 1"></div><div><label>สถานะ</label><select id="logStatus"><option>ปกติ</option><option>ต้องติดตาม</option><option>ผิดปกติ</option><option>แก้ไขแล้ว</option></select></div></div><label>หมายเหตุ</label><textarea id="logNote"></textarea><button onclick="saveLog()">บันทึกสถานะ</button><button class="gray" onclick="resetLog()">ยกเลิกการแก้ไข</button></div>
 
@@ -662,11 +665,11 @@ function renderRoleUI(){
   if(isAdmin()){
     badge.className="roleBadge admin";
     badge.textContent="สิทธิ์ปัจจุบัน: Admin";
-    text.textContent="Admin v3.6: Full Access";
+    text.textContent="Admin v3.8: Full Access";
   }else{
     badge.className="roleBadge supervisor";
     badge.textContent="สิทธิ์ปัจจุบัน: Supervisor";
-    text.textContent="Supervisor v3.6: อนุมัติคำขอ / แก้เวรได้ / ลบข้อมูลไม่ได้";
+    text.textContent="Supervisor v3.8: อนุมัติคำขอ / แก้เวรได้ / ลบข้อมูลไม่ได้";
   }
 }
 
@@ -675,6 +678,33 @@ let staff=[],shifts=[],duties=[],logs=[],requests=[];
 let selectedCalendarDate="";
 function q(id){return document.getElementById(id)}
 function val(id){return q(id).value.trim()}
+function pad2(n){return String(n).padStart(2,"0")}
+function formatLocalDate(d){return `${d.getFullYear()}-${pad2(d.getMonth()+1)}-${pad2(d.getDate())}`}
+function normalizeInputDate(raw, baseMonth){
+  let s=String(raw||"").trim();
+  if(!s) return "";
+  s=s.replace(/[.]/g,"-").replace(/\s+/g,"");
+  let m=s.match(/^(\d{4})[-\/](\d{1,2})[-\/](\d{1,2})$/);
+  if(m){
+    let y=Number(m[1]); if(y>2400)y-=543;
+    return `${y}-${pad2(m[2])}-${pad2(m[3])}`;
+  }
+  m=s.match(/^(\d{1,2})[-\/](\d{1,2})(?:[-\/](\d{2,4}))?$/);
+  if(m){
+    let d=Number(m[1]), mo=Number(m[2]);
+    let y=m[3]?Number(m[3]):Number((baseMonth||val("dutyDate")||formatLocalDate(new Date())).slice(0,4));
+    if(y<100)y+=2500;
+    if(y>2400)y-=543;
+    return `${y}-${pad2(mo)}-${pad2(d)}`;
+  }
+  m=s.match(/^(\d{1,2})$/);
+  if(m){
+    const base=(baseMonth||val("dutyDate")||formatLocalDate(new Date())).slice(0,7);
+    return `${base}-${pad2(m[1])}`;
+  }
+  return s;
+}
+function sleep(ms){return new Promise(resolve=>setTimeout(resolve,ms))}
 function jsonp(url){
 return new Promise((resolve,reject)=>{
 const cb="cb_"+Date.now()+"_"+Math.floor(Math.random()*1000);
@@ -730,14 +760,40 @@ function countBy(list, keyFn){
 
 function escapeHtml(s){return String(s||"").replace(/[&<>"']/g,m=>({"&":"&amp;","<":"&lt;",">":"&gt;","\"":"&quot;","'":"&#39;"}[m]));}
 function parseSubDates(){
-  return val("subDates").split(/[\n,，\s]+/).map(x=>x.trim()).filter(Boolean);
+  const base=val("dutyDate")||formatLocalDate(new Date());
+  return [...new Set(val("subDates")
+    .split(/[\n,，\s]+/)
+    .map(x=>normalizeInputDate(x,base))
+    .filter(Boolean))];
+}
+function parseSubRules(){
+  const base=val("dutyDate")||formatLocalDate(new Date());
+  const map={};
+  // แบบกลุ่ม: ใส่หลายวัน แล้วใช้คนแทนคนเดียวกัน
+  const sharedStaff=val("subStaff");
+  const sharedReason=val("subReason")||"วันหยุด";
+  parseSubDates().forEach(date=>{
+    if(sharedStaff) map[date]={sub:sharedStaff,reason:sharedReason};
+  });
+  // แบบรายวัน: 7=ป๋อ หรือ 2026-07-21=โนรา | วันหยุด
+  val("subRules").split(/\n+/).map(x=>x.trim()).filter(Boolean).forEach(line=>{
+    const parts=line.split(/=|→|->|:/);
+    if(parts.length<2) return;
+    const date=normalizeInputDate(parts[0].trim(),base);
+    const right=parts.slice(1).join("=").trim();
+    if(!date || !right) return;
+    const rr=right.split("|");
+    const sub=(rr[0]||"").trim();
+    const reason=(rr[1]||sharedReason||"วันหยุด").trim();
+    if(sub) map[date]={sub,reason};
+  });
+  return map;
 }
 function buildDutyNote(base,date){
-  const subDates=parseSubDates();
-  const sub=val("subStaff");
-  const reason=val("subReason")||"วันหยุด";
-  if(sub && subDates.includes(date)){
-    const marker=`[เวรแทน] เวรหลัก: ${val("dutyStaff")} | เวรแทน: ${sub} | เหตุผล: ${reason}`;
+  const subMap=parseSubRules();
+  const item=subMap[date];
+  if(item && item.sub){
+    const marker=`[เวรแทน] เวรหลัก: ${val("dutyStaff")} | เวรแทน: ${item.sub} | เหตุผล: ${item.reason||"วันหยุด"}`;
     return base ? `${base}\n${marker}` : marker;
   }
   return base;
@@ -872,7 +928,14 @@ if(q("staffReportMonth")) q("staffReportMonth").value=today.slice(0,7);
 }
 
 
-function renderLists(){const shiftNames=shifts.map(shiftLabel).filter(Boolean);q("dutyShift").innerHTML=optionList(shiftNames);q("logShift").innerHTML=optionList(shiftNames);}
+function renderLists(){
+  const fallback=["เวรกลางวัน (07:00 - 16:00)","เวรค่ำ (16:00 - 00:00)","เวรดึก (00:00 - 08:00)"];
+  const shiftNames=shifts.map(shiftLabel).filter(Boolean);
+  const finalShifts=shiftNames.length?shiftNames:fallback;
+  q("dutyShift").innerHTML=optionList(finalShifts);
+  q("logShift").innerHTML=optionList(finalShifts);
+  if(q("staffNameList")) q("staffNameList").innerHTML=getStaffNames().map(n=>`<option value="${escapeHtml(n)}"></option>`).join("");
+}
 function renderDashboard(){
 const today=new Date().toISOString().slice(0,10);
 const pending=requests.filter(x=>x["สถานะ"]==="รออนุมัติ").length;
@@ -947,20 +1010,23 @@ function renderTables(){const dutyList=filteredDuties();q("dutyTable").innerHTML
 function clearFilters(){q("filterStaff").value="";q("filterMachine").value="";renderTables();}
 function buildDateRange(start,end){
   const out=[];
-  const s=new Date(start+"T00:00:00");
-  const e=new Date((end||start)+"T00:00:00");
-  if(isNaN(s)||isNaN(e)) return out;
-  if(e<s) return out;
-  const maxDays=45;
+  const sParts=String(start||"").split("-").map(Number);
+  const eParts=String(end||start||"").split("-").map(Number);
+  if(sParts.length<3 || eParts.length<3) return out;
+  const s=new Date(sParts[0],sParts[1]-1,sParts[2]);
+  const e=new Date(eParts[0],eParts[1]-1,eParts[2]);
+  if(isNaN(s.getTime())||isNaN(e.getTime())||e<s) return out;
+  const maxDays=60;
   for(let d=new Date(s); d<=e && out.length<maxDays; d.setDate(d.getDate()+1)){
-    out.push(d.toISOString().slice(0,10));
+    out.push(formatLocalDate(d));
   }
   return out;
 }
 async function saveDuty(){
   if(!val("dutyDate"))return alert("กรุณาเลือกวันที่เริ่ม");
   if(!val("dutyStaff"))return alert("กรุณาพิมพ์ชื่อพนักงานหลัก");
-  if(val("subDates") && !val("subStaff"))return alert("กรุณากรอกชื่อเวรแทน");
+  if(!val("dutyShift"))return alert("กรุณาเลือกกะเวร");
+  if(val("subDates") && !val("subStaff"))return alert("กรุณากรอกชื่อเวรแทน หรือใช้ช่องเวรแทนแบบกำหนดรายวัน เช่น 17=ป๋อ");
   const isEdit=!!val("dutyRow");
   if(isEdit){
     const note=buildDutyNote(val("dutyNote"),val("dutyDate"));
@@ -972,24 +1038,31 @@ async function saveDuty(){
   }
   const dates=buildDateRange(val("dutyDate"),val("dutyEndDate")||val("dutyDate"));
   if(!dates.length)return alert("ช่วงวันที่ไม่ถูกต้อง กรุณาตรวจวันที่เริ่มและวันที่สิ้นสุด");
-  if(dates.length>=45)return alert("ช่วงวันที่ยาวเกินไป กรุณาแบ่งบันทึกเป็นช่วงสั้นลง");
+  if(dates.length>90)return alert("ช่วงวันที่ยาวเกินไป กรุณาแบ่งบันทึกเป็นช่วงไม่เกิน 90 วัน");
+  const subMap=parseSubRules();
+  const subDates=Object.keys(subMap);
+  const subOutside=subDates.filter(d=>!dates.includes(d));
+  if(subOutside.length){
+    return alert("วันที่เวรแทนอยู่นอกช่วงเวร: "+subOutside.join(", ")+"\nกรุณาตรวจวันที่เริ่ม-สิ้นสุด หรือวันที่เวรแทน");
+  }
   const conflicts=detectDutyConflicts(dates,val("dutyStaff"),val("dutyShift"),val("dutyMachine"));
   if(conflicts.length){
     const sample=conflicts.slice(0,5).map(x=>`${x["วันที่"]} ${x["พนักงาน"]} ${x["กะเวร"]} ${x["ตู้"]}`).join("\n");
     if(!confirm(`พบเวรที่อาจชนกัน ${conflicts.length} รายการ\n${sample}\n\nต้องการบันทึกต่อหรือไม่?`)) return;
   }
-  const subDates=parseSubDates();
-  if(dates.length>1 || subDates.length){
-    const msg=`ต้องการบันทึกเวร ${dates.length} วัน${subDates.length?` และมีเวรแทน ${subDates.length} วัน`:""} ใช่หรือไม่?`;
-    if(!confirm(msg)) return;
-  }
+  const subText=subDates.length?"\nมีเวรแทน: "+subDates.map(d=>`${d}=${subMap[d].sub}`).join(", "):"";
+  const msg=`ต้องการบันทึกเวร ${dates.length} วัน (${dates[0]} ถึง ${dates[dates.length-1]})${subText} ใช่หรือไม่?`;
+  if(!confirm(msg)) return;
+  let ok=0;
   for(const date of dates){
     const note=buildDutyNote(val("dutyNote"),date);
     const url=API_URL+`?action=addDuty&date=${encodeURIComponent(date)}&staff=${encodeURIComponent(val("dutyStaff"))}&shift=${encodeURIComponent(cleanShift(val("dutyShift")))}&machine=${encodeURIComponent(val("dutyMachine"))}&note=${encodeURIComponent(note)}`;
     await jsonp(url);
+    ok++;
+    await sleep(180);
   }
-  addAudit(`เพิ่มเวร ${val("dutyStaff")} ${dates[0]} ถึง ${dates[dates.length-1]}${subDates.length?` เวรแทน: ${val("subStaff")}`:""}`);
-  alert(dates.length>1?`บันทึกเวรต่อเนื่อง ${dates.length} วันแล้ว`:"บันทึกเวรแล้ว");
+  addAudit(`เพิ่มเวร ${val("dutyStaff")} ${dates[0]} ถึง ${dates[dates.length-1]} จำนวน ${ok} วัน${subDates.length?` เวรแทน ${subDates.map(d=>`${d}=${subMap[d].sub}`).join(",")}`:""}`);
+  alert(`บันทึกเวรสำเร็จ ${ok}/${dates.length} วัน`);
   resetDuty(); await loadData();
 }
 function editDutyByRow(row){const d=duties.find(x=>String(x._row)===String(row)); if(!d)return;q("dutyRow").value=d._row;q("dutyTitle").textContent="แก้ไขเวรตู้";q("dutyDate").value=d["วันที่"]||"";q("dutyEndDate").value=d["วันที่"]||"";q("dutyStaff").value=d["พนักงาน"]||"";q("dutyShift").value=d["กะเวร"]||"";q("dutyMachine").value=d["ตู้"]||"";q("dutyNote").value=d["หมายเหตุ"]||"";}
@@ -1009,7 +1082,7 @@ async function deleteLog(row){
   addAudit("ลบบันทึกสถานะ row "+row);
   await loadData();
 }
-function resetDuty(){q("dutyRow").value="";q("dutyTitle").textContent="เพิ่มเวรตู้";q("dutyEndDate").value=q("dutyDate").value;q("dutyMachine").value="";q("subDates").value="";q("subStaff").value="";q("subReason").value="";q("dutyNote").value="";}
+function resetDuty(){q("dutyRow").value="";q("dutyTitle").textContent="เพิ่มเวรตู้";q("dutyEndDate").value=q("dutyDate").value;q("dutyMachine").value="";q("subDates").value="";q("subStaff").value="";q("subReason").value="";if(q("subRules"))q("subRules").value="";q("dutyNote").value="";}
 function resetLog(){q("logRow").value="";q("logTitle").textContent="บันทึกสถานะเวร";q("logMachine").value="";q("logNote").value="";}
 function renderAll(){renderRoleUI();renderLists();renderDashboard();renderExecutiveDashboard();renderPendingRequests();renderMonthlySummary();renderRequests();renderLatestDuty();renderToday();renderCalendar();renderTables();}
 renderRoleUI();setTodayBase();loadData();
