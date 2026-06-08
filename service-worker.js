@@ -1,10 +1,9 @@
-const CACHE_NAME = "kms2-v34-advanced-duty-tools";
+const CACHE_NAME = "kms2-v36-stable-hotfix";
 
 const FILES_TO_CACHE = [
-  "./",
   "./login.html",
-  "./index.html?v=34",
-  "./employee.html?v=34",
+  "./index.html?v=36",
+  "./employee.html?v=36",
   "./manifest.json",
   "./manifest-employee.json"
 ];
@@ -18,14 +17,16 @@ self.addEventListener("install", event => {
 
 self.addEventListener("activate", event => {
   event.waitUntil(
-    caches.keys().then(keys =>
-      Promise.all(keys.map(k => caches.delete(k)))
-    )
+    caches.keys().then(keys => Promise.all(keys.map(k => caches.delete(k))))
   );
+  self.clients.claim();
 });
 
 self.addEventListener("fetch", event => {
-  event.respondWith(
-    fetch(event.request).catch(() => caches.match(event.request))
-  );
+  const req = event.request;
+  if (req.mode === "navigate" || req.url.includes("script.google.com")) {
+    event.respondWith(fetch(req).catch(() => caches.match(req)));
+    return;
+  }
+  event.respondWith(fetch(req).catch(() => caches.match(req)));
 });

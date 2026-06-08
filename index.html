@@ -550,12 +550,12 @@ input[type="month"] {
 <body>
 <header>
 <h1>เวรตู้ฟัก โรงฟักคลองมือไทร 2</h1>
-<p id="roleText">Admin v3.1: Supervisor Permission System</p>
+<p id="roleText">Admin v3.6: Supervisor Permission System</p>
 <div id="roleBadge" class="roleBadge">กำลังตรวจสอบสิทธิ์...</div>
 <div class="nav noPrint">
-<a href="index.html?v=34">🏠 Admin</a>
+<a href="index.html?v=36">🏠 Admin</a>
 <a href="#executiveDashboard">📊 ผู้บริหาร</a>
-<a href="employee.html?v=34">👷 หน้าพนักงาน</a>
+<a href="employee.html?v=36">👷 หน้าพนักงาน</a>
 <button onclick="loadData()">🔄 รีเฟรช</button>
 <button onclick="window.print()">📄 Export PDF</button>
 <button onclick="logoutAdmin()">ออกจากระบบ</button>
@@ -662,11 +662,11 @@ function renderRoleUI(){
   if(isAdmin()){
     badge.className="roleBadge admin";
     badge.textContent="สิทธิ์ปัจจุบัน: Admin";
-    text.textContent="Admin v3.1: Full Access";
+    text.textContent="Admin v3.6: Full Access";
   }else{
     badge.className="roleBadge supervisor";
     badge.textContent="สิทธิ์ปัจจุบัน: Supervisor";
-    text.textContent="Supervisor v3.1: อนุมัติคำขอ / แก้เวรได้ / ลบข้อมูลไม่ได้";
+    text.textContent="Supervisor v3.6: อนุมัติคำขอ / แก้เวรได้ / ลบข้อมูลไม่ได้";
   }
 }
 
@@ -975,12 +975,8 @@ async function saveDuty(){
   if(dates.length>=45)return alert("ช่วงวันที่ยาวเกินไป กรุณาแบ่งบันทึกเป็นช่วงสั้นลง");
   const conflicts=detectDutyConflicts(dates,val("dutyStaff"),val("dutyShift"),val("dutyMachine"));
   if(conflicts.length){
-    const sample=conflicts.slice(0,5).map(x=>`${x["วันที่"]} ${x["พนักงาน"]} ${x["กะเวร"]} ${x["ตู้"]}`).join("
-");
-    if(!confirm(`พบเวรที่อาจชนกัน ${conflicts.length} รายการ
-${sample}
-
-ต้องการบันทึกต่อหรือไม่?`)) return;
+    const sample=conflicts.slice(0,5).map(x=>`${x["วันที่"]} ${x["พนักงาน"]} ${x["กะเวร"]} ${x["ตู้"]}`).join("\n");
+    if(!confirm(`พบเวรที่อาจชนกัน ${conflicts.length} รายการ\n${sample}\n\nต้องการบันทึกต่อหรือไม่?`)) return;
   }
   const subDates=parseSubDates();
   if(dates.length>1 || subDates.length){

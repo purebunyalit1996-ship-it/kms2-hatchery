@@ -1,7 +1,7 @@
 {
   "name": "KMS2 เวรพนักงาน",
   "short_name": "KMS2 เวร",
-  "start_url": "employee.html?v=34",
+  "start_url": "employee.html?v=36",
   "scope": "./",
   "display": "standalone",
   "background_color": "#eef3ef",
