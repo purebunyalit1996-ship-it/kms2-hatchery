@@ -50,7 +50,7 @@ button.gray{background:#64748b}
       <p class="small">Supervisor เข้า Dashboard ได้ แต่ลบข้อมูลไม่ได้</p>
     </div>
 
-    <button class="gray" onclick="location.href='employee.html?v=31'">
+    <button class="gray" onclick="location.href='employee.html?v=32'">
       ไปหน้าพนักงาน
     </button>
   </div>
@@ -64,12 +64,12 @@ function login(){
   if(u==="admin" && p==="1234"){
     sessionStorage.setItem("kms2Role","admin");
     sessionStorage.setItem("kms2Admin","yes");
-    location.href="index.html?v=31";
+    location.href="index.html?v=32";
   }
   else if(u==="supervisor" && p==="5678"){
     sessionStorage.setItem("kms2Role","supervisor");
     sessionStorage.setItem("kms2Admin","yes");
-    location.href="index.html?v=31";
+    location.href="index.html?v=32";
   }
   else{
     alert("Username หรือ Password ไม่ถูกต้อง");

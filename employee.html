@@ -48,6 +48,140 @@ button{background:#198754;color:white;border:0;font-weight:900;min-height:46px;c
 @media(max-width:390px){
   .tabs{grid-template-columns:repeat(2,1fr)}
 }
+
+
+/* ===============================
+   KMS2 v32 Mobile Month Input Fix
+   แก้ input เดือน / ปุ่มรายงาน / กล่องที่เกี่ยวข้องกับเดือน
+   ให้ไม่ล้นหน้าจอบนมือถือ
+   =============================== */
+html, body {
+  width: 100%;
+  max-width: 100%;
+  overflow-x: hidden !important;
+}
+
+.container,
+.card,
+.grid,
+.statgrid,
+.notice,
+.calendar,
+table,
+#monthlySummary,
+#calendarArea,
+#execTodayList,
+#execFrequentLeave,
+#execRequestSummary,
+#execStatusSummary,
+#myDutyBox {
+  max-width: 100%;
+  min-width: 0;
+  overflow-wrap: anywhere;
+  word-break: break-word;
+}
+
+.grid > div,
+.statgrid > div,
+.card > div {
+  min-width: 0;
+}
+
+input[type="month"],
+input[type="date"],
+input[type="time"],
+input[type="text"],
+input:not([type]),
+select,
+textarea,
+button {
+  display: block;
+  width: 100%;
+  max-width: 100%;
+  min-width: 0;
+  box-sizing: border-box;
+}
+
+input[type="month"] {
+  -webkit-appearance: none;
+  appearance: none;
+  min-height: 48px;
+  line-height: 1.2;
+  padding: 12px 14px;
+  font-size: 16px;
+  background: #fff;
+}
+
+@media (max-width: 700px) {
+  .grid,
+  .statgrid {
+    width: 100%;
+    max-width: 100%;
+  }
+
+  .grid {
+    grid-template-columns: minmax(0, 1fr) !important;
+  }
+
+  .grid input[type="month"],
+  .grid input[type="date"],
+  .grid input[type="time"],
+  .grid input,
+  .grid select,
+  .grid textarea,
+  .grid button {
+    width: 100% !important;
+    max-width: 100% !important;
+  }
+
+  input[type="month"] {
+    font-size: 16px !important;
+    border-radius: 14px;
+    margin-top: 4px;
+    margin-bottom: 8px;
+  }
+
+  #execMonth,
+  #summaryMonth,
+  #myMonth,
+  #monthPicker {
+    width: 100% !important;
+    max-width: 100% !important;
+    min-width: 0 !important;
+  }
+
+  .card h2,
+  .card h3,
+  label,
+  .small,
+  .notice,
+  .chip,
+  td {
+    max-width: 100%;
+    overflow-wrap: anywhere;
+    word-break: break-word;
+  }
+
+  .noPrint.grid,
+  div.grid.noPrint {
+    display: grid !important;
+    grid-template-columns: minmax(0, 1fr) !important;
+    gap: 10px !important;
+  }
+
+  .noPrint.grid button,
+  div.grid.noPrint button {
+    width: 100% !important;
+  }
+}
+
+@media (max-width: 390px) {
+  input[type="month"] {
+    padding-left: 11px;
+    padding-right: 11px;
+  }
+}
+
 </style>
 </head>
 <body>
