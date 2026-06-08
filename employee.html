@@ -298,6 +298,29 @@ let selectedCalendarDate="";
 
 function q(id){return document.getElementById(id)}
 function val(id){return q(id).value.trim()}
+function pad2(n){return String(n).padStart(2,'0')}
+function normalizeYear(y){
+  y=Number(y);
+  if(!Number.isFinite(y)) return new Date().getFullYear();
+  if(y>=2600) return y-633;
+  if(y>2400) return y-543;
+  if(y<100) return y+2000;
+  return y;
+}
+function normalizeRecordDate(raw, baseMonth){
+  let s=String(raw||'').trim();
+  if(!s) return '';
+  s=s.replace(/[.]/g,'-').replace(/\s+/g,'');
+  let m=s.match(/^(\d{4})[-\/](\d{1,2})[-\/](\d{1,2})/);
+  if(m){return `${normalizeYear(m[1])}-${pad2(m[2])}-${pad2(m[3])}`;}
+  m=s.match(/^(\d{1,2})[-\/](\d{1,2})[-\/](\d{2,4})/);
+  if(m){return `${normalizeYear(m[3])}-${pad2(m[2])}-${pad2(m[1])}`;}
+  m=s.match(/^(\d{1,2})$/);
+  if(m){const base=(baseMonth||val('monthPicker')||new Date().toISOString().slice(0,7)).slice(0,7);return `${base}-${pad2(m[1])}`;}
+  return s.slice(0,10);
+}
+function dutyDateOf(x){return normalizeRecordDate(x && x['วันที่']);}
+function requestDateOf(x){return normalizeRecordDate((x && (x['วันที่เกี่ยวข้อง']||x['วันที่ส่งคำขอ']))||'');}
 
 function showSection(name){
   ["today","myduty","request","status","calendar"].forEach(x=>{
@@ -357,15 +380,15 @@ function renderStaffList(){
 
 function renderToday(){
   const today=new Date().toISOString().slice(0,10);
-  const list=duties.filter(x=>String(x["วันที่"]).startsWith(today));
+  const list=duties.filter(x=>dutyDateOf(x)===today);
   q("todayDuty").innerHTML=list.length?list.map(x=>dutyChip(x)).join(""):`วันนี้ยังไม่มีข้อมูลเวร`;
 }
 
 function renderMyDuty(){
   const name=val("myName"),month=val("myMonth");
   if(!name)return alert("กรุณาพิมพ์ชื่อพนักงาน");
-  const list=duties.filter(x=>String(x["พนักงาน"]||"").includes(name)&&(month?String(x["วันที่"]||"").startsWith(month):true));
-  q("myDutyBox").innerHTML=list.length?list.map(x=>`<div class="chip">📅 <b>${x["วันที่"]||""}</b>${dutyChip(x)}</div>`).join(""):`ไม่พบเวรของ ${name} ในเดือนที่เลือก`;
+  const list=duties.filter(x=>String(x["พนักงาน"]||"").includes(name)&&(month?dutyDateOf(x).startsWith(month):true));
+  q("myDutyBox").innerHTML=list.length?list.map(x=>`<div class="chip">📅 <b>${dutyDateOf(x)}</b>${dutyChip(x)}</div>`).join(""):`ไม่พบเวรของ ${name} ในเดือนที่เลือก`;
   q("statusName").value=name;
 }
 
@@ -412,7 +435,7 @@ function renderCalendar(){
   for(let i=0;i<start;i++)html+=`<div></div>`;
   for(let d=1;d<=last;d++){
     const date=`${y}-${String(m).padStart(2,"0")}-${String(d).padStart(2,"0")}`;
-    const list=duties.filter(x=>String(x["วันที่"]||"").startsWith(date));
+    const list=duties.filter(x=>dutyDateOf(x)===date);
     html+=`<div class="cell ${list.length?"hasDuty":""}" onclick="openDayDetail('${date}')" title="กดเพื่อดูรายละเอียด"><div class="date">${d}</div>${list.length?list.slice(0,2).map(x=>dutyChip(x,true)).join(""):`<small>ไม่มีเวร</small>`}${list.length>2?`<small>+${list.length-2} รายการ</small>`:""}</div>`;
   }
   html+=`</div>`;
@@ -420,7 +443,7 @@ function renderCalendar(){
 }
 function openDayDetail(date){
   selectedCalendarDate=date;
-  const list=duties.filter(x=>String(x["วันที่"]||"").startsWith(date));
+  const list=duties.filter(x=>dutyDateOf(x)===date);
   q("dayDetailTitle").textContent="รายละเอียดเวรวันที่ "+date;
   q("dayDetailBody").innerHTML=list.length?list.map(x=>dutyChip(x)).join(""):`<div class="notice warn">วันนี้ยังไม่มีข้อมูลเวร</div>`;
   q("dayDetailOverlay").classList.add("active");
