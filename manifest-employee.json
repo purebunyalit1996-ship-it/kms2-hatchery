@@ -1,7 +1,7 @@
 {
-  "name": "KMS2 Admin เวรตู้ฟัก",
-  "short_name": "KMS2 Admin",
-  "start_url": "login.html",
+  "name": "KMS2 เวรพนักงาน",
+  "short_name": "KMS2 เวร",
+  "start_url": "employee.html?v=31",
   "scope": "./",
   "display": "standalone",
   "background_color": "#eef3ef",

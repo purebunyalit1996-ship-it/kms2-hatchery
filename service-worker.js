@@ -1,10 +1,12 @@
-const CACHE_NAME = "kms2-admin-v29";
+const CACHE_NAME = "kms2-dual-pwa-v31";
 
 const FILES_TO_CACHE = [
   "./",
   "./login.html",
-  "./index.html?v=27",
-  "./manifest.json"
+  "./index.html?v=31",
+  "./employee.html?v=31",
+  "./manifest.json",
+  "./manifest-employee.json"
 ];
 
 self.addEventListener("install", event => {

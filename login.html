@@ -5,129 +5,83 @@
 <meta name="theme-color" content="#0f5132">
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
-<title>KMS2 Login</title>
+<title>KMS2 Login v3.1</title>
+
 <style>
 *{box-sizing:border-box;font-family:system-ui,sans-serif}
-body{margin:0;background:#eef3ef;color:#1f2933}
-header{background:#0f5132;color:white;padding:24px;text-align:center}
-header h1{margin:0;font-size:28px}
-header p{margin:8px 0 0}
-.nav{display:flex;gap:10px;justify-content:center;flex-wrap:wrap;margin-top:14px}
-.nav a,.nav button{width:auto;text-decoration:none;background:#ffffff22;color:white;border:1px solid #ffffff55;padding:9px 14px;border-radius:999px;font-weight:800;cursor:pointer}
-.container{max-width:1200px;margin:auto;padding:16px}
-.card{background:white;border-radius:18px;padding:16px;margin-bottom:16px;box-shadow:0 6px 20px #0001}
-.card.hot{border:2px solid #f59e0b;background:#fffdf5}
-.card.alert{border:2px solid #dc2626;background:#fff7f7}
-.card.executive{border:2px solid #0f766e;background:#f0fdfa}
-.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:12px}
-h2{margin:0 0 12px;color:#0f5132;font-size:18px}
-h3{margin:10px 0;color:#0f5132;font-size:15px}
-label{font-weight:700;font-size:13px;margin-top:8px;display:block}
-input,select,textarea,button{width:100%;padding:11px;border-radius:11px;border:1px solid #d0d7de;margin-top:6px}
-button{background:#198754;color:white;border:0;font-weight:800;cursor:pointer}
-button.danger{background:#dc2626}
+html,body{margin:0;max-width:100%;overflow-x:hidden;background:#eef3ef;color:#1f2933}
+.loginWrap{min-height:100vh;display:flex;align-items:center;justify-content:center;background:linear-gradient(135deg,#0f5132,#198754);padding:20px}
+.loginBox{background:white;border-radius:22px;padding:24px;max-width:430px;width:100%;box-shadow:0 20px 60px #0004}
+.loginBox h1{color:#0f5132;margin:0 0 8px;font-size:26px}
+.loginBox p{line-height:1.45}
+label{font-weight:800;font-size:14px;margin-top:12px;display:block}
+input,button{width:100%;max-width:100%;box-sizing:border-box;padding:13px 14px;border-radius:14px;border:1px solid #d0d7de;margin-top:6px;font-size:16px}
+button{background:#198754;color:white;border:0;font-weight:900;min-height:48px;cursor:pointer}
 button.gray{background:#64748b}
-button.print{background:#0f766e}
-.statgrid{display:grid;grid-template-columns:repeat(auto-fit,minmax(170px,1fr));gap:10px}
-.stat{background:#f4faf6;border:1px solid #d8e8dc;border-radius:14px;padding:12px}
-.stat b{font-size:24px;color:#0f5132}
-.stat.warn{background:#fffbeb;border-color:#fde68a}
-.stat.danger{background:#fef2f2;border-color:#fecaca}
-.calendar{display:grid;grid-template-columns:repeat(7,1fr);gap:8px}
-.dayname{background:#dff3e8;text-align:center;font-weight:900;color:#0f5132;padding:10px;border-radius:10px}
-.cell{min-height:125px;background:#f8faf9;border:1px solid #d8e3dc;border-radius:12px;padding:8px}
-.date{font-weight:900;color:#0f5132;margin-bottom:5px}
-.chip{background:white;border-left:5px solid #198754;margin-top:6px;padding:7px;border-radius:9px;font-size:12px;box-shadow:0 1px 5px #0001}
-.chip.pending{border-left-color:#f59e0b;background:#fffbeb}
-.chip.approved{border-left-color:#16a34a;background:#f0fdf4}
-.chip.rejected{border-left-color:#dc2626;background:#fef2f2}
-.badge{display:inline-block;padding:3px 8px;border-radius:999px;font-size:12px;font-weight:800}
-.green{background:#dcfce7;color:#166534}.yellow{background:#fef3c7;color:#92400e}.red{background:#fee2e2;color:#991b1b}.blue{background:#dbeafe;color:#1e40af}
-table{width:100%;border-collapse:collapse}
-th,td{padding:9px;border-bottom:1px solid #e5e7eb;font-size:14px;text-align:left}
-th{background:#e8f5ee;color:#0f5132}
-.actions{display:flex;gap:6px}
-.notice{background:#ecfdf5;border:1px solid #bbf7d0;border-radius:14px;padding:12px;color:#166534}
-.notice.warn{background:#fffbeb;border-color:#fde68a;color:#92400e}
-.notice.danger{background:#fef2f2;border-color:#fecaca;color:#991b1b}
-.small{font-size:13px;color:#64748b}
-.loginWrap{min-height:100vh;display:flex;align-items:center;justify-content:center;background:#0f5132;padding:20px}
-.loginBox{background:white;border-radius:22px;padding:24px;max-width:420px;width:100%;box-shadow:0 20px 60px #0004}
-.loginBox h1{color:#0f5132;margin-top:0}
-@media print{header,.nav,.noPrint{display:none!important}body{background:white}.card{box-shadow:none;border:1px solid #ddd}.executive{background:white}}
-@media(max-width:700px){header h1{font-size:24px}.calendar{grid-template-columns:repeat(2,1fr)}.dayname{display:none}table{display:block;overflow-x:auto}}
-
-/* KMS2 v2.6 Mobile Pro Polish */
-html,body{max-width:100%;overflow-x:hidden}
-.card,.container,header{max-width:100%}
-.card{overflow:hidden}
-input,select,textarea,button{font-size:16px}
+.notice{background:#f8fafc;border:1px solid #d8e3dc;border-radius:16px;padding:13px;margin-top:14px;font-size:14px}
+.badge{display:inline-block;padding:4px 9px;border-radius:999px;font-size:12px;font-weight:900;background:#dcfce7;color:#166534}
+.small{font-size:13px;color:#64748b;text-align:center}
+.roleLine{margin:7px 0;color:#334155}
 @media(max-width:700px){
-  body{background:#eef3ef}
-  header{padding:22px 14px;border-bottom-left-radius:0;border-bottom-right-radius:0}
-  header h1{font-size:23px;line-height:1.25}
-  header p{font-size:14px;line-height:1.45}
-  .container{padding:12px}
-  .card{border-radius:18px;padding:14px;margin-bottom:14px}
-  h2{font-size:21px;line-height:1.25}
-  h3{font-size:16px}
-  .nav{gap:8px}
-  .nav a,.nav button{font-size:14px;padding:9px 12px}
-  .grid{grid-template-columns:1fr!important;gap:10px}
-  .statgrid{grid-template-columns:repeat(2,1fr)!important;gap:9px}
-  .stat{padding:10px;min-height:86px}
-  .stat b{font-size:26px}
-
-  /* Tables become mobile cards, no horizontal scrolling */
-  table,thead,tbody,tr,th,td{display:block;width:100%}
-  table{border-collapse:separate;border-spacing:0}
-  thead{display:none}
-  tr{background:#fff;border:1px solid #e5e7eb;border-radius:14px;margin:0 0 10px;padding:10px;box-shadow:0 2px 8px #0000000d}
-  td{border:0!important;padding:6px 0!important;font-size:14px;line-height:1.35;white-space:normal;word-break:break-word}
-  td:empty{display:none}
-  .actions{display:grid;grid-template-columns:1fr 1fr;gap:8px}
-  .actions button{margin-top:4px}
-
-  /* Compact calendar for phone */
-  .calendar{grid-template-columns:repeat(7,1fr)!important;gap:4px}
-  .dayname{display:block!important;font-size:11px;padding:6px 2px;border-radius:7px}
-  .cell{min-height:54px!important;padding:5px!important;border-radius:9px}
-  .date{font-size:13px;margin-bottom:2px}
-  .cell small{font-size:10px;line-height:1.1}
-  .cell .chip{font-size:9px;line-height:1.15;padding:3px;margin-top:2px;border-left-width:3px;border-radius:6px;max-height:34px;overflow:hidden}
-  .chip{font-size:13px;line-height:1.35;padding:9px;border-radius:12px}
-  .notice{font-size:14px;line-height:1.45}
+  .loginBox{padding:20px}
+  .loginBox h1{font-size:24px}
 }
-
-/* Extra narrow phones */
-@media(max-width:390px){
-  .statgrid{grid-template-columns:1fr!important}
-  header h1{font-size:21px}
-  .card{padding:12px}
-  .calendar{gap:3px}
-  .cell{min-height:48px!important}
-}
-
 </style>
 </head>
+
 <body>
 <div class="loginWrap">
   <div class="loginBox">
-    <h1>🔐 KMS2 Admin Login</h1>
-    <p>เข้าสู่ระบบผู้ดูแลเวรตู้ฟัก</p>
-    <label>Username</label><input id="user" placeholder="admin">
-    <label>Password</label><input id="pass" type="password" placeholder="1234">
+    <h1>🔐 KMS2 Login</h1>
+    <p>เข้าสู่ระบบผู้ดูแล / ผู้ควบคุมเวรตู้ฟัก</p>
+
+    <label>Username</label>
+    <input id="user" placeholder="admin หรือ supervisor" autocomplete="username">
+
+    <label>Password</label>
+    <input id="pass" type="password" placeholder="รหัสผ่าน" autocomplete="current-password">
+
     <button onclick="login()">เข้าสู่ระบบ</button>
-    <p class="small">ค่าเริ่มต้น: admin / 1234</p>
-    <button class="gray" onclick="location.href='employee.html?v=26'">ไปหน้าพนักงาน</button>
+
+    <div class="notice">
+      <span class="badge">บัญชีทดสอบ</span>
+      <p class="roleLine"><b>Admin</b> : admin / 1234</p>
+      <p class="roleLine"><b>Supervisor</b> : supervisor / 5678</p>
+      <p class="small">Supervisor เข้า Dashboard ได้ แต่ลบข้อมูลไม่ได้</p>
+    </div>
+
+    <button class="gray" onclick="location.href='employee.html?v=31'">
+      ไปหน้าพนักงาน
+    </button>
   </div>
 </div>
+
 <script>
 function login(){
   const u=document.getElementById("user").value.trim();
   const p=document.getElementById("pass").value.trim();
-  if(u==="admin" && p==="1234"){sessionStorage.setItem("kms2Admin","yes");location.href="index.html?v=26";}
-  else alert("Username หรือ Password ไม่ถูกต้อง");
+
+  if(u==="admin" && p==="1234"){
+    sessionStorage.setItem("kms2Role","admin");
+    sessionStorage.setItem("kms2Admin","yes");
+    location.href="index.html?v=31";
+  }
+  else if(u==="supervisor" && p==="5678"){
+    sessionStorage.setItem("kms2Role","supervisor");
+    sessionStorage.setItem("kms2Admin","yes");
+    location.href="index.html?v=31";
+  }
+  else{
+    alert("Username หรือ Password ไม่ถูกต้อง");
+  }
+}
+
+document.addEventListener("keydown", e=>{
+  if(e.key==="Enter") login();
+});
+
+if ("serviceWorker" in navigator) {
+  navigator.serviceWorker.register("./service-worker.js");
 }
 </script>
 </body>

@@ -5,7 +5,7 @@
 <meta name="theme-color" content="#0f5132">
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
-<title>KMS2 Admin v2.7 เวรตู้ฟัก</title>
+<title>KMS2 Admin v3.1 เวรตู้ฟัก</title>
 <style>
 *{box-sizing:border-box;font-family:system-ui,sans-serif}
 body{margin:0;background:#eef3ef;color:#1f2933}
@@ -350,16 +350,41 @@ button {
   }
 }
 
+/* KMS2 v3.1 Supervisor Permission */
+.roleBadge{
+  display:inline-block;
+  margin-top:10px;
+  padding:6px 12px;
+  border-radius:999px;
+  font-size:13px;
+  font-weight:900;
+  background:#dcfce7;
+  color:#166534;
+}
+.roleBadge.supervisor{background:#dbeafe;color:#1e40af}
+.roleBadge.admin{background:#dcfce7;color:#166534}
+.supervisorLock{
+  background:#eff6ff;
+  border:1px solid #bfdbfe;
+  color:#1e40af;
+  border-radius:14px;
+  padding:12px;
+  margin-top:10px;
+  line-height:1.45;
+}
+.adminOnly{}
+
 </style>
 </head>
 <body>
 <header>
 <h1>เวรตู้ฟัก โรงฟักคลองมือไทร 2</h1>
-<p>Admin v2.7: Mobile Admin Pro</p>
+<p id="roleText">Admin v3.1: Supervisor Permission System</p>
+<div id="roleBadge" class="roleBadge">กำลังตรวจสอบสิทธิ์...</div>
 <div class="nav noPrint">
-<a href="index.html?v=27">🏠 Admin</a>
+<a href="index.html?v=31">🏠 Admin</a>
 <a href="#executiveDashboard">📊 ผู้บริหาร</a>
-<a href="employee.html?v=27">👷 หน้าพนักงาน</a>
+<a href="employee.html?v=31">👷 หน้าพนักงาน</a>
 <button onclick="loadData()">🔄 รีเฟรช</button>
 <button onclick="window.print()">📄 Export PDF</button>
 <button onclick="logoutAdmin()">ออกจากระบบ</button>
@@ -422,8 +447,35 @@ button {
 </div>
 
 <script>
-if(sessionStorage.getItem("kms2Admin")!=="yes") location.href="login.html";
-function logoutAdmin(){sessionStorage.removeItem("kms2Admin");location.href="login.html";}
+const KMS2_ROLE = sessionStorage.getItem("kms2Role") || (sessionStorage.getItem("kms2Admin")==="yes" ? "admin" : "");
+if(sessionStorage.getItem("kms2Admin")!=="yes" || !["admin","supervisor"].includes(KMS2_ROLE)){
+  location.href="login.html";
+}
+function isAdmin(){return KMS2_ROLE==="admin";}
+function isSupervisor(){return KMS2_ROLE==="supervisor";}
+function canDelete(){return isAdmin();}
+function denySupervisor(){
+  alert("สิทธิ์ Supervisor ไม่สามารถลบข้อมูลหรือจัดการระบบระดับ Admin ได้");
+}
+function logoutAdmin(){
+  sessionStorage.removeItem("kms2Admin");
+  sessionStorage.removeItem("kms2Role");
+  location.href="login.html";
+}
+function renderRoleUI(){
+  const badge=q("roleBadge");
+  const text=q("roleText");
+  if(!badge || !text) return;
+  if(isAdmin()){
+    badge.className="roleBadge admin";
+    badge.textContent="สิทธิ์ปัจจุบัน: Admin";
+    text.textContent="Admin v3.1: Full Access";
+  }else{
+    badge.className="roleBadge supervisor";
+    badge.textContent="สิทธิ์ปัจจุบัน: Supervisor";
+    text.textContent="Supervisor v3.1: อนุมัติคำขอ / แก้เวรได้ / ลบข้อมูลไม่ได้";
+  }
+}
 
 const API_URL="https://script.google.com/macros/s/AKfycbxyvvxC1lO6cpWwJ5EUtkhpzm2WvheLhJHBAq_W9u_FHhfPVP_HMGEewAm9BXES2u7ALQ/exec";
 let staff=[],shifts=[],duties=[],logs=[],requests=[];
@@ -585,18 +637,28 @@ async function approveRequest(row){await jsonp(API_URL+`?action=approveRequest&r
 async function rejectRequest(row){await jsonp(API_URL+`?action=rejectRequest&row=${row}`);alert("ปฏิเสธคำขอแล้ว พนักงานกดรีเฟรชเพื่อดูสถานะล่าสุด");await loadData();}
 function renderMyDuty(){const name=val("myName"),month=val("myMonth");if(!name)return alert("กรุณาพิมพ์ชื่อพนักงาน");const list=duties.filter(x=>(String(x["พนักงาน"]||"").includes(name))&&(month?String(x["วันที่"]||"").startsWith(month):true));q("myDutyBox").innerHTML=list.length?list.map(x=>`<div class="chip">📅 <b>${x["วันที่"]||""}</b><br>👤 ${x["พนักงาน"]||""}<br>🕒 ${x["กะเวร"]||""}<br>🐣 ${x["ตู้"]||""}<br>📝 ${x["หมายเหตุ"]||"-"}</div>`).join(""):`ไม่พบเวรของ ${name} ในเดือนที่เลือก`;}
 function filteredDuties(){const fs=val("filterStaff"),fm=val("filterMachine");return duties.filter(x=>(fs?String(x["พนักงาน"]||"").includes(fs):true)&&(fm?String(x["ตู้"]||"").includes(fm):true));}
-function renderTables(){const dutyList=filteredDuties();q("dutyTable").innerHTML=`<table><thead><tr><th>วันที่</th><th>พนักงาน</th><th>กะเวร</th><th>ตู้</th><th>หมายเหตุ</th><th class="noPrint">จัดการ</th></tr></thead><tbody>${dutyList.map(d=>`<tr><td>${d["วันที่"]||""}</td><td>${d["พนักงาน"]||""}</td><td>${d["กะเวร"]||""}</td><td>${d["ตู้"]||""}</td><td>${d["หมายเหตุ"]||""}</td><td class="noPrint"><div class="actions"><button onclick="editDutyByRow('${d._row}')">แก้ไข</button><button class="danger" onclick="deleteDuty('${d._row}')">ลบ</button></div></td></tr>`).join("")}</tbody></table>`;q("logTable").innerHTML=`<table><thead><tr><th>วันที่</th><th>เวลา</th><th>พนักงาน</th><th>กะเวร</th><th>ตู้</th><th>สถานะ</th><th>หมายเหตุ</th><th class="noPrint">จัดการ</th></tr></thead><tbody>${logs.map(l=>`<tr><td>${l["วันที่"]||""}</td><td>${l["เวลา"]||""}</td><td>${l["พนักงาน"]||""}</td><td>${l["กะเวร"]||""}</td><td>${l["ตู้"]||""}</td><td>${badge(l["สถานะ"])}</td><td>${l["หมายเหตุ"]||""}</td><td class="noPrint"><div class="actions"><button onclick="editLogByRow('${l._row}')">แก้ไข</button><button class="danger" onclick="deleteLog('${l._row}')">ลบ</button></div></td></tr>`).join("")}</tbody></table>`;}
+function renderTables(){const dutyList=filteredDuties();q("dutyTable").innerHTML=`<table><thead><tr><th>วันที่</th><th>พนักงาน</th><th>กะเวร</th><th>ตู้</th><th>หมายเหตุ</th><th class="noPrint">จัดการ</th></tr></thead><tbody>${dutyList.map(d=>`<tr><td>${d["วันที่"]||""}</td><td>${d["พนักงาน"]||""}</td><td>${d["กะเวร"]||""}</td><td>${d["ตู้"]||""}</td><td>${d["หมายเหตุ"]||""}</td><td class="noPrint"><div class="actions"><button onclick="editDutyByRow('${d._row}')">แก้ไข</button>${canDelete()?`<button class="danger" onclick="deleteDuty('${d._row}')">ลบ</button>`:`<button class="gray" onclick="denySupervisor()">ล็อกลบ</button>`}</div></td></tr>`).join("")}</tbody></table>`;q("logTable").innerHTML=`<table><thead><tr><th>วันที่</th><th>เวลา</th><th>พนักงาน</th><th>กะเวร</th><th>ตู้</th><th>สถานะ</th><th>หมายเหตุ</th><th class="noPrint">จัดการ</th></tr></thead><tbody>${logs.map(l=>`<tr><td>${l["วันที่"]||""}</td><td>${l["เวลา"]||""}</td><td>${l["พนักงาน"]||""}</td><td>${l["กะเวร"]||""}</td><td>${l["ตู้"]||""}</td><td>${badge(l["สถานะ"])}</td><td>${l["หมายเหตุ"]||""}</td><td class="noPrint"><div class="actions"><button onclick="editLogByRow('${l._row}')">แก้ไข</button>${canDelete()?`<button class="danger" onclick="deleteLog('${l._row}')">ลบ</button>`:`<button class="gray" onclick="denySupervisor()">ล็อกลบ</button>`}</div></td></tr>`).join("")}</tbody></table>`;}
 function clearFilters(){q("filterStaff").value="";q("filterMachine").value="";renderTables();}
 async function saveDuty(){if(!val("dutyDate"))return alert("กรุณาเลือกวันที่");const action=val("dutyRow")?"updateDuty":"addDuty";let url=API_URL+`?action=${action}&date=${encodeURIComponent(val("dutyDate"))}&staff=${encodeURIComponent(val("dutyStaff"))}&shift=${encodeURIComponent(cleanShift(val("dutyShift")))}&machine=${encodeURIComponent(val("dutyMachine"))}&note=${encodeURIComponent(val("dutyNote"))}`;if(val("dutyRow"))url+=`&row=${val("dutyRow")}`;await jsonp(url);alert("บันทึกเวรแล้ว");resetDuty();await loadData();}
 function editDutyByRow(row){const d=duties.find(x=>String(x._row)===String(row)); if(!d)return;q("dutyRow").value=d._row;q("dutyTitle").textContent="แก้ไขเวรตู้";q("dutyDate").value=d["วันที่"]||"";q("dutyStaff").value=d["พนักงาน"]||"";q("dutyShift").value=d["กะเวร"]||"";q("dutyMachine").value=d["ตู้"]||"";q("dutyNote").value=d["หมายเหตุ"]||"";}
-async function deleteDuty(row){if(!confirm("ลบเวรนี้ใช่หรือไม่?"))return;await jsonp(API_URL+`?action=deleteDuty&row=${row}`);await loadData();}
+async function deleteDuty(row){
+  if(!canDelete()) return denySupervisor();
+  if(!confirm("ลบเวรนี้ใช่หรือไม่?"))return;
+  await jsonp(API_URL+`?action=deleteDuty&row=${row}`);
+  await loadData();
+}
 async function saveLog(){if(!val("logDate"))return alert("กรุณาเลือกวันที่");const action=val("logRow")?"updateLog":"addLog";let url=API_URL+`?action=${action}&date=${encodeURIComponent(val("logDate"))}&time=${encodeURIComponent(val("logTime"))}&staff=${encodeURIComponent(val("logStaff"))}&shift=${encodeURIComponent(cleanShift(val("logShift")))}&machine=${encodeURIComponent(val("logMachine"))}&status=${encodeURIComponent(val("logStatus"))}&note=${encodeURIComponent(val("logNote"))}`;if(val("logRow"))url+=`&row=${val("logRow")}`;await jsonp(url);alert("บันทึกสถานะแล้ว");resetLog();await loadData();}
 function editLogByRow(row){const l=logs.find(x=>String(x._row)===String(row)); if(!l)return;q("logRow").value=l._row;q("logTitle").textContent="แก้ไขบันทึกสถานะ";q("logDate").value=l["วันที่"]||"";q("logTime").value=l["เวลา"]||"";q("logStaff").value=l["พนักงาน"]||"";q("logShift").value=l["กะเวร"]||"";q("logMachine").value=l["ตู้"]||"";q("logStatus").value=l["สถานะ"]||"ปกติ";q("logNote").value=l["หมายเหตุ"]||"";}
-async function deleteLog(row){if(!confirm("ลบบันทึกนี้ใช่หรือไม่?"))return;await jsonp(API_URL+`?action=deleteLog&row=${row}`);await loadData();}
+async function deleteLog(row){
+  if(!canDelete()) return denySupervisor();
+  if(!confirm("ลบบันทึกนี้ใช่หรือไม่?"))return;
+  await jsonp(API_URL+`?action=deleteLog&row=${row}`);
+  await loadData();
+}
 function resetDuty(){q("dutyRow").value="";q("dutyTitle").textContent="เพิ่มเวรตู้";q("dutyMachine").value="";q("dutyNote").value="";}
 function resetLog(){q("logRow").value="";q("logTitle").textContent="บันทึกสถานะเวร";q("logMachine").value="";q("logNote").value="";}
-function renderAll(){renderLists();renderDashboard();renderExecutiveDashboard();renderPendingRequests();renderMonthlySummary();renderRequests();renderLatestDuty();renderToday();renderCalendar();renderTables();}
-setTodayBase();loadData();
+function renderAll(){renderRoleUI();renderLists();renderDashboard();renderExecutiveDashboard();renderPendingRequests();renderMonthlySummary();renderRequests();renderLatestDuty();renderToday();renderCalendar();renderTables();}
+renderRoleUI();setTodayBase();loadData();
 </script>
 <script>if ("serviceWorker" in navigator) {navigator.serviceWorker.register("./service-worker.js");}</script>
 </body>
