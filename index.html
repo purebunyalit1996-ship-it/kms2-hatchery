@@ -650,9 +650,7 @@ input[type="month"] {
 <div class="toolBox"><h3>ประวัติการแก้ไข</h3><button class="gray" onclick="renderAuditLog()">ดูประวัติ</button><div id="auditLogBox" class="notice warn auditBox">ยังไม่มีการแสดงประวัติ</div></div>
 </div></div>
 
-<div class="card noPrint" id="dutyFormCard"><h2 id="dutyTitle">เพิ่มเวรตู้</h2><input type="hidden" id="dutyRow"><div class="grid"><div><label>วันที่เริ่ม</label><input type="date" id="dutyDate"></div><div><label>วันที่สิ้นสุด <span class="small">(เลือกสั้น/ยาวได้อิสระ)</span></label><input type="date" id="dutyEndDate"></div><div><label>พนักงานหลัก</label><input id="dutyStaff" list="staffNameList" placeholder="เลือก/พิมพ์ชื่อใครก็ได้"><datalist id="staffNameList"></datalist></div><div><label>กะเวร</label><select id="dutyShift"></select></div><div><label>ตู้</label><input id="dutyMachine" placeholder="เช่น ตู้ฟัก 1"></div></div><p class="dateRangeHelp">เลือกช่วงวันที่ได้ทุกเดือน ทุกคน และปรับความยาวเวรได้เอง เช่น 1–5, 11–20, 1–31 ระบบจะเพิ่มเวรให้ทุกวันในช่วงนั้น</p><div class="subSimpleBox"><h3>🔁 เวรแทนวันหยุด</h3><p class="subHelp">ใช้งานง่าย: ใส่วันที่ที่ต้องมีคนแทน เช่น <b>17</b> หรือ <b>17, 24</b> แล้วใส่ชื่อคนแทน ระบบจะแสดงเป็นป้ายสีส้มเด่นในปฏิทินและรายละเอียดวัน</p><div class="grid"><div><label>วันที่ที่ต้องมีเวรแทน <span class="small">(ไม่บังคับ)</span></label><textarea id="subDates" placeholder="เช่น 17 หรือ 17, 24 หรือ 2026-06-17"></textarea></div><div><label>เวรแทนโดย</label><input id="subStaff" list="staffNameList" placeholder="เช่น ป๋อ"><label>เหตุผล / หมายเหตุเวรแทน</label><input id="subReason" placeholder="เช่น วันหยุดประจำสัปดาห์"></div></div><details style="margin-top:10px"><summary style="font-weight:900;color:#9a3412;cursor:pointer">ตัวเลือกขั้นสูง: คนแทนต่างกันแต่ละวัน</summary><textarea id="subRules" placeholder="ตัวอย่าง:
-17=ป๋อ | วันหยุด
-24=นุช | แทนเวร" style="margin-top:8px"></textarea></details></div><p class="dateRangeHelp">ระบบไม่ล็อกชื่อและไม่ล็อกวันที่: พนักงานหลักเป็นใครก็ได้ เวรแทนเป็นใครก็ได้ และใช้ได้ทุกเดือน</p><label>หมายเหตุ / ฉุกเฉิน</label><textarea id="dutyNote"></textarea><button onclick="saveDuty()">บันทึกเวร</button><button class="gray" onclick="resetDuty()">ยกเลิกการแก้ไข</button></div>
+<div class="card noPrint" id="dutyFormCard"><h2 id="dutyTitle">เพิ่มเวรตู้</h2><input type="hidden" id="dutyRow"><div class="grid"><div><label>วันที่เริ่ม</label><input type="date" id="dutyDate"></div><div><label>วันที่สิ้นสุด <span class="small">(เลือกสั้น/ยาวได้อิสระ)</span></label><input type="date" id="dutyEndDate"></div><div><label>พนักงานหลัก</label><input id="dutyStaff" list="staffNameList" placeholder="เลือก/พิมพ์ชื่อใครก็ได้"><datalist id="staffNameList"></datalist></div><div><label>กะเวร</label><select id="dutyShift"></select></div><div><label>ตู้</label><input id="dutyMachine" placeholder="เช่น ตู้ฟัก 1"></div></div><p class="dateRangeHelp">เลือกช่วงวันที่ได้ทุกเดือน ทุกคน และปรับความยาวเวรได้เอง เช่น 1–5, 11–20, 1–31 ระบบจะเพิ่มเวรให้ทุกวันในช่วงนั้น</p><div class="subSimpleBox"><h3>🔁 เวรแทน</h3><p class="subHelp">โหมดใหม่แบบง่าย: ระบุ <b>ชื่อคนแทน</b> และ <b>วันที่แทน</b> ได้อิสระ ใช้ได้ทุกเดือน ไม่จำเป็นต้องอยู่ในช่วงเวรหลัก และระบบจะแสดงเป็นป้ายสีส้มเด่นว่าเป็นเวรแทน</p><div class="grid"><div><label>เวรแทนโดย <span class="small">(ไม่บังคับ)</span></label><input id="subStaff" list="staffNameList" placeholder="เช่น ป๋อ / นุช / โนรา"><label>เหตุผล / หมายเหตุเวรแทน</label><input id="subReason" placeholder="เช่น วันหยุดประจำสัปดาห์"></div><div><label>วันที่แทน <span class="small">(เลือกได้หลายวัน / ทุกเดือน)</span></label><textarea id="subDates" placeholder="เช่น 12/06/2026, 18/06/2026, 25/07/2026 หรือ 12,18,25"></textarea></div></div><p class="dateRangeHelp">ตัวอย่าง: เวรหลัก ยูร 11–13 แต่ ป๋อแทนวันที่ 12 ให้ใส่ เวรแทนโดย = ป๋อ และ วันที่แทน = 12/06/2026</p></div><p class="dateRangeHelp">ระบบไม่ล็อกชื่อ ไม่ล็อกวันที่ และเวรแทนสามารถอยู่นอกช่วงเวรหลักได้</p><label>หมายเหตุ / ฉุกเฉิน</label><textarea id="dutyNote"></textarea><button onclick="saveDuty()">บันทึกเวร</button><button class="gray" onclick="resetDuty()">ยกเลิกการแก้ไข</button></div>
 
 <div class="card noPrint" id="logFormCard"><h2 id="logTitle">บันทึกสถานะเวร</h2><input type="hidden" id="logRow"><div class="grid"><div><label>วันที่</label><input type="date" id="logDate"></div><div><label>เวลา</label><input type="time" id="logTime"></div><div><label>พนักงาน</label><input id="logStaff" placeholder="เช่น ยูร"></div><div><label>กะเวร</label><select id="logShift"></select></div><div><label>ตู้</label><input id="logMachine" placeholder="เช่น ตู้ฟัก 1"></div><div><label>สถานะ</label><select id="logStatus"><option>ปกติ</option><option>ต้องติดตาม</option><option>ผิดปกติ</option><option>แก้ไขแล้ว</option></select></div></div><label>หมายเหตุ</label><textarea id="logNote"></textarea><button onclick="saveLog()">บันทึกสถานะ</button><button class="gray" onclick="resetLog()">ยกเลิกการแก้ไข</button></div>
 
@@ -828,14 +826,15 @@ function parseSubDates(){
 function parseSubRules(){
   const base=val("dutyDate")||formatLocalDate(new Date());
   const map={};
-  // แบบกลุ่ม: ใส่หลายวัน แล้วใช้คนแทนคนเดียวกัน
+  // โหมดง่าย: คนแทน 1 คน ต่อวันที่แทนหลายวัน ใช้ได้ทุกเดือนและไม่จำกัดช่วงเวรหลัก
   const sharedStaff=val("subStaff");
-  const sharedReason=val("subReason")||"วันหยุด";
+  const sharedReason=val("subReason")||"เวรแทน";
   parseSubDates().forEach(date=>{
     if(sharedStaff) map[date]={sub:sharedStaff,reason:sharedReason};
   });
-  // แบบรายวัน: 7=ป๋อ หรือ 2026-07-21=โนรา | วันหยุด
-  val("subRules").split(/\n+/).map(x=>x.trim()).filter(Boolean).forEach(line=>{
+  // รองรับของเก่าถ้ามี subRules ซ่อนอยู่ในไฟล์/ข้อมูลเดิม
+  const rawRules = q("subRules") ? q("subRules").value : "";
+  rawRules.split(/\n+/).map(x=>x.trim()).filter(Boolean).forEach(line=>{
     const parts=line.split(/=|→|->|:/);
     if(parts.length<2) return;
     const date=normalizeInputDate(parts[0].trim(),base);
@@ -843,7 +842,7 @@ function parseSubRules(){
     if(!date || !right) return;
     const rr=right.split("|");
     const sub=(rr[0]||"").trim();
-    const reason=(rr[1]||sharedReason||"วันหยุด").trim();
+    const reason=(rr[1]||sharedReason||"เวรแทน").trim();
     if(sub) map[date]={sub,reason};
   });
   return map;
@@ -1125,7 +1124,7 @@ async function saveDuty(){
   if(!val("dutyDate"))return alert("กรุณาเลือกวันที่เริ่ม");
   if(!val("dutyStaff"))return alert("กรุณาพิมพ์ชื่อพนักงานหลัก");
   if(!val("dutyShift"))return alert("กรุณาเลือกกะเวร");
-  if(val("subDates") && !val("subStaff"))return alert("กรุณากรอกชื่อเวรแทน หรือใช้ช่องเวรแทนแบบกำหนดรายวัน เช่น 17=ป๋อ");
+  if(val("subDates") && !val("subStaff"))return alert("กรุณากรอกชื่อเวรแทน");
   const isEdit=!!val("dutyRow");
   if(isEdit){
     const note=buildDutyNote(val("dutyNote"),val("dutyDate"));
@@ -1139,29 +1138,41 @@ async function saveDuty(){
   if(!dates.length)return alert("ช่วงวันที่ไม่ถูกต้อง กรุณาตรวจวันที่เริ่มและวันที่สิ้นสุด");
   if(dates.length>90)return alert("ช่วงวันที่ยาวเกินไป กรุณาแบ่งบันทึกเป็นช่วงไม่เกิน 90 วัน");
   const subMap=parseSubRules();
-  const subDates=Object.keys(subMap);
-  const subOutside=subDates.filter(d=>!dates.includes(d));
-  if(subOutside.length){
-    return alert("วันที่เวรแทนอยู่นอกช่วงเวร: "+subOutside.join(", ")+"\nกรุณาตรวจวันที่เริ่ม-สิ้นสุด หรือวันที่เวรแทน");
-  }
+  const subDates=Object.keys(subMap).sort();
+
   const conflicts=detectDutyConflicts(dates,val("dutyStaff"),val("dutyShift"),val("dutyMachine"));
   if(conflicts.length){
     const sample=conflicts.slice(0,5).map(x=>`${x["วันที่"]} ${x["พนักงาน"]} ${x["กะเวร"]} ${x["ตู้"]}`).join("\n");
     if(!confirm(`พบเวรที่อาจชนกัน ${conflicts.length} รายการ\n${sample}\n\nต้องการบันทึกต่อหรือไม่?`)) return;
   }
-  const subText=subDates.length?"\nมีเวรแทน: "+subDates.map(d=>`${d}=${subMap[d].sub}`).join(", "):"";
-  const msg=`ต้องการบันทึกเวร ${dates.length} วัน (${dates[0]} ถึง ${dates[dates.length-1]})${subText} ใช่หรือไม่?`;
+
+  const outsideSubDates=subDates.filter(d=>!dates.includes(d));
+  const subText=subDates.length?"\nเวรแทน: "+subDates.map(d=>`${d}=${subMap[d].sub}`).join(", "):"";
+  const outsideText=outsideSubDates.length?`\n(มีวันที่แทนนอกช่วงเวรหลัก ${outsideSubDates.length} วัน ระบบจะสร้างรายการเวรแทนแยกให้)`:"";
+  const msg=`ต้องการบันทึกเวรหลัก ${dates.length} วัน (${dates[0]} ถึง ${dates[dates.length-1]})${subText}${outsideText} ใช่หรือไม่?`;
   if(!confirm(msg)) return;
-  let ok=0;
+
+  let ok=0, subOk=0;
+  // บันทึกเวรหลักตามช่วงวันที่ โดยถ้าวันนั้นมีเวรแทน จะใส่ป้ายเวรแทนลงในหมายเหตุของวันนั้น
   for(const date of dates){
     const note=buildDutyNote(val("dutyNote"),date);
     const url=API_URL+`?action=addDuty&date=${encodeURIComponent(date)}&staff=${encodeURIComponent(val("dutyStaff"))}&shift=${encodeURIComponent(cleanShift(val("dutyShift")))}&machine=${encodeURIComponent(val("dutyMachine"))}&note=${encodeURIComponent(note)}`;
     await jsonp(url);
     ok++;
-    await sleep(180);
+    await sleep(160);
   }
-  addAudit(`เพิ่มเวร ${val("dutyStaff")} ${dates[0]} ถึง ${dates[dates.length-1]} จำนวน ${ok} วัน${subDates.length?` เวรแทน ${subDates.map(d=>`${d}=${subMap[d].sub}`).join(",")}`:""}`);
-  alert(`บันทึกเวรสำเร็จ ${ok}/${dates.length} วัน`);
+  // บันทึกเวรแทนนอกช่วงเวรหลักแบบอิสระทุกเดือน/ทุกวัน
+  for(const date of outsideSubDates){
+    const item=subMap[date];
+    const marker=`[เวรแทน] เวรหลัก: ${val("dutyStaff")} | เวรแทน: ${item.sub} | เหตุผล: ${item.reason||"เวรแทน"}`;
+    const note=val("dutyNote") ? `${val("dutyNote")}\n${marker}` : marker;
+    const url=API_URL+`?action=addDuty&date=${encodeURIComponent(date)}&staff=${encodeURIComponent(item.sub)}&shift=${encodeURIComponent(cleanShift(val("dutyShift")))}&machine=${encodeURIComponent(val("dutyMachine"))}&note=${encodeURIComponent(note)}`;
+    await jsonp(url);
+    subOk++;
+    await sleep(160);
+  }
+  addAudit(`เพิ่มเวรหลัก ${val("dutyStaff")} ${dates[0]} ถึง ${dates[dates.length-1]} จำนวน ${ok} วัน${subDates.length?` เวรแทน ${subDates.map(d=>`${d}=${subMap[d].sub}`).join(",")}`:""}`);
+  alert(`บันทึกสำเร็จ\nเวรหลัก ${ok}/${dates.length} วัน${subOk?`\nเวรแทนอิสระ ${subOk} วัน`:""}`);
   resetDuty(); await loadData();
 }
 function editDutyByRow(row){
