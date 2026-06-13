@@ -5,7 +5,7 @@
 <meta name="theme-color" content="#0f5132">
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
-<title>KMS2 Workspace v44 ระบบจัดการเวรตู้ฟัก</title>
+<title>KMS2 Workspace v45 ระบบจัดการเวรตู้ฟัก</title>
 <style>
 *{box-sizing:border-box;font-family:system-ui,sans-serif}
 body{margin:0;background:#eef3ef;color:#1f2933}
@@ -654,7 +654,7 @@ td{color:#26362f}
 
 
 /* ===============================
-   KMS2 v44 Production Workspace UI
+   KMS2 v45 Production Workspace UI
    =============================== */
 .workspaceNav{
   display:grid;
@@ -783,10 +783,14 @@ button:active,.nav a:active{transform:scale(.985)}
 
 <div id="adminSettingsWorkspace" class="card noPrint workspaceOnlyCard" style="display:none">
   <h2>ตั้งค่าระบบ</h2>
-  <div class="grid">
-    <div class="notice"><b>สิทธิ์ผู้ใช้งาน</b><br><span id="settingsRoleText">Admin / Supervisor</span></div>
-    <div class="notice"><b>สำรองข้อมูล</b><br>ใช้เมนูเครื่องมือจัดเวรเพื่อดาวน์โหลด Backup และ Export CSV</div>
-    <div class="notice"><b>เวอร์ชัน</b><br>KMS2 Professional Workspace v44</div>
+  <p class="small">ศูนย์ควบคุมระบบ บัญชีผู้ใช้ กะเวร สำรองข้อมูล และข้อมูลระบบ</p>
+  <div class="toolGrid">
+    <div class="toolBox"><h3>👤 สิทธิ์ผู้ใช้งาน</h3><div class="notice"><b id="settingsRoleText">Admin / Supervisor</b><br>แสดงสิทธิ์ที่กำลังใช้งานในระบบ</div></div>
+    <div class="toolBox"><h3>🕒 กะเวร</h3><div class="notice">จัดการรายการกะเวรจากข้อมูล Google Sheets</div></div>
+    <div class="toolBox"><h3>🐣 ตู้ฟัก</h3><div class="notice">ใช้สำหรับตรวจสอบตู้ที่ถูกบันทึกในตารางเวร</div></div>
+    <div class="toolBox"><h3>💾 สำรองข้อมูล</h3><button onclick="downloadBackupJSON()">ดาวน์โหลด Backup</button><button class="print" onclick="downloadMonthlyCSV()">Export CSV เดือนนี้</button></div>
+    <div class="toolBox"><h3>🧾 ประวัติการแก้ไข</h3><button class="gray" onclick="renderAuditLog()">ดูประวัติ</button><div id="settingsAuditMirror" class="small">ดูประวัติได้จากเครื่องมือจัดเวร</div></div>
+    <div class="toolBox"><h3>ℹ️ เกี่ยวกับระบบ</h3><div class="notice">KMS2 Professional Workspace v45<br>เชื่อมต่อ Google Sheets + GitHub Pages + PWA</div></div>
   </div>
 </div>
 </div>

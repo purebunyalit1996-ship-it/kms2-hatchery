@@ -5,7 +5,7 @@
 <meta name="theme-color" content="#0f5132">
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
-<title>KMS2 Workspace v44 หน้าพนักงาน</title>
+<title>KMS2 Workspace v45 หน้าพนักงาน</title>
 <style>
 *{box-sizing:border-box;font-family:system-ui,sans-serif}
 html,body{margin:0;max-width:100%;overflow-x:hidden;background:#eef3ef;color:#1f2933}
@@ -405,7 +405,7 @@ button{background:var(--kms2-primary);border-radius:13px;box-shadow:0 3px 10px r
   <section id="section-settings" class="section">
     <div class="card">
       <h2>ตั้งค่า</h2>
-      <div class="notice"><b>KMS2 Professional Workspace v44</b><br>หน้าพนักงานสำหรับดูเวร ส่งคำขอ และติดตามสถานะ</div>
+      <div class="notice"><b>KMS2 Professional Workspace v45</b><br>หน้าพนักงานสำหรับดูเวร ส่งคำขอ และติดตามสถานะ</div>
       <br>
       <button onclick="loadData()">รีเฟรชข้อมูล</button>
     </div>
@@ -552,8 +552,7 @@ function getSubstituteInfo(note){
 }
 function dutyChip(x,compact=false){
   const info=getSubstituteInfo(x["หมายเหตุ"]||"");
-  const baseNote=String(x["หมายเหตุ"]||"").replace(/
-?\[เวรแทน\].*/s,"").trim();
+  const baseNote=String(x["หมายเหตุ"]||"").replace(/\n?\[เวรแทน\].*/s,"").trim();
   if(compact && info){
     return `<div class="chip subDuty">🔁 <b>เวรแทน</b></div>`;
   }
