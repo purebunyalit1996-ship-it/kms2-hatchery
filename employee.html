@@ -5,7 +5,7 @@
 <meta name="theme-color" content="#0f5132">
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
-<title>KMS2 พนักงาน v3.4</title>
+<title>KMS2 หน้าพนักงาน</title>
 <style>
 *{box-sizing:border-box;font-family:system-ui,sans-serif}
 html,body{margin:0;max-width:100%;overflow-x:hidden;background:#eef3ef;color:#1f2933}
@@ -302,12 +302,40 @@ input[type="month"] {
   }
 }
 
+
+
+/* ===============================
+   KMS2 v43 Employee Professional UI
+   =============================== */
+:root{--kms2-primary:#124734;--kms2-bg:#f5f7f6;--kms2-card:#fff;--kms2-border:#dfe7e2;--kms2-text:#17231d;--kms2-muted:#66736d;--kms2-radius:18px}
+body{background:var(--kms2-bg);color:var(--kms2-text);letter-spacing:.01em}
+header{background:linear-gradient(135deg,#0d3f2f,#155c43);padding:24px 14px 20px;box-shadow:0 10px 30px rgba(12,64,46,.18)}
+header h1{font-weight:900;letter-spacing:.01em}
+header p{opacity:.92}
+.card{border:1px solid var(--kms2-border);box-shadow:0 8px 24px rgba(15,23,42,.06);border-radius:var(--kms2-radius)}
+h2{color:var(--kms2-primary);font-weight:900}
+.small{color:var(--kms2-muted)}
+.tabs{background:rgba(245,247,246,.94);backdrop-filter:blur(10px);border-bottom:1px solid #e3ebe6}
+.tabs button{background:#5d6b66;border-radius:14px;box-shadow:none}
+.tabs button.active{background:var(--kms2-primary)}
+label{color:#30443a;font-weight:850}
+input,select,textarea{border:1px solid #d8e1dc;background:#fff;color:var(--kms2-text);transition:border .15s ease,box-shadow .15s ease}
+input:focus,select:focus,textarea:focus{outline:none;border-color:#2f7d5f;box-shadow:0 0 0 4px rgba(47,125,95,.12)}
+button{background:var(--kms2-primary);border-radius:13px;box-shadow:0 3px 10px rgba(18,71,52,.14)}
+.notice{background:#f5fbf7;border-color:#cfe3d7;color:#245a41}
+.notice.warn{background:#fff9ed;border-color:#f2d399;color:#8a5a13}
+.chip{border-radius:13px;box-shadow:0 2px 10px rgba(15,23,42,.05)}
+.dayname{background:#e7f2ed;color:var(--kms2-primary)}
+.cell{background:#fbfcfb;border-color:#dfe7e2;box-shadow:0 2px 8px rgba(15,23,42,.035)}
+.cell.hasDuty{background:#f6fbf8;border-color:#a9d8bf}
+@media(max-width:700px){header h1{font-size:21px}.tabs button{font-size:12px}.card{border-radius:16px}}
+
 </style>
 </head>
 <body>
 <header>
   <h1>เวรตู้ฟัก โรงฟักคลองมือไทร 2</h1>
-  <p>หน้าพนักงาน v3.1: Compact View</p>
+  <p>หน้าพนักงาน</p>
 </header>
 
 <div class="container">
@@ -325,20 +353,20 @@ input[type="month"] {
 
   <section id="section-myduty" class="section">
     <div class="card">
-      <h2>ดูเวรของฉัน</h2>
+      <h2>ดูเวร</h2>
       <div class="grid">
         <div><label>พิมพ์ชื่อพนักงาน</label><input id="myName" list="staffList" placeholder="เช่น ยูร"></div>
         <div><label>เดือนที่ต้องการดู</label><input type="month" id="myMonth"></div>
       </div>
-      <button onclick="renderMyDuty()">ดูเวรของฉัน</button>
+      <button onclick="renderMyDuty()">ค้นหาเวร</button>
       <datalist id="staffList"></datalist><br><br>
-      <div id="myDutyBox" class="notice">พิมพ์ชื่อ แล้วกดดูเวรของฉัน</div>
+      <div id="myDutyBox" class="notice">กรอกชื่อเพื่อค้นหาเวร</div>
     </div>
   </section>
 
   <section id="section-request" class="section">
     <div class="card">
-      <h2>ส่งคำขอลา / เปลี่ยนเวร</h2>
+      <h2>ส่งคำขอ</h2>
       <div class="grid requestGrid">
         <div class="requestField"><label>พนักงาน</label><input id="requestStaff" list="staffList" placeholder="เช่น ยูร"></div>
         <div class="requestField requestDateField"><label>วันที่เกี่ยวข้อง</label><input type="date" id="requestDate"></div>
@@ -352,11 +380,11 @@ input[type="month"] {
 
   <section id="section-status" class="section">
     <div class="card">
-      <h2>สถานะคำขอของฉัน</h2>
+      <h2>สถานะคำขอ</h2>
       <label>พิมพ์ชื่อเพื่อตรวจสถานะ</label>
       <input id="statusName" list="staffList" placeholder="เช่น ยูร">
       <button onclick="renderMyRequests()">ตรวจสถานะคำขอ</button><br><br>
-      <div id="myRequestBox" class="notice warn">พิมพ์ชื่อ แล้วกดตรวจสถานะคำขอ</div>
+      <div id="myRequestBox" class="notice warn">กรอกชื่อเพื่อตรวจสถานะ</div>
     </div>
   </section>
 
@@ -368,7 +396,7 @@ input[type="month"] {
         <button onclick="loadData()">รีเฟรชข้อมูล</button>
       </div><br>
       <div id="calendarArea"></div>
-      <p class="small">ปฏิทินถูกย่อให้กะทัดรัดสำหรับมือถือ</p>
+      <p class="small">กดวันที่เพื่อดูรายละเอียดเวร</p>
     </div>
   </section>
 </div>

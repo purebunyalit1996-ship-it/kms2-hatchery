@@ -5,7 +5,7 @@
 <meta name="theme-color" content="#0f5132">
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
-<title>KMS2 Admin v4.1 เวรตู้ฟัก</title>
+<title>KMS2 ระบบจัดการเวรตู้ฟัก</title>
 <style>
 *{box-sizing:border-box;font-family:system-ui,sans-serif}
 body{margin:0;background:#eef3ef;color:#1f2933}
@@ -579,19 +579,91 @@ input[type="month"] {
   .pager button{min-width:38px;padding:8px 10px}
 }
 
+
+
+/* ===============================
+   KMS2 v43 Professional Copy UI
+   Clean Enterprise visual polish
+   =============================== */
+:root{
+  --kms2-primary:#124734;
+  --kms2-primary-soft:#eaf3ee;
+  --kms2-bg:#f5f7f6;
+  --kms2-card:#ffffff;
+  --kms2-border:#dfe7e2;
+  --kms2-text:#17231d;
+  --kms2-muted:#66736d;
+  --kms2-warning:#b7791f;
+  --kms2-danger:#b42318;
+  --kms2-radius:18px;
+}
+body{background:var(--kms2-bg);color:var(--kms2-text);letter-spacing:.01em}
+header{background:linear-gradient(135deg,#0d3f2f,#155c43);padding:26px 16px 22px;box-shadow:0 10px 30px rgba(12,64,46,.18)}
+header h1{font-size:27px;font-weight:900;letter-spacing:.01em}
+header p{font-size:15px;opacity:.92;margin-top:6px}
+.nav{margin-top:16px}
+.nav a,.nav button{background:rgba(255,255,255,.14);border:1px solid rgba(255,255,255,.24);backdrop-filter:blur(8px);font-weight:800;box-shadow:none}
+.nav a:hover,.nav button:hover{background:rgba(255,255,255,.24)}
+.container{padding-top:18px}
+.card{border:1px solid var(--kms2-border);box-shadow:0 8px 24px rgba(15,23,42,.06);border-radius:var(--kms2-radius)}
+.card.executive{border:1px solid #bad7cb;background:#f8fcfa}
+.card.hot{border:1px solid #f2d39b;background:#fffaf0}
+.card.alert{border:1px solid #f0b8b2;background:#fff8f7}
+h2{font-size:20px;color:var(--kms2-primary);font-weight:900;letter-spacing:.01em}
+h3{color:var(--kms2-primary);font-weight:850}
+.small{color:var(--kms2-muted)}
+label{color:#30443a;font-weight:850}
+input,select,textarea{border:1px solid #d8e1dc;background:#fff;color:var(--kms2-text);transition:border .15s ease,box-shadow .15s ease}
+input:focus,select:focus,textarea:focus{outline:none;border-color:#2f7d5f;box-shadow:0 0 0 4px rgba(47,125,95,.12)}
+button{background:var(--kms2-primary);border-radius:13px;box-shadow:0 3px 10px rgba(18,71,52,.14)}
+button:hover{filter:brightness(1.04)}
+button.gray{background:#5d6b66}
+button.print{background:#0f5e55}
+button.danger{background:#b42318}
+.stat{background:#fff;border:1px solid var(--kms2-border);box-shadow:0 4px 16px rgba(15,23,42,.04);border-radius:16px}
+.stat b{color:var(--kms2-primary);font-size:28px}
+.notice{background:#f5fbf7;border-color:#cfe3d7;color:#245a41}
+.notice.warn{background:#fff9ed;border-color:#f2d399;color:#8a5a13}
+.notice.danger{background:#fff5f4;border-color:#f0b8b2;color:#9f1c12}
+th{background:#eef6f2;color:var(--kms2-primary);font-weight:900}
+td{color:#26362f}
+.calendar{gap:7px}
+.dayname{background:#e7f2ed;color:var(--kms2-primary);font-weight:900}
+.cell{background:#fbfcfb;border-color:#dfe7e2;box-shadow:0 2px 8px rgba(15,23,42,.035)}
+.cell.hasDuty{background:#f6fbf8;border-color:#a9d8bf}
+.date{color:var(--kms2-primary)}
+.dutyPill{border-color:#e1e8e4;background:#fff;border-radius:999px;font-size:11.5px}
+.dutyPill.sub{background:#fff4e8;border-color:#f7b267;color:#8a3d08}
+.roleBadge{background:#eef6f2;color:var(--kms2-primary);border:1px solid rgba(255,255,255,.35);box-shadow:0 6px 20px rgba(0,0,0,.12)}
+.roleBadge.supervisor{background:#edf4ff;color:#1c4e8a}
+.subSimpleBox{background:#fff8ee;border:1px solid #f3c78d}
+.subSimpleBox h3{color:#964b10}
+.subHelp{color:#8a4a12}
+.pager button{box-shadow:none}
+.pager button.active{background:var(--kms2-primary)}
+@media(max-width:700px){
+  header{padding:22px 12px 18px}
+  header h1{font-size:21px}
+  header p{font-size:14px}
+  .nav a,.nav button{font-size:13px;border-radius:12px}
+  .card{border-radius:16px;padding:14px}
+  h2{font-size:19px}
+  .stat b{font-size:25px}
+}
+
 </style>
 </head>
 <body>
 <header>
 <h1>เวรตู้ฟัก โรงฟักคลองมือไทร 2</h1>
-<p id="roleText">Admin v4.1: Flexible Duty Range</p>
+<p id="roleText">ระบบจัดการเวร</p>
 <div id="roleBadge" class="roleBadge">กำลังตรวจสอบสิทธิ์...</div>
 <div class="nav noPrint">
-<a href="index.html?v=36">🏠 Admin</a>
-<a href="#executiveDashboard">📊 ผู้บริหาร</a>
-<a href="employee.html?v=36">👷 หน้าพนักงาน</a>
-<button onclick="loadData()">🔄 รีเฟรช</button>
-<button onclick="window.print()">📄 Export PDF</button>
+<a href="index.html?v=43">หน้าหลัก</a>
+<a href="#executiveDashboard">รายงาน</a>
+<a href="employee.html?v=43">หน้าพนักงาน</a>
+<button onclick="loadData()">รีเฟรชข้อมูล</button>
+<button onclick="window.print()">Export PDF</button>
 <button onclick="logoutAdmin()">ออกจากระบบ</button>
 </div>
 </header>
@@ -600,7 +672,7 @@ input[type="month"] {
 <div id="systemAlert" class="card alert" style="display:none"></div>
 
 <div id="executiveDashboard" class="card executive">
-<h2>📊 Dashboard ผู้บริหาร</h2><p class="small noPrint">Mobile Pro: ปรับฟอร์ม ตาราง และปฏิทินให้ใช้งานบนมือถือได้โดยไม่ต้องเลื่อนซ้ายขวา</p>
+<h2>รายงานผู้บริหาร</h2><p class="small noPrint">ภาพรวมเวร คำขอ และสถานะประจำเดือน</p>
 <div class="grid noPrint">
 <div><label>เลือกเดือนรายงาน</label><input type="month" id="execMonth" onchange="renderExecutiveDashboard()"></div>
 <div><label>&nbsp;</label><button onclick="renderExecutiveDashboard()">อัปเดตรายงาน</button></div>
@@ -623,7 +695,7 @@ input[type="month"] {
 </div>
 
 <div class="card">
-<h2>Dashboard Pro</h2>
+<h2>สรุปภาพรวม</h2>
 <div class="statgrid">
 <div class="stat">เวรทั้งหมด<br><b id="totalDuty">0</b></div>
 <div class="stat">เวรวันนี้<br><b id="todayCount">0</b></div>
@@ -634,23 +706,23 @@ input[type="month"] {
 </div>
 </div>
 
-<div class="card hot"><h2>🔥 คำขอรออนุมัติ</h2><div id="pendingRequestBox" class="notice warn">กำลังโหลดคำขอ...</div></div>
-<div class="card"><h2>📊 สรุปรายเดือน</h2><div class="grid noPrint"><input type="month" id="summaryMonth" onchange="renderMonthlySummary()"><button onclick="renderMonthlySummary()">สรุปรายเดือน</button></div><br><div id="monthlySummary"></div></div>
+<div class="card hot"><h2>คำขอรออนุมัติ</h2><div id="pendingRequestBox" class="notice warn">กำลังโหลดคำขอ...</div></div>
+<div class="card"><h2>สรุปรายเดือน</h2><div class="grid noPrint"><input type="month" id="summaryMonth" onchange="renderMonthlySummary()"><button onclick="renderMonthlySummary()">สรุปรายเดือน</button></div><br><div id="monthlySummary"></div></div>
 <div class="card"><h2>คำขอลา / เปลี่ยนเวร ทั้งหมด</h2><div id="requestTable"></div></div>
-<div class="card"><h2>เวรล่าสุด</h2><div id="latestDuty"></div></div>
+<div class="card"><h2>รายการเวรล่าสุด</h2><div id="latestDuty"></div></div>
 <div class="card noPrint"><h2>ดูเวรของพนักงาน</h2><div class="grid"><div><label>พิมพ์ชื่อพนักงาน</label><input id="myName" placeholder="เช่น ยูร"></div><div><label>เดือนที่ต้องการดู</label><input type="month" id="myMonth"></div><div><label>&nbsp;</label><button onclick="renderMyDuty()">ดูเวร</button></div></div><br><div id="myDutyBox" class="notice">พิมพ์ชื่อพนักงาน แล้วกดดูเวร</div></div>
 <div class="card"><h2>เวรวันนี้</h2><div id="todayDuty"></div></div>
-<div class="card"><h2>ปฏิทินเวรรายเดือน</h2><div class="grid noPrint"><input type="month" id="monthPicker" onchange="renderCalendar()"><button onclick="loadData()">รีเฟรชข้อมูล</button><button class="print" onclick="window.print()">Export PDF / Print</button></div><br><div id="calendarArea"></div></div>
+<div class="card"><h2>ปฏิทินเวรรายเดือน</h2><div class="grid noPrint"><input type="month" id="monthPicker" onchange="renderCalendar()"><button onclick="loadData()">รีเฟรชข้อมูล</button><button class="print" onclick="window.print()">Export PDF</button></div><br><div id="calendarArea"></div></div>
 
-<div class="card noPrint"><h2>🧠 เครื่องมือจัดเวรขั้นสูง</h2><div class="toolGrid">
-<div class="toolBox"><h3>ค้นหาพนักงานเร็ว</h3><input id="quickStaff" placeholder="เช่น ยูร"><button onclick="renderStaffQuickSearch()">ค้นหา</button><div id="quickStaffResult" class="notice warn">พิมพ์ชื่อเพื่อดูเวร/คำขอ/สถานะ</div></div>
+<div class="card noPrint"><h2>เครื่องมือจัดเวร</h2><div class="toolGrid">
+<div class="toolBox"><h3>ค้นหาพนักงาน</h3><input id="quickStaff" placeholder="เช่น ยูร"><button onclick="renderStaffQuickSearch()">ค้นหา</button><div id="quickStaffResult" class="notice warn">กรอกชื่อเพื่อดูข้อมูล</div></div>
 <div class="toolBox"><h3>ตรวจคนว่าง</h3><input type="date" id="availableDate"><button onclick="renderAvailableStaff()">ดูคนว่างวันนี้</button><div id="availableResult" class="notice warn">เลือกวันที่เพื่อตรวจคนว่าง</div></div>
 <div class="toolBox"><h3>รายงานคนเข้าเวร</h3><input type="month" id="staffReportMonth"><button onclick="renderStaffDutyReport()">สรุปรายงาน</button><div id="staffReportBox" class="notice warn">เลือกเดือนเพื่อดูจำนวนเวร/คำขอ</div></div>
-<div class="toolBox"><h3>Backup / Export</h3><button onclick="downloadBackupJSON()">ดาวน์โหลด Backup JSON</button><button class="print" onclick="downloadMonthlyCSV()">Export CSV เดือนนี้</button><div class="small">ใช้สำรองข้อมูลฝั่งหน้าเว็บจากข้อมูลที่โหลดล่าสุด</div></div>
+<div class="toolBox"><h3>สำรองข้อมูล</h3><button onclick="downloadBackupJSON()">ดาวน์โหลด Backup</button><button class="print" onclick="downloadMonthlyCSV()">Export CSV เดือนนี้</button><div class="small">สำรองจากข้อมูลที่โหลดล่าสุด</div></div>
 <div class="toolBox"><h3>ประวัติการแก้ไข</h3><button class="gray" onclick="renderAuditLog()">ดูประวัติ</button><div id="auditLogBox" class="notice warn auditBox">ยังไม่มีการแสดงประวัติ</div></div>
 </div></div>
 
-<div class="card noPrint" id="dutyFormCard"><h2 id="dutyTitle">เพิ่มเวรตู้</h2><input type="hidden" id="dutyRow"><div class="grid"><div><label>วันที่เริ่ม</label><input type="date" id="dutyDate"></div><div><label>วันที่สิ้นสุด <span class="small">(เลือกสั้น/ยาวได้อิสระ)</span></label><input type="date" id="dutyEndDate"></div><div><label>พนักงานหลัก</label><input id="dutyStaff" list="staffNameList" placeholder="เลือก/พิมพ์ชื่อใครก็ได้"><datalist id="staffNameList"></datalist></div><div><label>กะเวร</label><select id="dutyShift"></select></div><div><label>ตู้</label><input id="dutyMachine" placeholder="เช่น ตู้ฟัก 1"></div></div><p class="dateRangeHelp">เลือกช่วงวันที่ได้ทุกเดือน ทุกคน และปรับความยาวเวรได้เอง เช่น 1–5, 11–20, 1–31 ระบบจะเพิ่มเวรให้ทุกวันในช่วงนั้น</p><div class="subSimpleBox"><h3>🔁 เวรแทน</h3><p class="subHelp">โหมดใหม่แบบง่าย: ระบุ <b>ชื่อคนแทน</b> และ <b>วันที่แทน</b> ได้อิสระ ใช้ได้ทุกเดือน ไม่จำเป็นต้องอยู่ในช่วงเวรหลัก และระบบจะแสดงเป็นป้ายสีส้มเด่นว่าเป็นเวรแทน</p><div class="grid"><div><label>เวรแทนโดย <span class="small">(ไม่บังคับ)</span></label><input id="subStaff" list="staffNameList" placeholder="เช่น ป๋อ / นุช / โนรา"><label>เหตุผล / หมายเหตุเวรแทน</label><input id="subReason" placeholder="เช่น วันหยุดประจำสัปดาห์"></div><div><label>วันที่แทน <span class="small">(เลือกได้หลายวัน / ทุกเดือน)</span></label><textarea id="subDates" placeholder="เช่น 12/06/2026, 18/06/2026, 25/07/2026 หรือ 12,18,25"></textarea></div></div><p class="dateRangeHelp">ตัวอย่าง: เวรหลัก ยูร 11–13 แต่ ป๋อแทนวันที่ 12 ให้ใส่ เวรแทนโดย = ป๋อ และ วันที่แทน = 12/06/2026</p></div><p class="dateRangeHelp">ระบบไม่ล็อกชื่อ ไม่ล็อกวันที่ และเวรแทนสามารถอยู่นอกช่วงเวรหลักได้</p><label>หมายเหตุ / ฉุกเฉิน</label><textarea id="dutyNote"></textarea><button onclick="saveDuty()">บันทึกเวร</button><button class="gray" onclick="resetDuty()">ยกเลิกการแก้ไข</button></div>
+<div class="card noPrint" id="dutyFormCard"><h2 id="dutyTitle">เพิ่มเวรตู้</h2><input type="hidden" id="dutyRow"><div class="grid"><div><label>วันที่เริ่ม</label><input type="date" id="dutyDate"></div><div><label>วันที่สิ้นสุด <span class="small">(เลือกสั้น/ยาวได้อิสระ)</span></label><input type="date" id="dutyEndDate"></div><div><label>พนักงานหลัก</label><input id="dutyStaff" list="staffNameList" placeholder="เลือก/พิมพ์ชื่อใครก็ได้"><datalist id="staffNameList"></datalist></div><div><label>กะเวร</label><select id="dutyShift"></select></div><div><label>ตู้</label><input id="dutyMachine" placeholder="เช่น ตู้ฟัก 1"></div></div><p class="dateRangeHelp">เลือกช่วงวันที่ได้อิสระ ระบบจะเพิ่มเวรให้ทุกวันในช่วงนั้น</p><div class="subSimpleBox"><h3>🔁 เวรแทน</h3><p class="subHelp">ระบุคนแทนและวันที่แทนได้อิสระ ระบบจะแสดงเป็นเวรแทนในปฏิทิน</p><div class="grid"><div><label>เวรแทนโดย <span class="small">(ไม่บังคับ)</span></label><input id="subStaff" list="staffNameList" placeholder="เช่น ป๋อ / นุช / โนรา"><label>เหตุผล / หมายเหตุเวรแทน</label><input id="subReason" placeholder="เช่น วันหยุดประจำสัปดาห์"></div><div><label>วันที่แทน <span class="small">(เลือกได้หลายวัน / ทุกเดือน)</span></label><textarea id="subDates" placeholder="เช่น 12/06/2026, 18/06/2026, 25/07/2026 หรือ 12,18,25"></textarea></div></div><p class="dateRangeHelp">ตัวอย่าง: เวรแทนโดย = ป๋อ, วันที่แทน = 12/06/2026</p></div><p class="dateRangeHelp">เวรแทนใช้ได้ทุกคน ทุกวันที่ และทุกเดือน</p><label>หมายเหตุ / ฉุกเฉิน</label><textarea id="dutyNote"></textarea><button onclick="saveDuty()">บันทึกเวร</button><button class="gray" onclick="resetDuty()">ยกเลิกการแก้ไข</button></div>
 
 <div class="card noPrint" id="logFormCard"><h2 id="logTitle">บันทึกสถานะเวร</h2><input type="hidden" id="logRow"><div class="grid"><div><label>วันที่</label><input type="date" id="logDate"></div><div><label>เวลา</label><input type="time" id="logTime"></div><div><label>พนักงาน</label><input id="logStaff" placeholder="เช่น ยูร"></div><div><label>กะเวร</label><select id="logShift"></select></div><div><label>ตู้</label><input id="logMachine" placeholder="เช่น ตู้ฟัก 1"></div><div><label>สถานะ</label><select id="logStatus"><option>ปกติ</option><option>ต้องติดตาม</option><option>ผิดปกติ</option><option>แก้ไขแล้ว</option></select></div></div><label>หมายเหตุ</label><textarea id="logNote"></textarea><button onclick="saveLog()">บันทึกสถานะ</button><button class="gray" onclick="resetLog()">ยกเลิกการแก้ไข</button></div>
 
@@ -695,12 +767,12 @@ function renderRoleUI(){
   if(!badge || !text) return;
   if(isAdmin()){
     badge.className="roleBadge admin";
-    badge.textContent="สิทธิ์ปัจจุบัน: Admin";
-    text.textContent="Admin v4.1: Full Access";
+    badge.textContent="Admin";
+    text.textContent="ระบบจัดการเวร";
   }else{
     badge.className="roleBadge supervisor";
-    badge.textContent="สิทธิ์ปัจจุบัน: Supervisor";
-    text.textContent="Supervisor v4.1: อนุมัติคำขอ / แก้เวรได้ / ลบข้อมูลไม่ได้";
+    badge.textContent="Supervisor";
+    text.textContent="ระบบจัดการเวร (Supervisor)";
   }
 }
 

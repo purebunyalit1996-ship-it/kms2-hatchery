@@ -1,4 +1,4 @@
-const CACHE_NAME = "kms2-issue-fix-stable-v42";
+const CACHE_NAME = "kms2-professional-ui-v43";
 
 self.addEventListener("install", event => {
   self.skipWaiting();

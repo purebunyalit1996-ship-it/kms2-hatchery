@@ -5,7 +5,7 @@
 <meta name="theme-color" content="#0f5132">
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
-<title>KMS2 Login v35 v3.1</title>
+<title>KMS2 Login</title>
 
 <style>
 *{box-sizing:border-box;font-family:system-ui,sans-serif}
@@ -26,14 +26,29 @@ button.gray{background:#64748b}
   .loginBox{padding:20px}
   .loginBox h1{font-size:24px}
 }
+
+
+/* KMS2 v43 Login Professional UI */
+:root{--kms2-primary:#124734;--kms2-border:#dfe7e2;--kms2-text:#17231d;--kms2-muted:#66736d}
+.loginWrap{background:linear-gradient(135deg,#0d3f2f,#155c43)}
+.loginBox{border:1px solid rgba(255,255,255,.35);box-shadow:0 24px 80px rgba(0,0,0,.24)}
+.loginBox h1{color:var(--kms2-primary);font-weight:900;letter-spacing:.01em}
+.loginBox p{color:var(--kms2-muted)}
+input{border-color:#d8e1dc}
+input:focus{outline:none;border-color:#2f7d5f;box-shadow:0 0 0 4px rgba(47,125,95,.12)}
+button{background:var(--kms2-primary);box-shadow:0 3px 10px rgba(18,71,52,.14)}
+button.gray{background:#5d6b66}
+.notice{border-color:var(--kms2-border);background:#f7faf8}
+.badge{background:#eef6f2;color:var(--kms2-primary)}
+
 </style>
 </head>
 
 <body>
 <div class="loginWrap">
   <div class="loginBox">
-    <h1>🔐 KMS2 Login v35</h1>
-    <p>เข้าสู่ระบบผู้ดูแล / ผู้ควบคุมเวรตู้ฟัก</p>
+    <h1>KMS2 Login</h1>
+    <p>ระบบจัดการเวรตู้ฟัก</p>
 
     <label>Username</label>
     <input id="user" placeholder="admin หรือ supervisor" autocomplete="username">
@@ -47,10 +62,10 @@ button.gray{background:#64748b}
       <span class="badge">บัญชีทดสอบ</span>
       <p class="roleLine"><b>Admin</b> : admin / 1234</p>
       <p class="roleLine"><b>Supervisor</b> : supervisor / 5678</p>
-      <p class="small">Supervisor เข้า Dashboard ได้ แต่ลบข้อมูลไม่ได้</p>
+      <p class="small">เข้าสู่ระบบตามสิทธิ์ผู้ใช้งาน</p>
     </div>
 
-    <button class="gray" onclick="location.href='employee.html?v=32'">
+    <button class="gray" onclick="location.href='employee.html?v=43'">
       ไปหน้าพนักงาน
     </button>
   </div>
@@ -64,12 +79,12 @@ function login(){
   if(u==="admin" && p==="1234"){
     sessionStorage.setItem("kms2Role","admin");
     sessionStorage.setItem("kms2Admin","yes");
-    location.href="index.html?v=32";
+    location.href="index.html?v=43";
   }
   else if(u==="supervisor" && p==="5678"){
     sessionStorage.setItem("kms2Role","supervisor");
     sessionStorage.setItem("kms2Admin","yes");
-    location.href="index.html?v=32";
+    location.href="index.html?v=43";
   }
   else{
     alert("Username หรือ Password ไม่ถูกต้อง");
