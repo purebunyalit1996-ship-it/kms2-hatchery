@@ -1,4 +1,4 @@
-const CACHE_NAME = "kms2-professional-ui-v43";
+const CACHE_NAME = "kms2-professional-workspace-v44";
 
 self.addEventListener("install", event => {
   self.skipWaiting();

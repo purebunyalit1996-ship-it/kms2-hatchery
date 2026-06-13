@@ -305,7 +305,7 @@ input[type="month"] {
 
 
 /* ===============================
-   KMS2 v43 Employee Professional UI
+   KMS2 v44 Employee Professional UI
    =============================== */
 :root{--kms2-primary:#124734;--kms2-bg:#f5f7f6;--kms2-card:#fff;--kms2-border:#dfe7e2;--kms2-text:#17231d;--kms2-muted:#66736d;--kms2-radius:18px}
 body{background:var(--kms2-bg);color:var(--kms2-text);letter-spacing:.01em}
@@ -330,6 +330,52 @@ button{background:var(--kms2-primary);border-radius:13px;box-shadow:0 3px 10px r
 .cell.hasDuty{background:#f6fbf8;border-color:#a9d8bf}
 @media(max-width:700px){header h1{font-size:21px}.tabs button{font-size:12px}.card{border-radius:16px}}
 
+
+/* ===============================
+   KMS2 v44 Employee Workspace Edition
+   =============================== */
+.workspaceTabs{
+  grid-template-columns:repeat(6,minmax(90px,1fr));
+  gap:9px;
+  padding:12px 0;
+}
+.workspaceTabs button{
+  min-height:46px;
+  border-radius:16px;
+  background:#e8eeeb;
+  color:#30443a;
+  border:1px solid #d9e4de;
+  box-shadow:0 4px 14px rgba(15,23,42,.04);
+  transition:transform .15s ease, background .15s ease, color .15s ease;
+}
+.workspaceTabs button.active{
+  background:var(--kms2-primary,#124734);
+  color:#fff;
+  box-shadow:0 8px 22px rgba(18,71,52,.18);
+}
+.workspaceTabs button:hover{transform:translateY(-1px)}
+.section.active{animation:workspaceFade .18s ease}
+@keyframes workspaceFade{from{opacity:.72;transform:translateY(4px)}to{opacity:1;transform:none}}
+button{transition:transform .12s ease, filter .12s ease}
+button:active{transform:scale(.985)}
+.subDuty .subLine{display:none}
+.cell .subDuty,
+.cell .chip.subDuty{
+  background:#fff4e8!important;
+  border:1px solid #f7b267!important;
+  color:#8a3d08!important;
+  font-weight:900;
+}
+.cell .chip.subDuty::after{
+  content:"🔁 เวรแทน";
+}
+.cell .chip.subDuty b,
+.cell .chip.subDuty .subLine{
+  display:none!important;
+}
+@media(max-width:800px){.workspaceTabs{grid-template-columns:repeat(3,1fr)}}
+@media(max-width:390px){.workspaceTabs{grid-template-columns:repeat(2,1fr)}}
+
 </style>
 </head>
 <body>
@@ -339,12 +385,13 @@ button{background:var(--kms2-primary);border-radius:13px;box-shadow:0 3px 10px r
 </header>
 
 <div class="container">
-  <div class="tabs">
+  <div class="tabs workspaceTabs" role="navigation" aria-label="เมนูพนักงาน">
     <button id="tab-today" class="active" onclick="showSection('today')">📌 วันนี้</button>
     <button id="tab-myduty" onclick="showSection('myduty')">👤 ดูเวร</button>
     <button id="tab-request" onclick="showSection('request')">📝 คำขอ</button>
     <button id="tab-status" onclick="showSection('status')">✅ สถานะ</button>
     <button id="tab-calendar" onclick="showSection('calendar')">📅 ปฏิทิน</button>
+    <button id="tab-settings" onclick="showSection('settings')">⚙️ ตั้งค่า</button>
   </div>
 
   <section id="section-today" class="section active">
@@ -399,6 +446,21 @@ button{background:var(--kms2-primary);border-radius:13px;box-shadow:0 3px 10px r
       <p class="small">กดวันที่เพื่อดูรายละเอียดเวร</p>
     </div>
   </section>
+
+  <section id="section-settings" class="section">
+    <div class="card">
+      <h2>ตั้งค่า</h2>
+      <div class="notice">
+        <b>KMS2 เวรพนักงาน</b><br>
+        ใช้สำหรับดูเวร ส่งคำขอ และตรวจสอบสถานะ
+      </div>
+      <br>
+      <div class="grid">
+        <button onclick="loadData()">รีเฟรชข้อมูล</button>
+        <button class="gray" onclick="location.href='login.html'">ไปหน้าผู้ดูแล</button>
+      </div>
+    </div>
+  </section>
 </div>
 
 <div id="dayDetailOverlay" class="dayDetailOverlay" onclick="closeDayDetail(event)">
@@ -443,7 +505,7 @@ function dutyDateOf(x){return normalizeRecordDate(x && x['วันที่']);
 function requestDateOf(x){return normalizeRecordDate((x && (x['วันที่เกี่ยวข้อง']||x['วันที่ส่งคำขอ']))||'');}
 
 function showSection(name){
-  ["today","myduty","request","status","calendar"].forEach(x=>{
+  ["today","myduty","request","status","calendar","settings"].forEach(x=>{
     q("section-"+x).classList.remove("active");
     q("tab-"+x).classList.remove("active");
   });
@@ -541,8 +603,15 @@ function getSubstituteInfo(note){
 }
 function dutyChip(x,compact=false){
   const info=getSubstituteInfo(x["หมายเหตุ"]||"");
-  const baseNote=String(x["หมายเหตุ"]||"").replace(/\n?\[เวรแทน\].*/s,"").trim();
-  return `<div class="chip ${info?"subDuty":""}">👤 <b>${escapeHtml(x["พนักงาน"]||"")}</b>${info?`<span class="subLine">🔁 เวรแทน: ${escapeHtml(info.sub)}<br>เวรหลัก: ${escapeHtml(info.main)} (${escapeHtml(info.reason)})</span>`:""}${compact?"":`<br>🕒 ${escapeHtml(x["กะเวร"]||"")}<br>🐣 ${escapeHtml(x["ตู้"]||"")}<br>📝 ${escapeHtml(baseNote||"-")}`}</div>`;
+  const baseNote=String(x["หมายเหตุ"]||"").replace(/
+?\[เวรแทน\].*/s,"").trim();
+  if(compact && info){
+    return `<div class="chip subDuty">🔁 เวรแทน</div>`;
+  }
+  if(compact){
+    return `<div class="chip">👤 <b>${escapeHtml(x["พนักงาน"]||"")}</b></div>`;
+  }
+  return `<div class="chip ${info?"subDuty":""}">👤 <b>${escapeHtml(x["พนักงาน"]||"")}</b>${info?`<span class="subLine">🔁 เวรแทน: ${escapeHtml(info.sub)}<br>เวรหลัก: ${escapeHtml(info.main)} (${escapeHtml(info.reason)})</span>`:""}<br>🕒 ${escapeHtml(x["กะเวร"]||"")}<br>🐣 ${escapeHtml(x["ตู้"]||"")}<br>📝 ${escapeHtml(baseNote||"-")}</div>`;
 }
 
 function renderCalendar(){

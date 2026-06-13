@@ -548,7 +548,7 @@ input[type="month"] {
 
 
 /* ===============================
-   KMS2 v4.1 Issue Fix
+   KMS2 v4.4 Issue Fix
    Calendar readability + pagination + simple substitute
    =============================== */
 .calendarLegend{display:flex;flex-wrap:wrap;gap:8px;margin:10px 0 14px}
@@ -582,7 +582,7 @@ input[type="month"] {
 
 
 /* ===============================
-   KMS2 v43 Professional Copy UI
+   KMS2 v44 Professional Copy UI
    Clean Enterprise visual polish
    =============================== */
 :root{
@@ -651,6 +651,83 @@ td{color:#26362f}
   .stat b{font-size:25px}
 }
 
+
+/* ===============================
+   KMS2 v44 Professional Workspace Edition
+   Page-like workspaces + production UI polish
+   =============================== */
+.workspaceNav{
+  display:grid;
+  grid-template-columns:repeat(7,minmax(110px,1fr));
+  gap:10px;
+  width:min(1120px,100%);
+  margin:18px auto 0;
+}
+.workspaceNav .wsBtn,
+.quickActions button{
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  min-height:46px;
+  padding:11px 14px;
+  border-radius:16px;
+  border:1px solid rgba(255,255,255,.28);
+  background:rgba(255,255,255,.14);
+  color:#fff;
+  font-weight:900;
+  text-decoration:none;
+  box-shadow:0 8px 22px rgba(0,0,0,.10);
+  transition:transform .15s ease, background .15s ease, box-shadow .15s ease;
+}
+.workspaceNav .wsBtn:hover,
+.quickActions button:hover{
+  transform:translateY(-1px);
+  background:rgba(255,255,255,.24);
+}
+.workspaceNav .wsBtn.active{
+  background:#fff;
+  color:var(--kms2-primary,#124734);
+  box-shadow:0 10px 28px rgba(0,0,0,.16);
+}
+.workspaceNav .linkBtn{margin-top:6px}
+.quickActions{
+  width:min(780px,100%);
+  margin:12px auto 0;
+  display:grid;
+  grid-template-columns:repeat(3,1fr);
+  gap:10px;
+}
+.quickActions button{background:rgba(255,255,255,.12);margin:0}
+.workspaceTitle{
+  width:min(1200px,100%);
+  margin:0 auto 16px;
+  padding:16px 18px;
+  border-radius:22px;
+  background:linear-gradient(135deg,#ffffff,#f7fbf9);
+  border:1px solid var(--kms2-border,#dfe7e2);
+  box-shadow:0 8px 24px rgba(15,23,42,.055);
+}
+.workspaceTitle h2{margin:0;font-size:22px;color:var(--kms2-primary,#124734)}
+.workspaceTitle p{margin:5px 0 0;color:var(--kms2-muted,#66736d);font-size:14px}
+.workspaceHidden{display:none!important}
+.container{animation:workspaceFade .18s ease}
+@keyframes workspaceFade{from{opacity:.72;transform:translateY(4px)}to{opacity:1;transform:none}}
+.card{transition:box-shadow .18s ease, transform .18s ease}
+.card:hover{box-shadow:0 12px 30px rgba(15,23,42,.08)}
+button{transition:transform .12s ease, filter .12s ease, box-shadow .12s ease}
+button:active{transform:scale(.985)}
+.dutyPill.sub span:last-child{font-weight:900}
+@media(max-width:900px){
+  .workspaceNav{grid-template-columns:repeat(3,1fr);gap:8px}
+  .quickActions{grid-template-columns:1fr 1fr 1fr}
+}
+@media(max-width:520px){
+  .workspaceNav{grid-template-columns:repeat(2,1fr)}
+  .quickActions{grid-template-columns:1fr}
+  .workspaceNav .wsBtn,.quickActions button{min-height:44px;border-radius:14px;font-size:13px}
+  .workspaceTitle{border-radius:18px;padding:14px}
+}
+
 </style>
 </head>
 <body>
@@ -658,13 +735,19 @@ td{color:#26362f}
 <h1>เวรตู้ฟัก โรงฟักคลองมือไทร 2</h1>
 <p id="roleText">ระบบจัดการเวร</p>
 <div id="roleBadge" class="roleBadge">กำลังตรวจสอบสิทธิ์...</div>
-<div class="nav noPrint">
-<a href="index.html?v=43">หน้าหลัก</a>
-<a href="#executiveDashboard">รายงาน</a>
-<a href="employee.html?v=43">หน้าพนักงาน</a>
-<button onclick="loadData()">รีเฟรชข้อมูล</button>
-<button onclick="window.print()">Export PDF</button>
-<button onclick="logoutAdmin()">ออกจากระบบ</button>
+<div class="nav workspaceNav noPrint" role="navigation" aria-label="เมนูผู้ดูแล">
+  <button type="button" class="wsBtn active" data-workspace="home" onclick="showAdminWorkspace('home')">🏠 หน้าหลัก</button>
+  <button type="button" class="wsBtn" data-workspace="schedule" onclick="showAdminWorkspace('schedule')">📅 จัดเวร</button>
+  <button type="button" class="wsBtn" data-workspace="requests" onclick="showAdminWorkspace('requests')">📝 คำขอ</button>
+  <button type="button" class="wsBtn" data-workspace="reports" onclick="showAdminWorkspace('reports')">📊 รายงาน</button>
+  <button type="button" class="wsBtn" data-workspace="people" onclick="showAdminWorkspace('people')">👥 พนักงาน</button>
+  <button type="button" class="wsBtn" data-workspace="settings" onclick="showAdminWorkspace('settings')">⚙️ ตั้งค่า</button>
+  <a class="wsBtn linkBtn" href="employee.html?v=44">หน้าพนักงาน</a>
+</div>
+<div class="quickActions noPrint">
+  <button type="button" onclick="loadData()">รีเฟรชข้อมูล</button>
+  <button type="button" class="print" onclick="window.print()">Export PDF</button>
+  <button type="button" class="gray" onclick="logoutAdmin()">ออกจากระบบ</button>
 </div>
 </header>
 
@@ -942,8 +1025,7 @@ function staffColor(name){
 function dutyPill(x){
   const info=getSubstituteInfo(x["หมายเหตุ"]||"");
   const main=escapeHtml(x["พนักงาน"]||"");
-  const sub=info?escapeHtml(info.sub):"";
-  const label=info?`🔁 ${sub} แทน ${main}`:`👤 ${main}`;
+  const label=info ? "🔁 เวรแทน" : `👤 ${main}`;
   const color=staffColor(info?info.sub:x["พนักงาน"]);
   return `<div class="dutyPill ${info?"sub":""}" title="กดวันที่เพื่อดูรายละเอียด"><span class="dot" style="background:${color}"></span><span>${label}</span></div>`;
 }
@@ -1304,7 +1386,65 @@ async function deleteLog(row){
 }
 function resetDuty(){q("dutyRow").value="";q("dutyTitle").textContent="เพิ่มเวรตู้";q("dutyEndDate").value=q("dutyDate").value;q("dutyMachine").value="";q("subDates").value="";q("subStaff").value="";q("subReason").value="";if(q("subRules"))q("subRules").value="";q("dutyNote").value="";}
 function resetLog(){q("logRow").value="";q("logTitle").textContent="บันทึกสถานะเวร";q("logMachine").value="";q("logNote").value="";}
-function renderAll(){renderRoleUI();renderLists();renderDashboard();renderExecutiveDashboard();renderPendingRequests();renderMonthlySummary();renderRequests();renderLatestDuty();renderToday();renderCalendar();renderTables();}
+
+const ADMIN_WORKSPACE_META = {
+  home:["หน้าหลัก","สรุปภาพรวม เวรวันนี้ และรายการล่าสุด"],
+  schedule:["จัดเวร","เพิ่มเวร ปฏิทินเวร ตารางเวร และเวรแทน"],
+  requests:["คำขอ","ตรวจสอบ อนุมัติ หรือปฏิเสธคำขอ"],
+  reports:["รายงาน","รายงานผู้บริหารและสรุปรายเดือน"],
+  people:["พนักงาน","ค้นหาเวรของพนักงาน ตรวจคนว่าง และรายงานรายคน"],
+  settings:["ตั้งค่า","บันทึกสถานะ สำรองข้อมูล ประวัติ และเครื่องมือระบบ"]
+};
+let currentAdminWorkspace = localStorage.getItem("kms2AdminWorkspace") || "home";
+function ensureWorkspaceTitle(){
+  let title=document.getElementById("workspaceTitle");
+  const container=document.querySelector(".container");
+  if(!title && container){
+    title=document.createElement("div");
+    title.id="workspaceTitle";
+    title.className="workspaceTitle noPrint";
+    title.innerHTML="<h2></h2><p></p>";
+    container.insertBefore(title, container.firstChild);
+  }
+  return title;
+}
+function setWorkspaceForCard(card){
+  if(!card || card.dataset.workspace) return;
+  const h=(card.querySelector("h2")?.textContent||"").trim();
+  const id=card.id||"";
+  let ws="home";
+  if(id==="executiveDashboard" || h.includes("รายงานผู้บริหาร") || h.includes("สรุปรายเดือน")) ws="reports";
+  else if(h.includes("คำขอ")) ws="requests";
+  else if(h.includes("ปฏิทิน") || h.includes("เพิ่มเวร") || h.includes("ค้นหา / กรอง") || h.includes("ตารางเวร")) ws="schedule";
+  else if(h.includes("ดูเวรของพนักงาน") || h.includes("เครื่องมือจัดเวร")) ws="people";
+  else if(h.includes("บันทึกสถานะ")) ws="settings";
+  else if(id==="systemAlert" || h.includes("สรุปภาพรวม") || h.includes("รายการเวรล่าสุด") || h==="เวรวันนี้") ws="home";
+  card.dataset.workspace=ws;
+}
+function initAdminWorkspace(){
+  document.querySelectorAll(".container > .card").forEach(setWorkspaceForCard);
+  showAdminWorkspace(currentAdminWorkspace, true);
+}
+function showAdminWorkspace(ws, silent){
+  currentAdminWorkspace=ws || "home";
+  localStorage.setItem("kms2AdminWorkspace", currentAdminWorkspace);
+  document.querySelectorAll(".workspaceNav .wsBtn[data-workspace]").forEach(btn=>{
+    btn.classList.toggle("active", btn.dataset.workspace===currentAdminWorkspace);
+  });
+  const title=ensureWorkspaceTitle();
+  const meta=ADMIN_WORKSPACE_META[currentAdminWorkspace] || ADMIN_WORKSPACE_META.home;
+  if(title){
+    title.querySelector("h2").textContent=meta[0];
+    title.querySelector("p").textContent=meta[1];
+  }
+  document.querySelectorAll(".container > .card").forEach(card=>{
+    setWorkspaceForCard(card);
+    card.classList.toggle("workspaceHidden", card.dataset.workspace!==currentAdminWorkspace);
+  });
+  if(!silent) window.scrollTo({top:0,behavior:"smooth"});
+}
+
+function renderAll(){renderRoleUI();renderLists();renderDashboard();renderExecutiveDashboard();renderPendingRequests();renderMonthlySummary();renderRequests();renderLatestDuty();renderToday();renderCalendar();renderTables();initAdminWorkspace();}
 renderRoleUI();setTodayBase();loadData();
 </script>
 <script>if ("serviceWorker" in navigator) {navigator.serviceWorker.register("./service-worker.js");}</script>
