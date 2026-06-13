@@ -1,4 +1,4 @@
-const CACHE_NAME = "kms2-professional-workspace-v44";
+const CACHE_NAME = "kms2-professional-workspace-production-v44";
 
 self.addEventListener("install", event => {
   self.skipWaiting();
@@ -6,9 +6,7 @@ self.addEventListener("install", event => {
 
 self.addEventListener("activate", event => {
   event.waitUntil(
-    caches.keys().then(keys =>
-      Promise.all(keys.map(k => caches.delete(k)))
-    )
+    caches.keys().then(keys => Promise.all(keys.map(k => caches.delete(k))))
   );
   self.clients.claim();
 });
