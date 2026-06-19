@@ -1,16 +1,16 @@
-KMS2 Grouped Request v52
+KMS2 Grouped Request v53
 
 แก้ไข:
 - Employee > คำขอหลายวัน ส่งเป็น "คำขอเดียว" ไม่แตกเป็นหลายรายการ
 - ลา 5 วัน = ขึ้นคำขอเดียวให้ผู้ดูแลอนุมัติครั้งเดียว
 - ลา 1 วัน = ขึ้นคำขอเดียว
 - เก็บรายละเอียดจำนวนวันและช่วงวันที่ไว้ในรายละเอียดคำขอ
-- อัปเดต manifest/login/service-worker เป็น v52
+- อัปเดต manifest/login/service-worker เป็น v53
 
 URL:
-login.html?v=52
-index.html?v=52
-employee.html?v=52
+login.html?v=53
+index.html?v=53
+employee.html?v=53
 
 หลังอัปโหลด:
 - รอ GitHub Pages 1-3 นาที

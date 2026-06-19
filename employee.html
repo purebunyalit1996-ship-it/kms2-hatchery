@@ -5,10 +5,11 @@
 <meta name="theme-color" content="#0f5132">
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
-<title>KMS2 Workspace v52 หน้าพนักงาน</title>
-<!-- KMS2 v52 Grouped Request -->
-<!-- KMS2 v52 Employee Free Date NoBlock -->
-<!-- KMS2 v52 Employee Free Date Cache Fix -->
+<title>KMS2 Workspace v53 หน้าพนักงาน</title>
+<!-- KMS2 v53 Single Request Approval -->
+<!-- KMS2 v53 Grouped Request -->
+<!-- KMS2 v53 Employee Free Date NoBlock -->
+<!-- KMS2 v53 Employee Free Date Cache Fix -->
 <style>
 *{box-sizing:border-box;font-family:system-ui,sans-serif}
 html,body{margin:0;max-width:100%;overflow-x:hidden;background:#eef3ef;color:#1f2933}
@@ -334,7 +335,7 @@ button{background:var(--kms2-primary);border-radius:13px;box-shadow:0 3px 10px r
 @media(max-width:700px){header h1{font-size:21px}.tabs button{font-size:12px}.card{border-radius:16px}}
 
 
-/* KMS2 v52 Employee Multi-day Request */
+/* KMS2 v53 Employee Multi-day Request */
 .requestDatesBox{min-height:86px;resize:vertical}
 #requestEndDate{min-height:48px!important}
 @media(max-width:700px){.requestDatesBox{min-height:92px}}
@@ -384,7 +385,7 @@ button{background:var(--kms2-primary);border-radius:13px;box-shadow:0 3px 10px r
       </div>
       <label>วันที่เพิ่มเติม <span class="small">(ไม่บังคับ / ใส่ได้หลายวัน)</span></label>
       <textarea id="requestExtraDates" class="requestDatesBox" placeholder="เช่น 12/06/2026, 18/06/2026, 25/07/2026 หรือ 12,18,25"></textarea>
-      <p class="small">เลือกช่วงวันหรือวันที่เพิ่มเติมได้หลายวัน ระบบจะส่งเป็นคำขอเดียวให้ผู้ดูแลอนุมัติครั้งเดียว</p>
+      <p class="small">เลือกช่วงวันหรือวันที่เพิ่มเติมได้หลายวัน ระบบจะบันทึกเป็นคำขอเดียว ผู้ดูแลอนุมัติครั้งเดียว</p>
       <label>รายละเอียด</label>
       <textarea id="requestDetail" placeholder="เช่น ขอเปลี่ยนเวรกับป๋อ / ลาป่วย / ติดธุระ"></textarea>
       <button onclick="sendRequest()">ส่งคำขอ</button>
@@ -417,7 +418,7 @@ button{background:var(--kms2-primary);border-radius:13px;box-shadow:0 3px 10px r
   <section id="section-settings" class="section">
     <div class="card">
       <h2>ตั้งค่า</h2>
-      <div class="notice"><b>KMS2 Professional Workspace v52</b><br>หน้าพนักงานสำหรับดูเวร ส่งคำขอ และติดตามสถานะ</div>
+      <div class="notice"><b>KMS2 Professional Workspace v53</b><br>หน้าพนักงานสำหรับดูเวร ส่งคำขอ และติดตามสถานะ</div>
       <br>
       <button onclick="loadData()">รีเฟรชข้อมูล</button>
     </div>
@@ -738,13 +739,13 @@ setTodayBase();
 loadData();
 if ("serviceWorker" in navigator) {navigator.serviceWorker.register("./service-worker.js");}
 
-// KMS2 v52 hard override: free-date request validator
+// KMS2 v53 hard override: free-date request validator
 window.kms2FreeDateModeV50 = true;
 
 </script>
 
 <script>
-/* KMS2 v52 NoBlock Request Date Override */
+/* KMS2 v53 NoBlock Request Date Override */
 (function(){
   function pad2x(n){ return String(n).padStart(2,"0"); }
   function fixYearV51(y){
@@ -810,6 +811,116 @@ window.kms2FreeDateModeV50 = true;
   };
 
   window.kms2NoBlockV51 = true;
+})();
+</script>
+
+
+<script>
+/* KMS2 v53 Single Request Row Override */
+(function(){
+  function v(id){ return (document.getElementById(id)?.value || "").trim(); }
+  function p2(n){ return String(n).padStart(2,"0"); }
+  function fy(y){
+    y = Number(y);
+    if(!Number.isFinite(y)) return new Date().getFullYear();
+    if(y < 100) y += 2000;
+    if(y >= 2600) y -= 633;
+    else if(y > 2400) y -= 543;
+    return y;
+  }
+  function norm(raw, base){
+    let s = String(raw || "").trim();
+    if(!s) return "";
+    s = s.replace(/[.]/g,"/").replace(/\s+/g,"");
+    let m = s.match(/^(\d{4})[-\/](\d{1,2})[-\/](\d{1,2})$/);
+    if(m) return `${fy(m[1])}-${p2(m[2])}-${p2(m[3])}`;
+    m = s.match(/^(\d{1,2})[-\/](\d{1,2})[-\/](\d{2,4})$/);
+    if(m) return `${fy(m[3])}-${p2(m[2])}-${p2(m[1])}`;
+    m = s.match(/^(\d{1,2})[-\/](\d{1,2})$/);
+    if(m){
+      const b = (base || v("requestDate") || new Date().toISOString().slice(0,10)).slice(0,7);
+      return `${b}-${p2(m[1])}`;
+    }
+    m = s.match(/^(\d{1,2})$/);
+    if(m){
+      const b = (base || v("requestDate") || new Date().toISOString().slice(0,10)).slice(0,7);
+      return `${b}-${p2(m[1])}`;
+    }
+    return s;
+  }
+  window.makeDateList = function(startRaw, endRaw, extraRaw){
+    const list = [];
+    const add = d => { if(d && !list.includes(d)) list.push(d); };
+    const today = new Date().toISOString().slice(0,10);
+    const start = norm(startRaw || "", today);
+    const end = norm(endRaw || "", start || today);
+
+    if(start && end){
+      const sd = new Date(start+"T00:00:00");
+      const ed = new Date(end+"T00:00:00");
+      if(!Number.isNaN(sd.getTime()) && !Number.isNaN(ed.getTime()) && ed >= sd){
+        for(let d = new Date(sd); d <= ed; d.setDate(d.getDate()+1)) add(d.toISOString().slice(0,10));
+      }else{
+        add(start); add(end);
+      }
+    }else if(start){ add(start); }
+    else if(end){ add(end); }
+
+    String(extraRaw || "").split(/[\n,，\s]+/).map(x=>x.trim()).filter(Boolean)
+      .forEach(x => add(norm(x, start || end || today)));
+    return list.sort();
+  };
+
+  window.sendRequest = async function(){
+    const staff = v("requestStaff");
+    const type = v("requestType");
+    const startRaw = v("requestDate");
+    const endRaw = v("requestEndDate");
+    const extraRaw = v("requestExtraDates");
+    const detailRaw = v("requestDetail");
+
+    if(!staff) return alert("กรุณากรอกชื่อพนักงาน");
+
+    const dates = window.makeDateList(startRaw, endRaw, extraRaw);
+    if(!dates.length) return alert("กรุณาเลือกวันที่เริ่ม หรือใส่วันที่เพิ่มเติมอย่างน้อย 1 วัน");
+
+    const start = dates[0];
+    const end = dates[dates.length - 1];
+    const days = dates.length;
+    const groupId = "REQ-" + Date.now();
+
+    const dateText = days > 1 ? `${start} ถึง ${end}` : start;
+    const detail = [
+      detailRaw || "",
+      days > 1 ? `คำขอรวม ${days} วัน: ${dateText}` : `คำขอ 1 วัน: ${start}`,
+      `RequestGroup:${groupId}`,
+      `AllDates:${dates.join(",")}`
+    ].filter(Boolean).join(" | ");
+
+    try{
+      // ส่งแค่ 1 แถวไป Google Sheet เท่านั้น
+      await jsonp(API_URL+
+        "?action=addRequest"+
+        "&staff="+encodeURIComponent(staff)+
+        "&type="+encodeURIComponent(type)+
+        "&date="+encodeURIComponent(dateText)+
+        "&detail="+encodeURIComponent(detail)
+      );
+
+      alert(days > 1 ? `ส่งคำขอรวม ${days} วันเรียบร้อย ผู้ดูแลอนุมัติครั้งเดียว` : "ส่งคำขอเรียบร้อย");
+      const detailEl = document.getElementById("requestDetail");
+      const extraEl = document.getElementById("requestExtraDates");
+      if(detailEl) detailEl.value = "";
+      if(extraEl) extraEl.value = "";
+      if(typeof loadData === "function") loadData();
+      if(typeof showSection === "function") showSection("status");
+    }catch(e){
+      console.error(e);
+      alert("ส่งคำขอไม่สำเร็จ");
+    }
+  };
+
+  window.kms2SingleRequestV53 = true;
 })();
 </script>
 
