@@ -5,7 +5,8 @@
 <meta name="theme-color" content="#0f5132">
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
-<title>KMS2 Workspace v49 หน้าพนักงาน</title>
+<title>KMS2 Workspace v50 หน้าพนักงาน</title>
+<!-- KMS2 v50 Employee Free Date Cache Fix -->
 <style>
 *{box-sizing:border-box;font-family:system-ui,sans-serif}
 html,body{margin:0;max-width:100%;overflow-x:hidden;background:#eef3ef;color:#1f2933}
@@ -331,7 +332,7 @@ button{background:var(--kms2-primary);border-radius:13px;box-shadow:0 3px 10px r
 @media(max-width:700px){header h1{font-size:21px}.tabs button{font-size:12px}.card{border-radius:16px}}
 
 
-/* KMS2 v49 Employee Multi-day Request */
+/* KMS2 v50 Employee Multi-day Request */
 .requestDatesBox{min-height:86px;resize:vertical}
 #requestEndDate{min-height:48px!important}
 @media(max-width:700px){.requestDatesBox{min-height:92px}}
@@ -414,7 +415,7 @@ button{background:var(--kms2-primary);border-radius:13px;box-shadow:0 3px 10px r
   <section id="section-settings" class="section">
     <div class="card">
       <h2>ตั้งค่า</h2>
-      <div class="notice"><b>KMS2 Professional Workspace v49</b><br>หน้าพนักงานสำหรับดูเวร ส่งคำขอ และติดตามสถานะ</div>
+      <div class="notice"><b>KMS2 Professional Workspace v50</b><br>หน้าพนักงานสำหรับดูเวร ส่งคำขอ และติดตามสถานะ</div>
       <br>
       <button onclick="loadData()">รีเฟรชข้อมูล</button>
     </div>
@@ -461,19 +462,43 @@ function normalizeRecordDate(raw, baseMonth){
 }
 
 function normalizeInputDate(raw, baseMonth){
-  let s=String(raw||'').trim();
-  if(!s) return '';
-  s=s.replace(/[.]/g,'-').replace(/\s+/g,'');
-  let m=s.match(/^(\d{4})[-\/](\d{1,2})[-\/](\d{1,2})$/);
-  if(m){return `${normalizeYear(m[1])}-${pad2(m[2])}-${pad2(m[3])}`;}
-  m=s.match(/^(\d{1,2})[-\/](\d{1,2})[-\/](\d{2,4})$/);
-  if(m){return `${normalizeYear(m[3])}-${pad2(m[2])}-${pad2(m[1])}`;}
-  m=s.match(/^(\d{1,2})$/);
+  let s = String(raw || "").trim();
+  if(!s) return "";
+  s = s.replace(/[.]/g, "/").replace(/\s+/g, "");
+
+  function fixYear(y){
+    y = Number(y);
+    if(!Number.isFinite(y)) return new Date().getFullYear();
+    if(y < 100) y += 2000;
+    if(y >= 2600) y -= 633;
+    else if(y > 2400) y -= 543;
+    return y;
+  }
+
+  let m = s.match(/^(\d{4})[-\/](\d{1,2})[-\/](\d{1,2})$/);
   if(m){
-    const base=String(baseMonth||val('requestDate')||new Date().toISOString().slice(0,7)).slice(0,7);
+    return `${fixYear(m[1])}-${pad2(m[2])}-${pad2(m[3])}`;
+  }
+
+  m = s.match(/^(\d{1,2})[-\/](\d{1,2})[-\/](\d{2,4})$/);
+  if(m){
+    return `${fixYear(m[3])}-${pad2(m[2])}-${pad2(m[1])}`;
+  }
+
+  m = s.match(/^(\d{1,2})[-\/](\d{1,2})$/);
+  if(m){
+    const base = (baseMonth || q("requestDate")?.value || formatLocalDate(new Date())).slice(0,7);
+    const y = Number(base.slice(0,4));
+    return `${y}-${pad2(m[2])}-${pad2(m[1])}`;
+  }
+
+  m = s.match(/^(\d{1,2})$/);
+  if(m){
+    const base = (baseMonth || q("requestDate")?.value || formatLocalDate(new Date())).slice(0,7);
     return `${base}-${pad2(m[1])}`;
   }
-  return normalizeRecordDate(s, baseMonth);
+
+  return s;
 }
 
 function dutyDateOf(x){return normalizeRecordDate(x && x['วันที่']);}
@@ -557,26 +582,21 @@ function renderMyRequests(){
 }
 
 function makeDateList(startRaw,endRaw,extraRaw){
-  const list=[];
-  const add=d=>{ if(d && !list.includes(d)) list.push(d); };
-  const todayBase=formatLocalDate(new Date());
+  const list = [];
+  const add = d => { if(d && !list.includes(d)) list.push(d); };
+  const todayBase = formatLocalDate(new Date());
 
-  const start=normalizeInputDate(startRaw||"", startRaw||todayBase);
-  const end=normalizeInputDate(endRaw||"", start||todayBase);
+  const start = normalizeInputDate(startRaw || "", startRaw || todayBase);
+  const end = normalizeInputDate(endRaw || "", start || todayBase);
 
-  // โหมดอิสระ:
-  // - ถ้าเลือกวันที่เริ่มอย่างเดียว = 1 วัน
-  // - ถ้าเลือกวันที่เริ่ม + วันที่สิ้นสุด และสิ้นสุดมากกว่า/เท่ากับเริ่ม = สร้างช่วงวันทั้งหมด
-  // - ถ้าระบบ/เบราว์เซอร์อ่านวันที่กลับด้านหรือสิ้นสุดน้อยกว่าเริ่ม = ไม่บล็อกผู้ใช้ แต่เก็บวันที่ทั้งสองวันแทน
+  // Free Date Mode:
+  // เลือกได้อิสระ ไม่ล็อกช่วงวัน และไม่บล็อกกรณี browser อ่านวันที่ผิดรูปแบบ
   if(start && end){
-    const sd=new Date(start+"T00:00:00");
-    const ed=new Date(end+"T00:00:00");
-    if(!Number.isNaN(sd.getTime()) && !Number.isNaN(ed.getTime())){
-      if(ed >= sd){
-        for(let d=new Date(sd); d<=ed; d.setDate(d.getDate()+1)) add(formatLocalDate(d));
-      }else{
-        add(start);
-        add(end);
+    const sd = new Date(start + "T00:00:00");
+    const ed = new Date(end + "T00:00:00");
+    if(!Number.isNaN(sd.getTime()) && !Number.isNaN(ed.getTime()) && ed >= sd){
+      for(let d = new Date(sd); d <= ed; d.setDate(d.getDate()+1)){
+        add(formatLocalDate(d));
       }
     }else{
       add(start);
@@ -588,12 +608,11 @@ function makeDateList(startRaw,endRaw,extraRaw){
     add(end);
   }
 
-  // วันที่เพิ่มเติม: เลือกได้ไม่จำกัดจำนวนและไม่จำเป็นต้องต่อเนื่อง
-  String(extraRaw||"")
+  String(extraRaw || "")
     .split(/[\n,，\s]+/)
-    .map(x=>x.trim())
+    .map(x => x.trim())
     .filter(Boolean)
-    .forEach(x=>add(normalizeInputDate(x, start || end || todayBase)));
+    .forEach(x => add(normalizeInputDate(x, start || end || todayBase)));
 
   return list;
 }
@@ -691,6 +710,10 @@ function renderAll(){
 setTodayBase();
 loadData();
 if ("serviceWorker" in navigator) {navigator.serviceWorker.register("./service-worker.js");}
+
+// KMS2 v50 hard override: free-date request validator
+window.kms2FreeDateModeV50 = true;
+
 </script>
 </body>
 </html>
