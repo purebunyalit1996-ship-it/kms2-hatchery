@@ -5,7 +5,7 @@
 <meta name="theme-color" content="#0f5132">
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
-<title>KMS2 Workspace v51 ระบบจัดการเวรตู้ฟัก</title>
+<title>KMS2 Workspace v52 ระบบจัดการเวรตู้ฟัก</title>
 <style>
 *{box-sizing:border-box;font-family:system-ui,sans-serif}
 body{margin:0;background:#eef3ef;color:#1f2933}
@@ -654,7 +654,7 @@ td{color:#26362f}
 
 
 /* ===============================
-   KMS2 v51 Production Workspace UI
+   KMS2 v52 Production Workspace UI
    =============================== */
 .workspaceNav{
   display:grid;
@@ -698,6 +698,8 @@ button:active,.nav a:active{transform:scale(.985)}
   .workspaceNav a,.workspaceNav button{font-size:13px;min-height:44px;padding:10px 8px!important}
 }
 
+
+.groupRequestNote{display:inline-block;background:#e0f2fe;color:#075985;border-radius:999px;padding:3px 8px;font-size:12px;font-weight:900;margin-top:4px}
 </style>
 </head>
 <body>
@@ -712,7 +714,7 @@ button:active,.nav a:active{transform:scale(.985)}
 <button id="nav-reports" onclick="openAdminWorkspace('reports')">รายงาน</button>
 <button id="nav-staff" onclick="openAdminWorkspace('staff')">พนักงาน</button>
 <button id="nav-settings" onclick="openAdminWorkspace('settings')">ตั้งค่า</button>
-<a href="employee.html?v=51">หน้าพนักงาน</a>
+<a href="employee.html?v=52">หน้าพนักงาน</a>
 <button onclick="loadData().then(()=>openAdminWorkspace(currentWorkspace||'home'))">รีเฟรชข้อมูล</button>
 <button onclick="window.print()">Export PDF</button>
 <button onclick="logoutAdmin()">ออกจากระบบ</button>
@@ -790,7 +792,7 @@ button:active,.nav a:active{transform:scale(.985)}
     <div class="toolBox"><h3>🐣 ตู้ฟัก</h3><div class="notice">ใช้สำหรับตรวจสอบตู้ที่ถูกบันทึกในตารางเวร</div></div>
     <div class="toolBox"><h3>💾 สำรองข้อมูล</h3><button onclick="downloadBackupJSON()">ดาวน์โหลด Backup</button><button class="print" onclick="downloadMonthlyCSV()">Export CSV เดือนนี้</button></div>
     <div class="toolBox"><h3>🧾 ประวัติการแก้ไข</h3><button class="gray" onclick="renderAuditLog()">ดูประวัติ</button><div id="settingsAuditMirror" class="small">ดูประวัติได้จากเครื่องมือจัดเวร</div></div>
-    <div class="toolBox"><h3>ℹ️ เกี่ยวกับระบบ</h3><div class="notice">KMS2 Professional Workspace v51<br>เชื่อมต่อ Google Sheets + GitHub Pages + PWA</div></div>
+    <div class="toolBox"><h3>ℹ️ เกี่ยวกับระบบ</h3><div class="notice">KMS2 Professional Workspace v52<br>เชื่อมต่อ Google Sheets + GitHub Pages + PWA</div></div>
   </div>
 </div>
 </div>
@@ -1432,5 +1434,34 @@ function openAdminWorkspace(name){
 renderRoleUI();setTodayBase();loadData().then(()=>openAdminWorkspace("home"));
 </script>
 <script>if ("serviceWorker" in navigator) {navigator.serviceWorker.register("./service-worker.js");}</script>
+
+<script>
+/* KMS2 v52 Admin grouped request helper */
+window.kms2GroupRequestsV52 = true;
+
+function kms2RequestGroupKeyV52(r){
+  const staff = r["พนักงาน"] || "";
+  const type = r["ประเภทคำขอ"] || "";
+  const detail = r["รายละเอียด"] || "";
+  const group = r["requestGroup"] || r["กลุ่มคำขอ"] || "";
+  if(group) return group;
+  const rangeMatch = String(detail).match(/คำขอหลายวัน\s*\((\d+)\s*วัน\):\s*([^|]+)/);
+  if(rangeMatch) return `${staff}|${type}|${rangeMatch[0]}`;
+  return `${staff}|${type}|${r["วันที่เกี่ยวข้อง"] || ""}|${detail}`;
+}
+
+function kms2GroupRequestsForDisplayV52(list){
+  const map = {};
+  (list || []).forEach(r => {
+    const key = kms2RequestGroupKeyV52(r);
+    if(!map[key]) map[key] = {...r, _count:0, _dates:[]};
+    map[key]._count++;
+    const d = r["วันที่เกี่ยวข้อง"] || r["date"] || "";
+    if(d && !map[key]._dates.includes(d)) map[key]._dates.push(d);
+  });
+  return Object.values(map);
+}
+</script>
+
 </body>
 </html>
