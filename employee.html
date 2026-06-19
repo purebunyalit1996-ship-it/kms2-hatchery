@@ -5,7 +5,7 @@
 <meta name="theme-color" content="#0f5132">
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
-<title>KMS2 Workspace v47 หน้าพนักงาน</title>
+<title>KMS2 Workspace v48 หน้าพนักงาน</title>
 <style>
 *{box-sizing:border-box;font-family:system-ui,sans-serif}
 html,body{margin:0;max-width:100%;overflow-x:hidden;background:#eef3ef;color:#1f2933}
@@ -331,7 +331,7 @@ button{background:var(--kms2-primary);border-radius:13px;box-shadow:0 3px 10px r
 @media(max-width:700px){header h1{font-size:21px}.tabs button{font-size:12px}.card{border-radius:16px}}
 
 
-/* KMS2 v47 Employee Multi-day Request */
+/* KMS2 v48 Employee Multi-day Request */
 .requestDatesBox{min-height:86px;resize:vertical}
 #requestEndDate{min-height:48px!important}
 @media(max-width:700px){.requestDatesBox{min-height:92px}}
@@ -414,7 +414,7 @@ button{background:var(--kms2-primary);border-radius:13px;box-shadow:0 3px 10px r
   <section id="section-settings" class="section">
     <div class="card">
       <h2>ตั้งค่า</h2>
-      <div class="notice"><b>KMS2 Professional Workspace v47</b><br>หน้าพนักงานสำหรับดูเวร ส่งคำขอ และติดตามสถานะ</div>
+      <div class="notice"><b>KMS2 Professional Workspace v48</b><br>หน้าพนักงานสำหรับดูเวร ส่งคำขอ และติดตามสถานะ</div>
       <br>
       <button onclick="loadData()">รีเฟรชข้อมูล</button>
     </div>
@@ -459,6 +459,23 @@ function normalizeRecordDate(raw, baseMonth){
   if(m){const base=(baseMonth||val('monthPicker')||new Date().toISOString().slice(0,7)).slice(0,7);return `${base}-${pad2(m[1])}`;}
   return s.slice(0,10);
 }
+
+function normalizeInputDate(raw, baseMonth){
+  let s=String(raw||'').trim();
+  if(!s) return '';
+  s=s.replace(/[.]/g,'-').replace(/\s+/g,'');
+  let m=s.match(/^(\d{4})[-\/](\d{1,2})[-\/](\d{1,2})$/);
+  if(m){return `${normalizeYear(m[1])}-${pad2(m[2])}-${pad2(m[3])}`;}
+  m=s.match(/^(\d{1,2})[-\/](\d{1,2})[-\/](\d{2,4})$/);
+  if(m){return `${normalizeYear(m[3])}-${pad2(m[2])}-${pad2(m[1])}`;}
+  m=s.match(/^(\d{1,2})$/);
+  if(m){
+    const base=String(baseMonth||val('requestDate')||new Date().toISOString().slice(0,7)).slice(0,7);
+    return `${base}-${pad2(m[1])}`;
+  }
+  return normalizeRecordDate(s, baseMonth);
+}
+
 function dutyDateOf(x){return normalizeRecordDate(x && x['วันที่']);}
 function requestDateOf(x){return normalizeRecordDate((x && (x['วันที่เกี่ยวข้อง']||x['วันที่ส่งคำขอ']))||'');}
 

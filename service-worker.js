@@ -1,4 +1,4 @@
-const CACHE_NAME = "kms2-workspace-stable-v47";
+const CACHE_NAME = "kms2-employee-multiday-datefix-v48";
 self.addEventListener("install", event => { self.skipWaiting(); });
 self.addEventListener("activate", event => {
   event.waitUntil(caches.keys().then(keys => Promise.all(keys.map(k => caches.delete(k)))));
