@@ -330,6 +330,11 @@ button{background:var(--kms2-primary);border-radius:13px;box-shadow:0 3px 10px r
 .cell.hasDuty{background:#f6fbf8;border-color:#a9d8bf}
 @media(max-width:700px){header h1{font-size:21px}.tabs button{font-size:12px}.card{border-radius:16px}}
 
+
+/* KMS2 v46 Employee Multi-day Request */
+.requestDatesBox{min-height:86px;resize:vertical}
+#requestEndDate{min-height:48px!important}
+@media(max-width:700px){.requestDatesBox{min-height:92px}}
 </style>
 </head>
 <body>
@@ -370,9 +375,13 @@ button{background:var(--kms2-primary);border-radius:13px;box-shadow:0 3px 10px r
       <h2>ส่งคำขอ</h2>
       <div class="grid requestGrid">
         <div class="requestField"><label>พนักงาน</label><input id="requestStaff" list="staffList" placeholder="เช่น ยูร"></div>
-        <div class="requestField requestDateField"><label>วันที่เกี่ยวข้อง</label><input type="date" id="requestDate"></div>
         <div class="requestField"><label>ประเภทคำขอ</label><select id="requestType"><option>ขอลา</option><option>ขอเปลี่ยนเวร</option></select></div>
+        <div class="requestField requestDateField"><label>วันที่เริ่ม</label><input type="date" id="requestDate"></div>
+        <div class="requestField requestDateField"><label>วันที่สิ้นสุด</label><input type="date" id="requestEndDate"></div>
       </div>
+      <label>วันที่เพิ่มเติม <span class="small">(ไม่บังคับ / ใส่ได้หลายวัน)</span></label>
+      <textarea id="requestExtraDates" class="requestDatesBox" placeholder="เช่น 12/06/2026, 18/06/2026, 25/07/2026 หรือ 12,18,25"></textarea>
+      <p class="small">เลือกช่วงวันที่ได้อิสระ เช่น ลางาน 5 วัน ให้เลือกวันที่เริ่มและวันที่สิ้นสุดครั้งเดียว ระบบจะส่งคำขอให้ครบทุกวัน</p>
       <label>รายละเอียด</label>
       <textarea id="requestDetail" placeholder="เช่น ขอเปลี่ยนเวรกับป๋อ / ลาป่วย / ติดธุระ"></textarea>
       <button onclick="sendRequest()">ส่งคำขอ</button>
@@ -530,14 +539,51 @@ function renderMyRequests(){
   q("myRequestBox").innerHTML=list.length?list.map(r=>`<div class="chip ${requestClass(r["สถานะ"])}">📅 วันที่เกี่ยวข้อง: <b>${r["วันที่เกี่ยวข้อง"]||""}</b><br>📋 ${r["ประเภทคำขอ"]||""}<br>📝 ${r["รายละเอียด"]||""}<br>สถานะล่าสุด: ${badge(r["สถานะ"])}</div>`).join(""):`ยังไม่มีคำขอของ ${name}`;
 }
 
+function makeDateList(startRaw,endRaw,extraRaw){
+  const list=[];
+  const add=d=>{ if(d && !list.includes(d)) list.push(d); };
+  const start=normalizeInputDate(startRaw||"", startRaw||formatLocalDate(new Date()));
+  const end=normalizeInputDate(endRaw||startRaw||"", startRaw||formatLocalDate(new Date()));
+  if(start){
+    const sd=new Date(start+"T00:00:00");
+    const ed=new Date((end||start)+"T00:00:00");
+    if(!Number.isNaN(sd.getTime()) && !Number.isNaN(ed.getTime())){
+      if(ed < sd) throw new Error("END_BEFORE_START");
+      for(let d=new Date(sd); d<=ed; d.setDate(d.getDate()+1)) add(formatLocalDate(d));
+    }else{
+      add(start);
+    }
+  }
+  String(extraRaw||"").split(/[
+,，\s]+/).map(x=>x.trim()).filter(Boolean).forEach(x=>{
+    add(normalizeInputDate(x, start || formatLocalDate(new Date())));
+  });
+  return list;
+}
+
 async function sendRequest(){
   if(!val("requestStaff"))return alert("กรุณาพิมพ์ชื่อพนักงาน");
-  if(!val("requestDate"))return alert("กรุณาเลือกวันที่");
-  const url=API_URL+`?action=addRequest&staff=${encodeURIComponent(val("requestStaff"))}&date=${encodeURIComponent(val("requestDate"))}&type=${encodeURIComponent(val("requestType"))}&detail=${encodeURIComponent(val("requestDetail"))}`;
-  await jsonp(url);
-  alert("ส่งคำขอแล้ว");
+  let dates=[];
+  try{
+    dates=makeDateList(val("requestDate"), val("requestEndDate"), val("requestExtraDates"));
+  }catch(e){
+    return alert("วันที่สิ้นสุดต้องไม่ก่อนวันที่เริ่ม");
+  }
+  if(!dates.length)return alert("กรุณาเลือกวันที่อย่างน้อย 1 วัน");
+  const staff=val("requestStaff");
+  const type=val("requestType");
+  const baseDetail=val("requestDetail");
+  const rangeText=dates.length>1 ? `คำขอหลายวัน (${dates.length} วัน): ${dates[0]} ถึง ${dates[dates.length-1]}` : `คำขอวันที่ ${dates[0]}`;
+  for(const date of dates){
+    const detail=baseDetail ? `${baseDetail}
+${rangeText}` : rangeText;
+    const url=API_URL+`?action=addRequest&staff=${encodeURIComponent(staff)}&date=${encodeURIComponent(date)}&type=${encodeURIComponent(type)}&detail=${encodeURIComponent(detail)}`;
+    await jsonp(url);
+  }
+  alert(`ส่งคำขอแล้ว ${dates.length} วัน`);
   q("requestDetail").value="";
-  q("statusName").value=val("requestStaff");
+  q("requestExtraDates").value="";
+  q("statusName").value=staff;
   await loadData();
   showSection("status");
 }
@@ -595,6 +641,7 @@ function setTodayBase(){
   q("monthPicker").value=today.slice(0,7);
   q("myMonth").value=today.slice(0,7);
   q("requestDate").value=today;
+  if(q("requestEndDate")) q("requestEndDate").value=today;
 }
 
 function renderAll(){
