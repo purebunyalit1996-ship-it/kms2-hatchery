@@ -5,7 +5,7 @@
 <meta name="theme-color" content="#0f5132">
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
-<title>KMS2 Workspace v45 หน้าพนักงาน</title>
+<title>KMS2 Workspace v47 หน้าพนักงาน</title>
 <style>
 *{box-sizing:border-box;font-family:system-ui,sans-serif}
 html,body{margin:0;max-width:100%;overflow-x:hidden;background:#eef3ef;color:#1f2933}
@@ -331,7 +331,7 @@ button{background:var(--kms2-primary);border-radius:13px;box-shadow:0 3px 10px r
 @media(max-width:700px){header h1{font-size:21px}.tabs button{font-size:12px}.card{border-radius:16px}}
 
 
-/* KMS2 v46 Employee Multi-day Request */
+/* KMS2 v47 Employee Multi-day Request */
 .requestDatesBox{min-height:86px;resize:vertical}
 #requestEndDate{min-height:48px!important}
 @media(max-width:700px){.requestDatesBox{min-height:92px}}
@@ -414,7 +414,7 @@ button{background:var(--kms2-primary);border-radius:13px;box-shadow:0 3px 10px r
   <section id="section-settings" class="section">
     <div class="card">
       <h2>ตั้งค่า</h2>
-      <div class="notice"><b>KMS2 Professional Workspace v45</b><br>หน้าพนักงานสำหรับดูเวร ส่งคำขอ และติดตามสถานะ</div>
+      <div class="notice"><b>KMS2 Professional Workspace v47</b><br>หน้าพนักงานสำหรับดูเวร ส่งคำขอ และติดตามสถานะ</div>
       <br>
       <button onclick="loadData()">รีเฟรชข้อมูล</button>
     </div>
@@ -554,8 +554,7 @@ function makeDateList(startRaw,endRaw,extraRaw){
       add(start);
     }
   }
-  String(extraRaw||"").split(/[
-,，\s]+/).map(x=>x.trim()).filter(Boolean).forEach(x=>{
+  String(extraRaw||"").split(/[\n,，\s]+/).map(x=>x.trim()).filter(Boolean).forEach(x=>{
     add(normalizeInputDate(x, start || formatLocalDate(new Date())));
   });
   return list;
