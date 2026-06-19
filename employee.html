@@ -5,7 +5,7 @@
 <meta name="theme-color" content="#0f5132">
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
-<title>KMS2 Workspace v48 หน้าพนักงาน</title>
+<title>KMS2 Workspace v49 หน้าพนักงาน</title>
 <style>
 *{box-sizing:border-box;font-family:system-ui,sans-serif}
 html,body{margin:0;max-width:100%;overflow-x:hidden;background:#eef3ef;color:#1f2933}
@@ -331,7 +331,7 @@ button{background:var(--kms2-primary);border-radius:13px;box-shadow:0 3px 10px r
 @media(max-width:700px){header h1{font-size:21px}.tabs button{font-size:12px}.card{border-radius:16px}}
 
 
-/* KMS2 v48 Employee Multi-day Request */
+/* KMS2 v49 Employee Multi-day Request */
 .requestDatesBox{min-height:86px;resize:vertical}
 #requestEndDate{min-height:48px!important}
 @media(max-width:700px){.requestDatesBox{min-height:92px}}
@@ -381,7 +381,7 @@ button{background:var(--kms2-primary);border-radius:13px;box-shadow:0 3px 10px r
       </div>
       <label>วันที่เพิ่มเติม <span class="small">(ไม่บังคับ / ใส่ได้หลายวัน)</span></label>
       <textarea id="requestExtraDates" class="requestDatesBox" placeholder="เช่น 12/06/2026, 18/06/2026, 25/07/2026 หรือ 12,18,25"></textarea>
-      <p class="small">เลือกช่วงวันที่ได้อิสระ เช่น ลางาน 5 วัน ให้เลือกวันที่เริ่มและวันที่สิ้นสุดครั้งเดียว ระบบจะส่งคำขอให้ครบทุกวัน</p>
+      <p class="small">เลือกวันได้อิสระ: เลือกช่วงวันที่ หรือใส่วันที่เพิ่มเติมได้หลายวัน ไม่จำกัดจำนวน</p>
       <label>รายละเอียด</label>
       <textarea id="requestDetail" placeholder="เช่น ขอเปลี่ยนเวรกับป๋อ / ลาป่วย / ติดธุระ"></textarea>
       <button onclick="sendRequest()">ส่งคำขอ</button>
@@ -414,7 +414,7 @@ button{background:var(--kms2-primary);border-radius:13px;box-shadow:0 3px 10px r
   <section id="section-settings" class="section">
     <div class="card">
       <h2>ตั้งค่า</h2>
-      <div class="notice"><b>KMS2 Professional Workspace v48</b><br>หน้าพนักงานสำหรับดูเวร ส่งคำขอ และติดตามสถานะ</div>
+      <div class="notice"><b>KMS2 Professional Workspace v49</b><br>หน้าพนักงานสำหรับดูเวร ส่งคำขอ และติดตามสถานะ</div>
       <br>
       <button onclick="loadData()">รีเฟรชข้อมูล</button>
     </div>
@@ -559,21 +559,42 @@ function renderMyRequests(){
 function makeDateList(startRaw,endRaw,extraRaw){
   const list=[];
   const add=d=>{ if(d && !list.includes(d)) list.push(d); };
-  const start=normalizeInputDate(startRaw||"", startRaw||formatLocalDate(new Date()));
-  const end=normalizeInputDate(endRaw||startRaw||"", startRaw||formatLocalDate(new Date()));
-  if(start){
+  const todayBase=formatLocalDate(new Date());
+
+  const start=normalizeInputDate(startRaw||"", startRaw||todayBase);
+  const end=normalizeInputDate(endRaw||"", start||todayBase);
+
+  // โหมดอิสระ:
+  // - ถ้าเลือกวันที่เริ่มอย่างเดียว = 1 วัน
+  // - ถ้าเลือกวันที่เริ่ม + วันที่สิ้นสุด และสิ้นสุดมากกว่า/เท่ากับเริ่ม = สร้างช่วงวันทั้งหมด
+  // - ถ้าระบบ/เบราว์เซอร์อ่านวันที่กลับด้านหรือสิ้นสุดน้อยกว่าเริ่ม = ไม่บล็อกผู้ใช้ แต่เก็บวันที่ทั้งสองวันแทน
+  if(start && end){
     const sd=new Date(start+"T00:00:00");
-    const ed=new Date((end||start)+"T00:00:00");
+    const ed=new Date(end+"T00:00:00");
     if(!Number.isNaN(sd.getTime()) && !Number.isNaN(ed.getTime())){
-      if(ed < sd) throw new Error("END_BEFORE_START");
-      for(let d=new Date(sd); d<=ed; d.setDate(d.getDate()+1)) add(formatLocalDate(d));
+      if(ed >= sd){
+        for(let d=new Date(sd); d<=ed; d.setDate(d.getDate()+1)) add(formatLocalDate(d));
+      }else{
+        add(start);
+        add(end);
+      }
     }else{
       add(start);
+      add(end);
     }
+  }else if(start){
+    add(start);
+  }else if(end){
+    add(end);
   }
-  String(extraRaw||"").split(/[\n,，\s]+/).map(x=>x.trim()).filter(Boolean).forEach(x=>{
-    add(normalizeInputDate(x, start || formatLocalDate(new Date())));
-  });
+
+  // วันที่เพิ่มเติม: เลือกได้ไม่จำกัดจำนวนและไม่จำเป็นต้องต่อเนื่อง
+  String(extraRaw||"")
+    .split(/[\n,，\s]+/)
+    .map(x=>x.trim())
+    .filter(Boolean)
+    .forEach(x=>add(normalizeInputDate(x, start || end || todayBase)));
+
   return list;
 }
 
@@ -583,7 +604,7 @@ async function sendRequest(){
   try{
     dates=makeDateList(val("requestDate"), val("requestEndDate"), val("requestExtraDates"));
   }catch(e){
-    return alert("วันที่สิ้นสุดต้องไม่ก่อนวันที่เริ่ม");
+    return alert("กรุณาตรวจสอบรูปแบบวันที่อีกครั้ง");
   }
   if(!dates.length)return alert("กรุณาเลือกวันที่อย่างน้อย 1 วัน");
   const staff=val("requestStaff");
