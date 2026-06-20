@@ -1,4 +1,4 @@
-KMS2 Single Request Approval v53
+KMS2 Single Request Approval v55
 
 แก้ไข:
 - Employee ส่งคำขอหลายวันเป็น 1 แถวใน Google Sheet
@@ -10,9 +10,9 @@ KMS2 Single Request Approval v53
 
 สำคัญ:
 - ให้ลบคำขอทดสอบเก่าที่แตกเป็นหลายแถวออกจาก Google Sheet ก่อนทดสอบใหม่
-- ทดสอบใหม่โดยส่งคำขอจาก employee.html?v=53 เท่านั้น
+- ทดสอบใหม่โดยส่งคำขอจาก employee.html?v=55 เท่านั้น
 
 URL:
-login.html?v=53
-index.html?v=53
-employee.html?v=53
+login.html?v=55
+index.html?v=55
+employee.html?v=55

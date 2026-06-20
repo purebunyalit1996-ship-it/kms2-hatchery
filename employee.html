@@ -5,11 +5,13 @@
 <meta name="theme-color" content="#0f5132">
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
-<title>KMS2 Workspace v53 หน้าพนักงาน</title>
-<!-- KMS2 v53 Single Request Approval -->
-<!-- KMS2 v53 Grouped Request -->
-<!-- KMS2 v53 Employee Free Date NoBlock -->
-<!-- KMS2 v53 Employee Free Date Cache Fix -->
+<title>KMS2 Workspace v55 หน้าพนักงาน</title>
+<!-- KMS2 v55 Local Date Request Fix -->
+<!-- KMS2 v55 Clean Request Display -->
+<!-- KMS2 v55 Single Request Approval -->
+<!-- KMS2 v55 Grouped Request -->
+<!-- KMS2 v55 Employee Free Date NoBlock -->
+<!-- KMS2 v55 Employee Free Date Cache Fix -->
 <style>
 *{box-sizing:border-box;font-family:system-ui,sans-serif}
 html,body{margin:0;max-width:100%;overflow-x:hidden;background:#eef3ef;color:#1f2933}
@@ -335,7 +337,7 @@ button{background:var(--kms2-primary);border-radius:13px;box-shadow:0 3px 10px r
 @media(max-width:700px){header h1{font-size:21px}.tabs button{font-size:12px}.card{border-radius:16px}}
 
 
-/* KMS2 v53 Employee Multi-day Request */
+/* KMS2 v55 Employee Multi-day Request */
 .requestDatesBox{min-height:86px;resize:vertical}
 #requestEndDate{min-height:48px!important}
 @media(max-width:700px){.requestDatesBox{min-height:92px}}
@@ -418,7 +420,7 @@ button{background:var(--kms2-primary);border-radius:13px;box-shadow:0 3px 10px r
   <section id="section-settings" class="section">
     <div class="card">
       <h2>ตั้งค่า</h2>
-      <div class="notice"><b>KMS2 Professional Workspace v53</b><br>หน้าพนักงานสำหรับดูเวร ส่งคำขอ และติดตามสถานะ</div>
+      <div class="notice"><b>KMS2 Professional Workspace v55</b><br>หน้าพนักงานสำหรับดูเวร ส่งคำขอ และติดตามสถานะ</div>
       <br>
       <button onclick="loadData()">รีเฟรชข้อมูล</button>
     </div>
@@ -739,13 +741,13 @@ setTodayBase();
 loadData();
 if ("serviceWorker" in navigator) {navigator.serviceWorker.register("./service-worker.js");}
 
-// KMS2 v53 hard override: free-date request validator
+// KMS2 v55 hard override: free-date request validator
 window.kms2FreeDateModeV50 = true;
 
 </script>
 
 <script>
-/* KMS2 v53 NoBlock Request Date Override */
+/* KMS2 v55 NoBlock Request Date Override */
 (function(){
   function pad2x(n){ return String(n).padStart(2,"0"); }
   function fixYearV51(y){
@@ -816,7 +818,7 @@ window.kms2FreeDateModeV50 = true;
 
 
 <script>
-/* KMS2 v53 Single Request Row Override */
+/* KMS2 v55 Single Request Row Override */
 (function(){
   function v(id){ return (document.getElementById(id)?.value || "").trim(); }
   function p2(n){ return String(n).padStart(2,"0"); }
@@ -893,8 +895,8 @@ window.kms2FreeDateModeV50 = true;
     const detail = [
       detailRaw || "",
       days > 1 ? `คำขอรวม ${days} วัน: ${dateText}` : `คำขอ 1 วัน: ${start}`,
-      `RequestGroup:${groupId}`,
-      `AllDates:${dates.join(",")}`
+      `[ระบบ:${groupId}`,
+      `วันที่ทั้งหมด:${dates.join(",")}`
     ].filter(Boolean).join(" | ");
 
     try{
@@ -921,6 +923,80 @@ window.kms2FreeDateModeV50 = true;
   };
 
   window.kms2SingleRequestV53 = true;
+})();
+</script>
+
+
+<script>
+/* KMS2 v55 Local Date Request Fix: no UTC shift */
+(function(){
+  function p2(n){ return String(n).padStart(2,"0"); }
+  function localYMD(date){
+    return `${date.getFullYear()}-${p2(date.getMonth()+1)}-${p2(date.getDate())}`;
+  }
+  function fy(y){
+    y = Number(y);
+    if(!Number.isFinite(y)) return new Date().getFullYear();
+    if(y < 100) y += 2000;
+    if(y >= 2600) y -= 633;
+    else if(y > 2400) y -= 543;
+    return y;
+  }
+  function norm(raw, base){
+    let s = String(raw || "").trim();
+    if(!s) return "";
+    s = s.replace(/[.]/g,"/").replace(/\s+/g,"");
+    let m = s.match(/^(\d{4})[-\/](\d{1,2})[-\/](\d{1,2})$/);
+    if(m) return `${fy(m[1])}-${p2(m[2])}-${p2(m[3])}`;
+    m = s.match(/^(\d{1,2})[-\/](\d{1,2})[-\/](\d{2,4})$/);
+    if(m) return `${fy(m[3])}-${p2(m[2])}-${p2(m[1])}`;
+    m = s.match(/^(\d{1,2})[-\/](\d{1,2})$/);
+    if(m){
+      const b = (base || document.getElementById("requestDate")?.value || localYMD(new Date())).slice(0,7);
+      return `${b}-${p2(m[1])}`;
+    }
+    m = s.match(/^(\d{1,2})$/);
+    if(m){
+      const b = (base || document.getElementById("requestDate")?.value || localYMD(new Date())).slice(0,7);
+      return `${b}-${p2(m[1])}`;
+    }
+    return s;
+  }
+
+  window.makeDateList = function(startRaw, endRaw, extraRaw){
+    const list = [];
+    const add = d => { if(d && !list.includes(d)) list.push(d); };
+    const today = localYMD(new Date());
+    const start = norm(startRaw || "", today);
+    const end = norm(endRaw || "", start || today);
+
+    if(start && end){
+      const [sy,sm,sdn] = start.split("-").map(Number);
+      const [ey,em,edn] = end.split("-").map(Number);
+      const sd = new Date(sy, sm - 1, sdn);
+      const ed = new Date(ey, em - 1, edn);
+
+      if(!Number.isNaN(sd.getTime()) && !Number.isNaN(ed.getTime()) && ed >= sd){
+        for(let d = new Date(sd); d <= ed; d.setDate(d.getDate()+1)){
+          add(localYMD(d));
+        }
+      }else{
+        add(start);
+        add(end);
+      }
+    }else if(start){ add(start); }
+    else if(end){ add(end); }
+
+    String(extraRaw || "")
+      .split(/[\n,，\s]+/)
+      .map(x => x.trim())
+      .filter(Boolean)
+      .forEach(x => add(norm(x, start || end || today)));
+
+    return list.sort();
+  };
+
+  window.kms2LocalDateRequestFixV55 = true;
 })();
 </script>
 
