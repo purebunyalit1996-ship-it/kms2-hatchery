@@ -5,13 +5,14 @@
 <meta name="theme-color" content="#0f5132">
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
-<title>KMS2 Workspace v55 หน้าพนักงาน</title>
-<!-- KMS2 v55 Local Date Request Fix -->
-<!-- KMS2 v55 Clean Request Display -->
-<!-- KMS2 v55 Single Request Approval -->
-<!-- KMS2 v55 Grouped Request -->
-<!-- KMS2 v55 Employee Free Date NoBlock -->
-<!-- KMS2 v55 Employee Free Date Cache Fix -->
+<title>KMS2 Workspace v56 หน้าพนักงาน</title>
+<!-- KMS2 v56 Clean Employee Request Display -->
+<!-- KMS2 v56 Local Date Request Fix -->
+<!-- KMS2 v56 Clean Request Display -->
+<!-- KMS2 v56 Single Request Approval -->
+<!-- KMS2 v56 Grouped Request -->
+<!-- KMS2 v56 Employee Free Date NoBlock -->
+<!-- KMS2 v56 Employee Free Date Cache Fix -->
 <style>
 *{box-sizing:border-box;font-family:system-ui,sans-serif}
 html,body{margin:0;max-width:100%;overflow-x:hidden;background:#eef3ef;color:#1f2933}
@@ -337,7 +338,7 @@ button{background:var(--kms2-primary);border-radius:13px;box-shadow:0 3px 10px r
 @media(max-width:700px){header h1{font-size:21px}.tabs button{font-size:12px}.card{border-radius:16px}}
 
 
-/* KMS2 v55 Employee Multi-day Request */
+/* KMS2 v56 Employee Multi-day Request */
 .requestDatesBox{min-height:86px;resize:vertical}
 #requestEndDate{min-height:48px!important}
 @media(max-width:700px){.requestDatesBox{min-height:92px}}
@@ -420,7 +421,7 @@ button{background:var(--kms2-primary);border-radius:13px;box-shadow:0 3px 10px r
   <section id="section-settings" class="section">
     <div class="card">
       <h2>ตั้งค่า</h2>
-      <div class="notice"><b>KMS2 Professional Workspace v55</b><br>หน้าพนักงานสำหรับดูเวร ส่งคำขอ และติดตามสถานะ</div>
+      <div class="notice"><b>KMS2 Professional Workspace v56</b><br>หน้าพนักงานสำหรับดูเวร ส่งคำขอ และติดตามสถานะ</div>
       <br>
       <button onclick="loadData()">รีเฟรชข้อมูล</button>
     </div>
@@ -741,13 +742,13 @@ setTodayBase();
 loadData();
 if ("serviceWorker" in navigator) {navigator.serviceWorker.register("./service-worker.js");}
 
-// KMS2 v55 hard override: free-date request validator
+// KMS2 v56 hard override: free-date request validator
 window.kms2FreeDateModeV50 = true;
 
 </script>
 
 <script>
-/* KMS2 v55 NoBlock Request Date Override */
+/* KMS2 v56 NoBlock Request Date Override */
 (function(){
   function pad2x(n){ return String(n).padStart(2,"0"); }
   function fixYearV51(y){
@@ -818,7 +819,7 @@ window.kms2FreeDateModeV50 = true;
 
 
 <script>
-/* KMS2 v55 Single Request Row Override */
+/* KMS2 v56 Single Request Row Override */
 (function(){
   function v(id){ return (document.getElementById(id)?.value || "").trim(); }
   function p2(n){ return String(n).padStart(2,"0"); }
@@ -928,7 +929,7 @@ window.kms2FreeDateModeV50 = true;
 
 
 <script>
-/* KMS2 v55 Local Date Request Fix: no UTC shift */
+/* KMS2 v56 Local Date Request Fix: no UTC shift */
 (function(){
   function p2(n){ return String(n).padStart(2,"0"); }
   function localYMD(date){
@@ -997,6 +998,78 @@ window.kms2FreeDateModeV50 = true;
   };
 
   window.kms2LocalDateRequestFixV55 = true;
+})();
+</script>
+
+
+<script>
+/* KMS2 v56 Clean Employee Request Display */
+(function(){
+  function cleanEmployeeTextV56(s){
+    s = String(s || "");
+    s = s.replace(/\s*\|\s*RequestGroup:[^|<\n\r]*/g, "");
+    s = s.replace(/\s*\|\s*\[ระบบ:[^|<\n\r]*/g, "");
+    s = s.replace(/\s*\|\s*AllDates:[^<\n\r]*/g, "");
+    s = s.replace(/\s*\|\s*วันที่ทั้งหมด:[^<\n\r]*/g, "");
+    s = s.replace(/\s*\|\s*ระบบ:REQ-[^|<\n\r]*/g, "");
+    s = s.replace(/\s*\|\s*REQ-[^|<\n\r]*/g, "");
+    s = s.replace(/คำขอรวม\s*(\d+)\s*วัน:\s*([0-9\-\/]+)\s*ถึง\s*([0-9\-\/]+)/g, "คำขอ $1 วัน: $2 ถึง $3");
+    return s.trim();
+  }
+
+  function cleanEmployeeRequestDisplayV56(){
+    const targets = document.querySelectorAll("#statusBox, #myRequestBox, #requestStatusBox, #section-status, .chip, .notice");
+    targets.forEach(el => {
+      if(!el || !el.innerHTML) return;
+      let html = el.innerHTML;
+      html = html.replace(/\s*\|\s*RequestGroup:[^<|]*/g, "");
+      html = html.replace(/\s*\|\s*\[ระบบ:[^<|]*/g, "");
+      html = html.replace(/\s*\|\s*AllDates:[^<]*/g, "");
+      html = html.replace(/\s*\|\s*วันที่ทั้งหมด:[^<]*/g, "");
+      html = html.replace(/\s*\|\s*ระบบ:REQ-[^<|]*/g, "");
+      html = html.replace(/\s*\|\s*REQ-[^<|]*/g, "");
+      html = html.replace(/คำขอรวม\s*(\d+)\s*วัน:\s*([0-9\-\/]+)\s*ถึง\s*([0-9\-\/]+)/g, "คำขอ $1 วัน: $2 ถึง $3");
+      el.innerHTML = html;
+    });
+  }
+
+  window.cleanEmployeeTextV56 = cleanEmployeeTextV56;
+  window.cleanEmployeeRequestDisplayV56 = cleanEmployeeRequestDisplayV56;
+
+  const oldLoadData = window.loadData;
+  if(typeof oldLoadData === "function"){
+    window.loadData = async function(){
+      const result = await oldLoadData.apply(this, arguments);
+      setTimeout(cleanEmployeeRequestDisplayV56, 0);
+      setTimeout(cleanEmployeeRequestDisplayV56, 500);
+      return result;
+    };
+  }
+
+  const oldRenderStatus = window.renderStatus;
+  if(typeof oldRenderStatus === "function"){
+    window.renderStatus = function(){
+      const result = oldRenderStatus.apply(this, arguments);
+      setTimeout(cleanEmployeeRequestDisplayV56, 0);
+      return result;
+    };
+  }
+
+  const oldShowSection = window.showSection;
+  if(typeof oldShowSection === "function"){
+    window.showSection = function(name){
+      const result = oldShowSection.apply(this, arguments);
+      setTimeout(cleanEmployeeRequestDisplayV56, 0);
+      setTimeout(cleanEmployeeRequestDisplayV56, 300);
+      return result;
+    };
+  }
+
+  document.addEventListener("DOMContentLoaded", () => {
+    setTimeout(cleanEmployeeRequestDisplayV56, 300);
+    setTimeout(cleanEmployeeRequestDisplayV56, 1000);
+    setInterval(cleanEmployeeRequestDisplayV56, 1500);
+  });
 })();
 </script>
 
