@@ -5,7 +5,7 @@
 <meta name="theme-color" content="#0f5132">
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
-<title>KMS2 Login v56 v56</title>
+<title>KMS2 Login v57 v57</title>
 
 <style>
 *{box-sizing:border-box;font-family:system-ui,sans-serif}
@@ -28,7 +28,7 @@ button.gray{background:#64748b}
 }
 
 
-/* KMS2 v56 Login Professional UI */
+/* KMS2 v57 Login Professional UI */
 :root{--kms2-primary:#124734;--kms2-border:#dfe7e2;--kms2-text:#17231d;--kms2-muted:#66736d}
 .loginWrap{background:linear-gradient(135deg,#0d3f2f,#155c43)}
 .loginBox{border:1px solid rgba(255,255,255,.35);box-shadow:0 24px 80px rgba(0,0,0,.24)}
@@ -41,6 +41,121 @@ button.gray{background:#5d6b66}
 .notice{border-color:var(--kms2-border);background:#f7faf8}
 .badge{background:#eef6f2;color:var(--kms2-primary)}
 
+
+
+/* =========================================================
+   KMS2 v57 Factory Control Center UI
+   Visual-only refactor: keep all IDs, functions, workflow.
+   ========================================================= */
+:root{
+  --kms2-bg:#071014;
+  --kms2-panel:#0d171d;
+  --kms2-panel-2:#111e25;
+  --kms2-card:#13232b;
+  --kms2-card-soft:#172a33;
+  --kms2-border:#263a44;
+  --kms2-border-strong:#35515d;
+  --kms2-text:#e7f0ee;
+  --kms2-muted:#8fa3a2;
+  --kms2-primary:#12c77b;
+  --kms2-primary-2:#0f9f75;
+  --kms2-warning:#f5a524;
+  --kms2-danger:#ef4444;
+  --kms2-blue:#38bdf8;
+  --kms2-radius:10px;
+  --kms2-radius-lg:14px;
+  --kms2-shadow:0 12px 28px rgba(0,0,0,.24);
+}
+html,body{background:var(--kms2-bg)!important;color:var(--kms2-text)!important;font-family:"Noto Sans Thai",system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif!important;letter-spacing:.005em;}
+body:before{content:"";position:fixed;inset:0;pointer-events:none;background:radial-gradient(circle at top left,rgba(18,199,123,.12),transparent 34%),linear-gradient(180deg,rgba(255,255,255,.025),transparent 32%);z-index:-1;}
+header{background:linear-gradient(180deg,#0b241d,#071014)!important;border-bottom:1px solid var(--kms2-border)!important;box-shadow:none!important;text-align:left!important;padding:14px 20px!important;}
+header h1{font-size:20px!important;line-height:1.2!important;margin:0!important;color:#fff!important;letter-spacing:.02em!important;text-shadow:none!important;}
+header h1:before{content:"K2";display:inline-grid;place-items:center;width:34px;height:34px;margin-right:12px;border-radius:7px;background:var(--kms2-warning);color:#0b1114;font-weight:950;font-size:14px;vertical-align:middle;}
+header p{margin:4px 0 0 48px!important;color:var(--kms2-muted)!important;font-size:12px!important;letter-spacing:.08em!important;text-transform:uppercase;}
+.container{max-width:1240px!important;padding:18px!important;background:transparent!important;}
+.card,.loginBox,.workspaceIntro,.toolBox,.stat{background:var(--kms2-panel)!important;color:var(--kms2-text)!important;border:1px solid var(--kms2-border)!important;border-radius:var(--kms2-radius-lg)!important;box-shadow:none!important;}
+.card{padding:18px!important;margin-bottom:16px!important;}
+.card .card{background:var(--kms2-panel-2)!important;}
+h2{color:#f4fbf8!important;font-size:22px!important;line-height:1.2!important;font-weight:900!important;letter-spacing:.01em!important;}
+h2:before{content:"";display:inline-block;width:4px;height:18px;background:var(--kms2-warning);border-radius:99px;margin-right:10px;vertical-align:-2px;}
+h3{color:#d9f7ec!important;font-weight:850!important;}
+.small,label{color:var(--kms2-muted)!important;}
+label{font-size:13px!important;font-weight:800!important;letter-spacing:.015em!important;}
+.notice{background:#10251d!important;border:1px solid #1e4f3b!important;color:#b7f7d7!important;border-radius:var(--kms2-radius)!important;}
+.notice.warn{background:#2a210e!important;border-color:#6d4b12!important;color:#ffd58a!important;}
+.notice.danger{background:#2a1212!important;border-color:#7f1d1d!important;color:#fecaca!important;}
+input,select,textarea{background:#081217!important;color:var(--kms2-text)!important;border:1px solid var(--kms2-border)!important;border-radius:10px!important;box-shadow:none!important;}
+input::placeholder,textarea::placeholder{color:#738988!important;}
+input:focus,select:focus,textarea:focus{outline:none!important;border-color:var(--kms2-primary)!important;box-shadow:0 0 0 3px rgba(18,199,123,.14)!important;}
+button,.nav a,.nav button,.tabs button{background:#1f3a34!important;color:#eafff5!important;border:1px solid #31594f!important;border-radius:10px!important;box-shadow:none!important;font-weight:900!important;letter-spacing:.01em!important;transition:transform .12s ease,border-color .12s ease,background .12s ease!important;}
+button:hover,.nav a:hover,.nav button:hover,.tabs button:hover{background:#285548!important;border-color:var(--kms2-primary)!important;filter:none!important;}
+button:active,.nav a:active,.tabs button:active{transform:translateY(1px) scale(.99)!important;}
+button.danger{background:#4a1717!important;border-color:#7f1d1d!important;color:#fecaca!important;}
+button.gray{background:#28343a!important;border-color:#3d4c54!important;color:#d2dde0!important;}
+button.print{background:#0f4f48!important;border-color:#168b7d!important;}
+.nav,.workspaceNav,.tabs{background:transparent!important;border:0!important;gap:8px!important;}
+.workspaceNav{max-width:none!important;margin:14px 0 0!important;grid-template-columns:repeat(auto-fit,minmax(112px,1fr))!important;}
+.workspaceNav a,.workspaceNav button,.tabs button{min-height:38px!important;padding:8px 10px!important;border-radius:8px!important;font-size:13px!important;}
+.workspaceNav button.active,.tabs button.active,.nav button.active{background:var(--kms2-warning)!important;color:#111827!important;border-color:var(--kms2-warning)!important;}
+.tabs{position:sticky!important;top:0!important;z-index:20!important;padding:10px!important;background:rgba(7,16,20,.92)!important;backdrop-filter:blur(10px)!important;border-bottom:1px solid var(--kms2-border)!important;}
+.statgrid{gap:12px!important;}
+.stat{min-height:88px!important;background:var(--kms2-panel-2)!important;padding:16px!important;}
+.stat b{display:block!important;margin-top:8px!important;color:var(--kms2-primary)!important;font-size:34px!important;line-height:1!important;font-weight:950!important;}
+.stat.warn{background:#241d0d!important;border-color:#5f4514!important;}
+.stat.warn b{color:var(--kms2-warning)!important;}
+.stat.danger{background:#251111!important;border-color:#5f1b1b!important;}
+.stat.danger b{color:var(--kms2-danger)!important;}
+table{border-collapse:separate!important;border-spacing:0!important;overflow:hidden!important;border:1px solid var(--kms2-border)!important;border-radius:var(--kms2-radius)!important;}
+th{background:#101b22!important;color:#c8d5d7!important;border-bottom:1px solid var(--kms2-border)!important;text-transform:none!important;}
+td{color:#d9e4e4!important;border-bottom:1px solid #1f3038!important;}
+tr:hover td{background:#12242c!important;}
+.badge,.green,.yellow,.red,.blue{border-radius:7px!important;padding:4px 8px!important;font-weight:900!important;border:1px solid transparent!important;}
+.green{background:#063f2a!important;color:#78f4b0!important;border-color:#137447!important;}
+.yellow{background:#3f2c05!important;color:#ffd166!important;border-color:#9a6700!important;}
+.red{background:#431313!important;color:#fecaca!important;border-color:#991b1b!important;}
+.blue{background:#082f49!important;color:#7dd3fc!important;border-color:#0369a1!important;}
+.chip,.dutyPill{background:#0b151a!important;color:#d8e6e5!important;border:1px solid var(--kms2-border)!important;border-left:4px solid var(--kms2-primary)!important;border-radius:9px!important;box-shadow:none!important;}
+.chip.pending,.dutyPill.sub{background:#271d08!important;border-color:#704b0b!important;border-left-color:var(--kms2-warning)!important;color:#ffe1a6!important;}
+.chip.approved{background:#092619!important;border-left-color:var(--kms2-primary)!important;}
+.chip.rejected{background:#2b1111!important;border-left-color:var(--kms2-danger)!important;}
+.subDuty,.chip.subDuty{background:#08253a!important;border-left-color:var(--kms2-blue)!important;color:#bae6fd!important;}
+.subLine{color:#7dd3fc!important;}
+.calendar{gap:6px!important;}
+.dayname{background:#13252b!important;color:#a8fff0!important;border:1px solid var(--kms2-border)!important;border-radius:8px!important;}
+.cell{background:#0b151a!important;border:1px solid var(--kms2-border)!important;border-radius:9px!important;box-shadow:none!important;color:var(--kms2-text)!important;}
+.cell:hover{outline:none!important;border-color:var(--kms2-primary)!important;background:#10251d!important;transform:none!important;}
+.cell.hasDuty{background:#0d201a!important;border-color:#1d6b4a!important;}
+.date{color:#7ff3bb!important;font-weight:950!important;}
+.dayDetailBox{background:var(--kms2-panel)!important;color:var(--kms2-text)!important;border:1px solid var(--kms2-border)!important;}
+.dayDetailOverlay{background:rgba(0,0,0,.68)!important;}
+.loginWrap{background:radial-gradient(circle at top,#123c32,#071014 55%)!important;}
+.loginBox h1{color:#fff!important;}
+.roleBadge{background:#10251d!important;color:#b7f7d7!important;border:1px solid #1e4f3b!important;box-shadow:none!important;}
+.roleBadge.admin{background:#15311f!important;color:#86efac!important;}
+.roleBadge.supervisor{background:#102a3f!important;color:#93c5fd!important;}
+.card.hot,.subSimpleBox{background:#241d0d!important;border:1px solid #6d4b12!important;}
+.card.alert{background:#2a1212!important;border:1px solid #7f1d1d!important;}
+.card.executive{background:#0d1d19!important;border:1px solid #1e4f3b!important;}
+.toolBox{background:#0d171d!important;}
+.requestSingleBadge,.groupRequestNote{background:#063f2a!important;color:#78f4b0!important;border:1px solid #137447!important;}
+.pager button{background:#101b22!important;color:#dbe7e7!important;border-color:var(--kms2-border)!important;}
+.pager button.active{background:var(--kms2-warning)!important;color:#111827!important;border-color:var(--kms2-warning)!important;}
+@media(max-width:700px){
+  header{text-align:center!important;padding:20px 12px!important;}
+  header h1{font-size:24px!important;}
+  header h1:before{display:block;margin:0 auto 8px;}
+  header p{margin:6px 0 0!important;font-size:12px!important;}
+  .container{padding:10px!important;}
+  .card{padding:14px!important;border-radius:12px!important;}
+  .workspaceNav,.tabs{grid-template-columns:repeat(2,minmax(0,1fr))!important;}
+  h2{font-size:24px!important;}
+  .statgrid{grid-template-columns:repeat(2,minmax(0,1fr))!important;}
+  .stat b{font-size:30px!important;}
+  table,tr,td,th{border-color:var(--kms2-border)!important;}
+  tr{background:var(--kms2-panel-2)!important;border-color:var(--kms2-border)!important;}
+  td{color:#d9e4e4!important;}
+}
+@media(max-width:390px){.statgrid{grid-template-columns:1fr!important}.workspaceNav,.tabs{grid-template-columns:1fr 1fr!important}}
 </style>
 </head>
 
@@ -65,7 +180,7 @@ button.gray{background:#5d6b66}
       <p class="small">เข้าสู่ระบบตามสิทธิ์ผู้ใช้งาน</p>
     </div>
 
-    <button class="gray" onclick="location.href="employee.html?v=56"">
+    <button class="gray" onclick="location.href="employee.html?v=57"">
       ไปหน้าพนักงาน
     </button>
   </div>
@@ -79,12 +194,12 @@ function login(){
   if(u==="admin" && p==="1234"){
     sessionStorage.setItem("kms2Role","admin");
     sessionStorage.setItem("kms2Admin","yes");
-    location.href="index.html?v=56";
+    location.href="index.html?v=57";
   }
   else if(u==="supervisor" && p==="5678"){
     sessionStorage.setItem("kms2Role","supervisor");
     sessionStorage.setItem("kms2Admin","yes");
-    location.href="index.html?v=56";
+    location.href="index.html?v=57";
   }
   else{
     alert("Username หรือ Password ไม่ถูกต้อง");

@@ -1,10 +1,10 @@
 {
   "name": "KMS2 หน้าพนักงาน",
   "short_name": "KMS2 เวร",
-  "start_url": "employee.html?v=56",
+  "start_url": "employee.html?v=57",
   "scope": "./",
   "display": "standalone",
-  "background_color": "#f5f7f6",
-  "theme_color": "#124734",
+  "background_color": "#071014",
+  "theme_color": "#0b241d",
   "icons": []
 }
