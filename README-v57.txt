@@ -1,4 +1,4 @@
-KMS2 Factory Control Center UI v57
+KMS2 Factory Control Center UI v58
 
 เป้าหมาย:
 - ปรับเฉพาะ Visual/UI Layer ให้เป็นแนว Factory Control Center
@@ -14,9 +14,9 @@ KMS2 Factory Control Center UI v57
 - service-worker.js
 
 URL ทดสอบ:
-- login.html?v=57
-- index.html?v=57
-- employee.html?v=57
+- login.html?v=58
+- index.html?v=58
+- employee.html?v=58
 
 หลังอัปโหลด:
 1) รอ GitHub Pages 1-3 นาที
