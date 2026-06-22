@@ -1,4 +1,4 @@
-KMS2 v60 Leave Date + Input Visual Fix
+KMS2 v61 Leave Date + Input Visual Fix
 
 แก้ไข:
 1) แก้ระบบคำขอลา/เปลี่ยนเวรฝั่ง Employee
@@ -13,6 +13,6 @@ KMS2 v60 Leave Date + Input Visual Fix
 - ไอคอนปฏิทินปรับให้ตรงและมองเห็นชัดขึ้น
 
 URL:
-login.html?v=60
-index.html?v=60
-employee.html?v=60
+login.html?v=61
+index.html?v=61
+employee.html?v=61

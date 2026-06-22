@@ -5,9 +5,10 @@
 <meta name="theme-color" content="#0f5132">
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
-<title>KMS2 Workspace v60 ระบบจัดการเวรตู้ฟัก</title>
-<!-- KMS2 v60 Month Picker Stability Fix -->
-<!-- KMS2 v60 Admin Clean Request Display -->
+<title>KMS2 Workspace v61 ระบบจัดการเวรตู้ฟัก</title>
+<!-- KMS2 v61 Month Input Text Mode Fix -->
+<!-- KMS2 v61 Month Picker Stability Fix -->
+<!-- KMS2 v61 Admin Clean Request Display -->
 <style>
 *{box-sizing:border-box;font-family:system-ui,sans-serif}
 body{margin:0;background:#eef3ef;color:#1f2933}
@@ -656,7 +657,7 @@ td{color:#26362f}
 
 
 /* ===============================
-   KMS2 v60 Production Workspace UI
+   KMS2 v61 Production Workspace UI
    =============================== */
 .workspaceNav{
   display:grid;
@@ -707,7 +708,7 @@ button:active,.nav a:active{transform:scale(.985)}
 
 
 /* =========================================================
-   KMS2 v60 Factory Control Center UI
+   KMS2 v61 Factory Control Center UI
    Visual-only refactor: keep all IDs, functions, workflow.
    ========================================================= */
 :root{
@@ -820,7 +821,7 @@ tr:hover td{background:#12242c!important;}
 }
 @media(max-width:390px){.statgrid{grid-template-columns:1fr!important}.workspaceNav,.tabs{grid-template-columns:1fr 1fr!important}}
 
-/* KMS2 v60 Month Picker Stability Fix */
+/* KMS2 v61 Month Picker Stability Fix */
 input[type="month"],
 .kms2MonthText{
   background:#081217!important;
@@ -864,6 +865,49 @@ input[type="month"]::-webkit-calendar-picker-indicator{
   font-size:14px!important;
 }
 
+
+/* KMS2 v61 Month Text Mode Fix */
+.kms2MonthWrap{position:relative!important;width:100%!important;display:block!important}
+.kms2MonthWrap input,
+input.kms2MonthText{
+  background:#081217!important;
+  color:#e7f0ee!important;
+  border:1px solid #263a44!important;
+  height:48px!important;
+  min-height:48px!important;
+  line-height:48px!important;
+  padding:0 48px 0 14px!important;
+  border-radius:10px!important;
+  box-sizing:border-box!important;
+  width:100%!important;
+  max-width:100%!important;
+  -webkit-text-fill-color:#e7f0ee!important;
+}
+.kms2MonthWrap input::placeholder,
+input.kms2MonthText::placeholder{
+  color:#8fa3a2!important;
+  -webkit-text-fill-color:#8fa3a2!important;
+}
+.kms2MonthBtn{
+  position:absolute!important;
+  right:8px!important;
+  top:50%!important;
+  transform:translateY(-50%)!important;
+  width:32px!important;
+  height:32px!important;
+  min-height:32px!important;
+  padding:0!important;
+  margin:0!important;
+  border-radius:8px!important;
+  display:grid!important;
+  place-items:center!important;
+  background:#1f3a34!important;
+  border:1px solid #31594f!important;
+  color:#eafff5!important;
+  font-size:15px!important;
+  z-index:5!important;
+}
+
 </style>
 </head>
 <body>
@@ -878,7 +922,7 @@ input[type="month"]::-webkit-calendar-picker-indicator{
 <button id="nav-reports" onclick="openAdminWorkspace('reports')">รายงาน</button>
 <button id="nav-staff" onclick="openAdminWorkspace('staff')">พนักงาน</button>
 <button id="nav-settings" onclick="openAdminWorkspace('settings')">ตั้งค่า</button>
-<a href="employee.html?v=60">หน้าพนักงาน</a>
+<a href="employee.html?v=61">หน้าพนักงาน</a>
 <button onclick="loadData().then(()=>openAdminWorkspace(currentWorkspace||'home'))">รีเฟรชข้อมูล</button>
 <button onclick="window.print()">Export PDF</button>
 <button onclick="logoutAdmin()">ออกจากระบบ</button>
@@ -956,7 +1000,7 @@ input[type="month"]::-webkit-calendar-picker-indicator{
     <div class="toolBox"><h3>🐣 ตู้ฟัก</h3><div class="notice">ใช้สำหรับตรวจสอบตู้ที่ถูกบันทึกในตารางเวร</div></div>
     <div class="toolBox"><h3>💾 สำรองข้อมูล</h3><button onclick="downloadBackupJSON()">ดาวน์โหลด Backup</button><button class="print" onclick="downloadMonthlyCSV()">Export CSV เดือนนี้</button></div>
     <div class="toolBox"><h3>🧾 ประวัติการแก้ไข</h3><button class="gray" onclick="renderAuditLog()">ดูประวัติ</button><div id="settingsAuditMirror" class="small">ดูประวัติได้จากเครื่องมือจัดเวร</div></div>
-    <div class="toolBox"><h3>ℹ️ เกี่ยวกับระบบ</h3><div class="notice">KMS2 Professional Workspace v60<br>เชื่อมต่อ Google Sheets + GitHub Pages + PWA</div></div>
+    <div class="toolBox"><h3>ℹ️ เกี่ยวกับระบบ</h3><div class="notice">KMS2 Professional Workspace v61<br>เชื่อมต่อ Google Sheets + GitHub Pages + PWA</div></div>
   </div>
 </div>
 </div>
@@ -1600,7 +1644,7 @@ renderRoleUI();setTodayBase();loadData().then(()=>openAdminWorkspace("home"));
 <script>if ("serviceWorker" in navigator) {navigator.serviceWorker.register("./service-worker.js");}</script>
 
 <script>
-/* KMS2 v60 Admin grouped request helper */
+/* KMS2 v61 Admin grouped request helper */
 window.kms2GroupRequestsV52 = true;
 
 function kms2RequestGroupKeyV52(r){
@@ -1629,12 +1673,12 @@ function kms2GroupRequestsForDisplayV52(list){
 
 
 <script>
-/* KMS2 v60 Admin display helper */
+/* KMS2 v61 Admin display helper */
 window.kms2SingleRequestApprovalV53 = true;
 </script>
 
 <script>
-/* KMS2 v60 Clean Request Metadata Display */
+/* KMS2 v61 Clean Request Metadata Display */
 (function(){
   function cleanMeta(){
     const targets = document.querySelectorAll("#pendingRequestBox, #requestTable, .card, td, .chip, .notice");
@@ -1662,7 +1706,7 @@ window.kms2SingleRequestApprovalV53 = true;
 
 
 <script>
-/* KMS2 v60 Admin Clean Request Display */
+/* KMS2 v61 Admin Clean Request Display */
 (function(){
   function cleanHtml(html){
     html = String(html || "");
@@ -1696,7 +1740,7 @@ window.kms2SingleRequestApprovalV53 = true;
 
 
 <script>
-/* KMS2 v60 Month Picker Stability Fix */
+/* KMS2 v61 Month Picker Stability Fix */
 (function(){
   function pad(n){ return String(n).padStart(2,"0"); }
   function currentMonth(){
@@ -1757,6 +1801,128 @@ window.kms2SingleRequestApprovalV53 = true;
     fixAllMonthInputs();
     setTimeout(fixAllMonthInputs, 500);
     setTimeout(fixAllMonthInputs, 1500);
+  });
+})();
+</script>
+
+
+<script>
+/* KMS2 v61 Month Input Text Mode Fix
+   แก้ปัญหา input type=month เด้ง/เลือกไม่ได้ใน Chrome บางเครื่อง โดยใช้ text mode + ปุ่มเลือกเดือน */
+(function(){
+  function pad(n){ return String(n).padStart(2,"0"); }
+  function currentMonth(){
+    const d = new Date();
+    return `${d.getFullYear()}-${pad(d.getMonth()+1)}`;
+  }
+  function isMonth(v){ return /^\d{4}-\d{2}$/.test(String(v || "").trim()); }
+  function normalizeMonth(v){
+    v = String(v || "").trim();
+    if(isMonth(v)) return v;
+    let m = v.match(/^(\d{1,2})[\/\-](\d{4})$/); // 06/2026
+    if(m) return `${m[2]}-${pad(m[1])}`;
+    m = v.match(/^(\d{4})[\/\-](\d{1,2})$/); // 2026/06
+    if(m) return `${m[1]}-${pad(m[2])}`;
+    m = v.match(/^(\d{1,2})[\/\-](\d{2,4})$/); // 06/26
+    if(m){
+      let y = Number(m[2]);
+      if(y < 100) y += 2000;
+      if(y > 2400) y -= 543;
+      return `${y}-${pad(m[1])}`;
+    }
+    return "";
+  }
+  function monthNameToValue(text){
+    const th = {
+      "มกราคม":"01","กุมภาพันธ์":"02","มีนาคม":"03","เมษายน":"04","พฤษภาคม":"05","มิถุนายน":"06",
+      "กรกฎาคม":"07","สิงหาคม":"08","กันยายน":"09","ตุลาคม":"10","พฤศจิกายน":"11","ธันวาคม":"12"
+    };
+    text = String(text || "");
+    for(const k in th){
+      if(text.includes(k)){
+        const y = (text.match(/(20\d{2}|25\d{2}|26\d{2})/) || [])[1];
+        if(y){
+          let yy = Number(y);
+          if(yy > 2400) yy -= 543;
+          return `${yy}-${th[k]}`;
+        }
+      }
+    }
+    return "";
+  }
+  function fixMonthInput(input){
+    if(!input || input.dataset.kms2V61Fixed === "yes") return;
+    input.dataset.kms2V61Fixed = "yes";
+
+    let oldValue = input.value || input.getAttribute("value") || "";
+    let fixed = normalizeMonth(oldValue) || monthNameToValue(oldValue) || currentMonth();
+
+    // Force text mode to stop native month picker from closing immediately
+    try{ input.type = "text"; }catch(e){}
+    input.classList.add("kms2MonthText");
+    input.value = fixed;
+    input.placeholder = "YYYY-MM เช่น 2026-06";
+    input.inputMode = "numeric";
+    input.autocomplete = "off";
+
+    if(!input.parentElement || !input.parentElement.classList.contains("kms2MonthWrap")){
+      const wrap = document.createElement("div");
+      wrap.className = "kms2MonthWrap";
+      input.parentNode.insertBefore(wrap, input);
+      wrap.appendChild(input);
+
+      const btn = document.createElement("button");
+      btn.type = "button";
+      btn.className = "kms2MonthBtn";
+      btn.textContent = "📅";
+      btn.title = "เลือกเดือน";
+      btn.addEventListener("click", () => {
+        const now = normalizeMonth(input.value) || currentMonth();
+        const v = prompt("ใส่เดือนรูปแบบ YYYY-MM เช่น 2026-06", now);
+        if(v === null) return;
+        const nv = normalizeMonth(v);
+        if(!nv){
+          alert("กรุณาใส่เดือนรูปแบบ YYYY-MM เช่น 2026-06");
+          return;
+        }
+        input.value = nv;
+        input.dispatchEvent(new Event("input", {bubbles:true}));
+        input.dispatchEvent(new Event("change", {bubbles:true}));
+      });
+      wrap.appendChild(btn);
+    }
+
+    input.addEventListener("blur", () => {
+      const nv = normalizeMonth(input.value);
+      if(nv) input.value = nv;
+      else if(!input.value.trim()) input.value = currentMonth();
+    });
+
+    input.addEventListener("keydown", ev => {
+      if(ev.key === "Enter"){
+        const nv = normalizeMonth(input.value);
+        if(nv){
+          input.value = nv;
+          input.dispatchEvent(new Event("change", {bubbles:true}));
+        }
+      }
+    });
+  }
+
+  function fixAll(){
+    const ids = ["monthPicker","summaryMonth","execMonth","myMonth","reportMonth","backupMonth"];
+    ids.forEach(id => {
+      const el = document.getElementById(id);
+      if(el) fixMonthInput(el);
+    });
+    document.querySelectorAll('input[type="month"]').forEach(fixMonthInput);
+  }
+
+  window.kms2FixMonthInputsV61 = fixAll;
+  document.addEventListener("DOMContentLoaded", () => {
+    fixAll();
+    setTimeout(fixAll, 400);
+    setTimeout(fixAll, 1200);
   });
 })();
 </script>

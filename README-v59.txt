@@ -1,4 +1,4 @@
-KMS2 v60 Clean Sheet + Request Display
+KMS2 v61 Clean Sheet + Request Display
 
 แก้ไข:
 1) ข้อมูล Google Sheet ในคำขอใหม่จะไม่บันทึก RequestGroup / AllDates แล้ว
@@ -16,9 +16,9 @@ KMS2 v60 Clean Sheet + Request Display
 
 หมายเหตุ:
 - ข้อมูลเก่าที่มี RequestGroup / AllDates อยู่ใน Google Sheet จะไม่ถูกลบย้อนหลังอัตโนมัติ
-- หลังอัป v60 ให้ทดสอบด้วยคำขอใหม่ หรือแก้/ลบข้อมูลทดสอบเก่าใน Sheet เอง
+- หลังอัป v61 ให้ทดสอบด้วยคำขอใหม่ หรือแก้/ลบข้อมูลทดสอบเก่าใน Sheet เอง
 
 URL:
-login.html?v=60
-index.html?v=60
-employee.html?v=60
+login.html?v=61
+index.html?v=61
+employee.html?v=61

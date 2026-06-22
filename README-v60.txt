@@ -1,4 +1,4 @@
-KMS2 v60 Month Picker Stability Fix
+KMS2 v61 Month Picker Stability Fix
 
 แก้ไข:
 1) ช่องเลือกเดือนที่แสดงเป็น -------- ---- แล้วกดเลือกไม่ได้
@@ -9,12 +9,12 @@ KMS2 v60 Month Picker Stability Fix
 2) ตรวจฝั่งผู้ดูแลและพนักงาน
 - แก้ทั้ง index.html และ employee.html
 - ช่องเดือนหลัก: monthPicker, summaryMonth, execMonth, myMonth, reportMonth, backupMonth
-- คงระบบคำขอ v59: หลายวันเป็นคำขอเดียว, ไม่บันทึก RequestGroup/AllDates ในคำขอใหม่
+- คงระบบคำขอ v61: หลายวันเป็นคำขอเดียว, ไม่บันทึก RequestGroup/AllDates ในคำขอใหม่
 
 URL:
-login.html?v=60
-index.html?v=60
-employee.html?v=60
+login.html?v=61
+index.html?v=61
+employee.html?v=61
 
 หลังอัป:
 - รอ GitHub Pages 1–3 นาที
