@@ -5,8 +5,9 @@
 <meta name="theme-color" content="#0f5132">
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
-<title>KMS2 Workspace v59 ระบบจัดการเวรตู้ฟัก</title>
-<!-- KMS2 v59 Admin Clean Request Display -->
+<title>KMS2 Workspace v60 ระบบจัดการเวรตู้ฟัก</title>
+<!-- KMS2 v60 Month Picker Stability Fix -->
+<!-- KMS2 v60 Admin Clean Request Display -->
 <style>
 *{box-sizing:border-box;font-family:system-ui,sans-serif}
 body{margin:0;background:#eef3ef;color:#1f2933}
@@ -655,7 +656,7 @@ td{color:#26362f}
 
 
 /* ===============================
-   KMS2 v59 Production Workspace UI
+   KMS2 v60 Production Workspace UI
    =============================== */
 .workspaceNav{
   display:grid;
@@ -706,7 +707,7 @@ button:active,.nav a:active{transform:scale(.985)}
 
 
 /* =========================================================
-   KMS2 v59 Factory Control Center UI
+   KMS2 v60 Factory Control Center UI
    Visual-only refactor: keep all IDs, functions, workflow.
    ========================================================= */
 :root{
@@ -818,6 +819,51 @@ tr:hover td{background:#12242c!important;}
   td{color:#d9e4e4!important;}
 }
 @media(max-width:390px){.statgrid{grid-template-columns:1fr!important}.workspaceNav,.tabs{grid-template-columns:1fr 1fr!important}}
+
+/* KMS2 v60 Month Picker Stability Fix */
+input[type="month"],
+.kms2MonthText{
+  background:#081217!important;
+  color:#e7f0ee!important;
+  border:1px solid #263a44!important;
+  height:48px!important;
+  min-height:48px!important;
+  line-height:48px!important;
+  padding:0 42px 0 14px!important;
+  border-radius:10px!important;
+  color-scheme:dark!important;
+  appearance:auto!important;
+  -webkit-appearance:auto!important;
+}
+input[type="month"]::-webkit-calendar-picker-indicator{
+  filter:invert(1) brightness(1.8)!important;
+  opacity:.95!important;
+  width:20px!important;
+  height:20px!important;
+  cursor:pointer!important;
+  margin-right:2px!important;
+}
+.kms2MonthWrap{position:relative;width:100%}
+.kms2MonthWrap input{padding-right:42px!important}
+.kms2MonthBtn{
+  position:absolute!important;
+  right:8px!important;
+  top:50%!important;
+  transform:translateY(-50%)!important;
+  width:30px!important;
+  height:30px!important;
+  min-height:30px!important;
+  padding:0!important;
+  margin:0!important;
+  border-radius:8px!important;
+  display:grid!important;
+  place-items:center!important;
+  background:#1f3a34!important;
+  border:1px solid #31594f!important;
+  color:#eafff5!important;
+  font-size:14px!important;
+}
+
 </style>
 </head>
 <body>
@@ -832,7 +878,7 @@ tr:hover td{background:#12242c!important;}
 <button id="nav-reports" onclick="openAdminWorkspace('reports')">รายงาน</button>
 <button id="nav-staff" onclick="openAdminWorkspace('staff')">พนักงาน</button>
 <button id="nav-settings" onclick="openAdminWorkspace('settings')">ตั้งค่า</button>
-<a href="employee.html?v=59">หน้าพนักงาน</a>
+<a href="employee.html?v=60">หน้าพนักงาน</a>
 <button onclick="loadData().then(()=>openAdminWorkspace(currentWorkspace||'home'))">รีเฟรชข้อมูล</button>
 <button onclick="window.print()">Export PDF</button>
 <button onclick="logoutAdmin()">ออกจากระบบ</button>
@@ -910,7 +956,7 @@ tr:hover td{background:#12242c!important;}
     <div class="toolBox"><h3>🐣 ตู้ฟัก</h3><div class="notice">ใช้สำหรับตรวจสอบตู้ที่ถูกบันทึกในตารางเวร</div></div>
     <div class="toolBox"><h3>💾 สำรองข้อมูล</h3><button onclick="downloadBackupJSON()">ดาวน์โหลด Backup</button><button class="print" onclick="downloadMonthlyCSV()">Export CSV เดือนนี้</button></div>
     <div class="toolBox"><h3>🧾 ประวัติการแก้ไข</h3><button class="gray" onclick="renderAuditLog()">ดูประวัติ</button><div id="settingsAuditMirror" class="small">ดูประวัติได้จากเครื่องมือจัดเวร</div></div>
-    <div class="toolBox"><h3>ℹ️ เกี่ยวกับระบบ</h3><div class="notice">KMS2 Professional Workspace v59<br>เชื่อมต่อ Google Sheets + GitHub Pages + PWA</div></div>
+    <div class="toolBox"><h3>ℹ️ เกี่ยวกับระบบ</h3><div class="notice">KMS2 Professional Workspace v60<br>เชื่อมต่อ Google Sheets + GitHub Pages + PWA</div></div>
   </div>
 </div>
 </div>
@@ -1554,7 +1600,7 @@ renderRoleUI();setTodayBase();loadData().then(()=>openAdminWorkspace("home"));
 <script>if ("serviceWorker" in navigator) {navigator.serviceWorker.register("./service-worker.js");}</script>
 
 <script>
-/* KMS2 v59 Admin grouped request helper */
+/* KMS2 v60 Admin grouped request helper */
 window.kms2GroupRequestsV52 = true;
 
 function kms2RequestGroupKeyV52(r){
@@ -1583,12 +1629,12 @@ function kms2GroupRequestsForDisplayV52(list){
 
 
 <script>
-/* KMS2 v59 Admin display helper */
+/* KMS2 v60 Admin display helper */
 window.kms2SingleRequestApprovalV53 = true;
 </script>
 
 <script>
-/* KMS2 v59 Clean Request Metadata Display */
+/* KMS2 v60 Clean Request Metadata Display */
 (function(){
   function cleanMeta(){
     const targets = document.querySelectorAll("#pendingRequestBox, #requestTable, .card, td, .chip, .notice");
@@ -1616,7 +1662,7 @@ window.kms2SingleRequestApprovalV53 = true;
 
 
 <script>
-/* KMS2 v59 Admin Clean Request Display */
+/* KMS2 v60 Admin Clean Request Display */
 (function(){
   function cleanHtml(html){
     html = String(html || "");
@@ -1644,6 +1690,73 @@ window.kms2SingleRequestApprovalV53 = true;
     setTimeout(cleanAdminRequestDisplay, 200);
     setTimeout(cleanAdminRequestDisplay, 1000);
     setInterval(cleanAdminRequestDisplay, 1500);
+  });
+})();
+</script>
+
+
+<script>
+/* KMS2 v60 Month Picker Stability Fix */
+(function(){
+  function pad(n){ return String(n).padStart(2,"0"); }
+  function currentMonth(){
+    const d = new Date();
+    return `${d.getFullYear()}-${pad(d.getMonth()+1)}`;
+  }
+  function isMonthValue(v){
+    return /^\d{4}-\d{2}$/.test(String(v||"").trim());
+  }
+  function fixMonthInput(input){
+    if(!input || input.dataset.kms2MonthFixed === "yes") return;
+    input.dataset.kms2MonthFixed = "yes";
+    input.setAttribute("placeholder", "YYYY-MM");
+    input.setAttribute("pattern", "\\d{4}-\\d{2}");
+    if(!isMonthValue(input.value)) input.value = currentMonth();
+
+    // Keep native picker when supported
+    input.addEventListener("click", () => {
+      try{
+        if(typeof input.showPicker === "function") input.showPicker();
+      }catch(e){}
+    });
+
+    // Fallback button for browsers where type=month opens and closes immediately
+    if(!input.parentElement || !input.parentElement.classList.contains("kms2MonthWrap")){
+      const wrap = document.createElement("div");
+      wrap.className = "kms2MonthWrap";
+      input.parentNode.insertBefore(wrap, input);
+      wrap.appendChild(input);
+      const btn = document.createElement("button");
+      btn.type = "button";
+      btn.className = "kms2MonthBtn";
+      btn.textContent = "📅";
+      btn.title = "เลือกเดือน";
+      btn.addEventListener("click", () => {
+        const now = input.value || currentMonth();
+        const v = prompt("ใส่เดือนรูปแบบ YYYY-MM เช่น 2026-06", now);
+        if(v === null) return;
+        if(!isMonthValue(v)){
+          alert("กรุณาใส่เดือนรูปแบบ YYYY-MM เช่น 2026-06");
+          return;
+        }
+        input.value = v;
+        input.dispatchEvent(new Event("input", {bubbles:true}));
+        input.dispatchEvent(new Event("change", {bubbles:true}));
+      });
+      wrap.appendChild(btn);
+    }
+  }
+
+  function fixAllMonthInputs(){
+    document.querySelectorAll('input[type="month"], #monthPicker, #summaryMonth, #execMonth, #myMonth, #reportMonth, #backupMonth')
+      .forEach(fixMonthInput);
+  }
+
+  window.kms2FixMonthInputsV60 = fixAllMonthInputs;
+  document.addEventListener("DOMContentLoaded", () => {
+    fixAllMonthInputs();
+    setTimeout(fixAllMonthInputs, 500);
+    setTimeout(fixAllMonthInputs, 1500);
   });
 })();
 </script>
