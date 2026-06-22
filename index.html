@@ -5,7 +5,8 @@
 <meta name="theme-color" content="#0f5132">
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
-<title>KMS2 Workspace v58 ระบบจัดการเวรตู้ฟัก</title>
+<title>KMS2 Workspace v59 ระบบจัดการเวรตู้ฟัก</title>
+<!-- KMS2 v59 Admin Clean Request Display -->
 <style>
 *{box-sizing:border-box;font-family:system-ui,sans-serif}
 body{margin:0;background:#eef3ef;color:#1f2933}
@@ -654,7 +655,7 @@ td{color:#26362f}
 
 
 /* ===============================
-   KMS2 v58 Production Workspace UI
+   KMS2 v59 Production Workspace UI
    =============================== */
 .workspaceNav{
   display:grid;
@@ -705,7 +706,7 @@ button:active,.nav a:active{transform:scale(.985)}
 
 
 /* =========================================================
-   KMS2 v58 Factory Control Center UI
+   KMS2 v59 Factory Control Center UI
    Visual-only refactor: keep all IDs, functions, workflow.
    ========================================================= */
 :root{
@@ -831,7 +832,7 @@ tr:hover td{background:#12242c!important;}
 <button id="nav-reports" onclick="openAdminWorkspace('reports')">รายงาน</button>
 <button id="nav-staff" onclick="openAdminWorkspace('staff')">พนักงาน</button>
 <button id="nav-settings" onclick="openAdminWorkspace('settings')">ตั้งค่า</button>
-<a href="employee.html?v=58">หน้าพนักงาน</a>
+<a href="employee.html?v=59">หน้าพนักงาน</a>
 <button onclick="loadData().then(()=>openAdminWorkspace(currentWorkspace||'home'))">รีเฟรชข้อมูล</button>
 <button onclick="window.print()">Export PDF</button>
 <button onclick="logoutAdmin()">ออกจากระบบ</button>
@@ -909,7 +910,7 @@ tr:hover td{background:#12242c!important;}
     <div class="toolBox"><h3>🐣 ตู้ฟัก</h3><div class="notice">ใช้สำหรับตรวจสอบตู้ที่ถูกบันทึกในตารางเวร</div></div>
     <div class="toolBox"><h3>💾 สำรองข้อมูล</h3><button onclick="downloadBackupJSON()">ดาวน์โหลด Backup</button><button class="print" onclick="downloadMonthlyCSV()">Export CSV เดือนนี้</button></div>
     <div class="toolBox"><h3>🧾 ประวัติการแก้ไข</h3><button class="gray" onclick="renderAuditLog()">ดูประวัติ</button><div id="settingsAuditMirror" class="small">ดูประวัติได้จากเครื่องมือจัดเวร</div></div>
-    <div class="toolBox"><h3>ℹ️ เกี่ยวกับระบบ</h3><div class="notice">KMS2 Professional Workspace v58<br>เชื่อมต่อ Google Sheets + GitHub Pages + PWA</div></div>
+    <div class="toolBox"><h3>ℹ️ เกี่ยวกับระบบ</h3><div class="notice">KMS2 Professional Workspace v59<br>เชื่อมต่อ Google Sheets + GitHub Pages + PWA</div></div>
   </div>
 </div>
 </div>
@@ -1553,7 +1554,7 @@ renderRoleUI();setTodayBase();loadData().then(()=>openAdminWorkspace("home"));
 <script>if ("serviceWorker" in navigator) {navigator.serviceWorker.register("./service-worker.js");}</script>
 
 <script>
-/* KMS2 v58 Admin grouped request helper */
+/* KMS2 v59 Admin grouped request helper */
 window.kms2GroupRequestsV52 = true;
 
 function kms2RequestGroupKeyV52(r){
@@ -1582,12 +1583,12 @@ function kms2GroupRequestsForDisplayV52(list){
 
 
 <script>
-/* KMS2 v58 Admin display helper */
+/* KMS2 v59 Admin display helper */
 window.kms2SingleRequestApprovalV53 = true;
 </script>
 
 <script>
-/* KMS2 v58 Clean Request Metadata Display */
+/* KMS2 v59 Clean Request Metadata Display */
 (function(){
   function cleanMeta(){
     const targets = document.querySelectorAll("#pendingRequestBox, #requestTable, .card, td, .chip, .notice");
@@ -1609,6 +1610,40 @@ window.kms2SingleRequestApprovalV53 = true;
     setTimeout(cleanMeta, 300);
     setTimeout(cleanMeta, 1200);
     setInterval(cleanMeta, 1500);
+  });
+})();
+</script>
+
+
+<script>
+/* KMS2 v59 Admin Clean Request Display */
+(function(){
+  function cleanHtml(html){
+    html = String(html || "");
+    html = html.replace(/\s*\|\s*RequestGroup:[^<|]*/g, "");
+    html = html.replace(/\s*\|\s*\[ระบบ:[^<|]*/g, "");
+    html = html.replace(/\s*\|\s*AllDates:[^<]*/g, "");
+    html = html.replace(/\s*\|\s*วันที่ทั้งหมด:[^<]*/g, "");
+    html = html.replace(/\s*\|\s*ระบบ:REQ-[^<|]*/g, "");
+    html = html.replace(/\s*\|\s*REQ-[^<|]*/g, "");
+    html = html.replace(/คำขอรวม\s*(\d+)\s*วัน:/g, "คำขอ $1 วัน:");
+
+    // ลดความซ้ำในคำขออนุมัติ: ถ้ามีรายละเอียด "คำขอ X วัน: A ถึง B" อยู่แล้ว
+    // ไม่ต้องโชว์วันที่เกี่ยวข้องซ้ำในบรรทัดบน
+    html = html.replace(/📅\s*วันที่เกี่ยวข้อง:\s*([0-9]{4}-[0-9]{2}-[0-9]{2}\s*ถึง\s*[0-9]{4}-[0-9]{2}-[0-9]{2})\s*<br>\s*📋/g, "📋");
+    return html;
+  }
+  function cleanAdminRequestDisplay(){
+    document.querySelectorAll("#pendingRequestBox,#requestTable,.card,td,.chip,.notice").forEach(el=>{
+      if(!el || !el.innerHTML) return;
+      el.innerHTML = cleanHtml(el.innerHTML);
+    });
+  }
+  window.kms2CleanAdminRequestDisplayV59 = cleanAdminRequestDisplay;
+  document.addEventListener("DOMContentLoaded", ()=>{
+    setTimeout(cleanAdminRequestDisplay, 200);
+    setTimeout(cleanAdminRequestDisplay, 1000);
+    setInterval(cleanAdminRequestDisplay, 1500);
   });
 })();
 </script>
