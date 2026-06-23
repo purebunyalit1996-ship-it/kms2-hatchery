@@ -1,4 +1,4 @@
-const CACHE_NAME = "kms2-recovery-stable-v66";
+const CACHE_NAME = "kms2-mobile-layoutfix-v67";
 self.addEventListener("install", event => { self.skipWaiting(); });
 self.addEventListener("activate", event => {
   event.waitUntil(caches.keys().then(keys => Promise.all(keys.map(k => caches.delete(k)))));

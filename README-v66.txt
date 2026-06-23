@@ -1,4 +1,4 @@
-KMS2 v66 Recovery Stable
+KMS2 v67 Recovery Stable
 
 เป้าหมาย:
 - กู้ระบบให้กลับมากดใช้งานได้ก่อน
@@ -15,9 +15,9 @@ KMS2 v66 Recovery Stable
 - ใช้ native date/month picker ของ browser แบบปลอดภัย
 
 URL:
-login.html?v=66
-index.html?v=66
-employee.html?v=66
+login.html?v=67
+index.html?v=67
+employee.html?v=67
 
 หลังอัป:
 - รอ GitHub Pages 1–3 นาที
