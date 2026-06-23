@@ -5,11 +5,12 @@
 <meta name="theme-color" content="#0f5132">
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
-<title>KMS2 Workspace v63 ระบบจัดการเวรตู้ฟัก</title>
-<!-- KMS2 v63 DateMonth HardFix -->
-<!-- KMS2 v63 Month Input Text Mode Fix -->
-<!-- KMS2 v63 Month Picker Stability Fix -->
-<!-- KMS2 v63 Admin Clean Request Display -->
+<title>KMS2 Workspace v64 ระบบจัดการเวรตู้ฟัก</title>
+<!-- KMS2 v64 DateMonth ClickPromptFix -->
+<!-- KMS2 v64 DateMonth HardFix -->
+<!-- KMS2 v64 Month Input Text Mode Fix -->
+<!-- KMS2 v64 Month Picker Stability Fix -->
+<!-- KMS2 v64 Admin Clean Request Display -->
 <style>
 *{box-sizing:border-box;font-family:system-ui,sans-serif}
 body{margin:0;background:#eef3ef;color:#1f2933}
@@ -658,7 +659,7 @@ td{color:#26362f}
 
 
 /* ===============================
-   KMS2 v63 Production Workspace UI
+   KMS2 v64 Production Workspace UI
    =============================== */
 .workspaceNav{
   display:grid;
@@ -709,7 +710,7 @@ button:active,.nav a:active{transform:scale(.985)}
 
 
 /* =========================================================
-   KMS2 v63 Factory Control Center UI
+   KMS2 v64 Factory Control Center UI
    Visual-only refactor: keep all IDs, functions, workflow.
    ========================================================= */
 :root{
@@ -822,7 +823,7 @@ tr:hover td{background:#12242c!important;}
 }
 @media(max-width:390px){.statgrid{grid-template-columns:1fr!important}.workspaceNav,.tabs{grid-template-columns:1fr 1fr!important}}
 
-/* KMS2 v63 Month Picker Stability Fix */
+/* KMS2 v64 Month Picker Stability Fix */
 input[type="text" data-kms2-kind="month"],
 .kms2MonthText{
   background:#081217!important;
@@ -867,7 +868,7 @@ input[type="text" data-kms2-kind="month"]::-webkit-calendar-picker-indicator{
 }
 
 
-/* KMS2 v63 Month Text Mode Fix */
+/* KMS2 v64 Month Text Mode Fix */
 .kms2MonthWrap{position:relative!important;width:100%!important;display:block!important}
 .kms2MonthWrap input,
 input.kms2MonthText{
@@ -910,7 +911,7 @@ input.kms2MonthText::placeholder{
 }
 
 
-/* KMS2 v63 Date/Month Hard Fix */
+/* KMS2 v64 Date/Month Hard Fix */
 .kms2PickerWrap{position:relative!important;width:100%!important;display:block!important}
 .kms2DateText,.kms2MonthText,input[data-kms2-kind="date"],input[data-kms2-kind="month"]{
   background:#081217!important;color:#e7f0ee!important;-webkit-text-fill-color:#e7f0ee!important;
@@ -927,6 +928,24 @@ input.kms2MonthText::placeholder{
   display:grid!important;place-items:center!important;background:#1f3a34!important;border:1px solid #31594f!important;color:#eafff5!important;font-size:15px!important;z-index:9!important;
 }
 
+
+/* KMS2 v64 Date/Month Click Prompt Fix */
+.kms2PickerWrap{position:relative!important;width:100%!important;display:block!important}
+.kms2DateText,.kms2MonthText,input[data-kms2-kind="date"],input[data-kms2-kind="month"]{
+  background:#081217!important;color:#e7f0ee!important;-webkit-text-fill-color:#e7f0ee!important;
+  border:1px solid #263a44!important;height:48px!important;min-height:48px!important;line-height:48px!important;
+  padding:0 48px 0 14px!important;border-radius:10px!important;box-sizing:border-box!important;width:100%!important;max-width:100%!important;
+  appearance:none!important;-webkit-appearance:none!important;cursor:pointer!important;
+}
+.kms2PickerBtn{
+  position:absolute!important;right:7px!important;top:50%!important;transform:translateY(-50%)!important;
+  width:34px!important;height:34px!important;min-height:34px!important;max-width:34px!important;
+  padding:0!important;margin:0!important;border-radius:9px!important;display:grid!important;place-items:center!important;
+  background:#245447!important;border:1px solid #39a77c!important;color:#eafff5!important;font-size:15px!important;
+  z-index:999!important;pointer-events:auto!important;cursor:pointer!important;
+}
+.kms2PickerHelp{font-size:12px!important;color:#8fa3a2!important;margin-top:4px!important}
+
 </style>
 </head>
 <body>
@@ -941,7 +960,7 @@ input.kms2MonthText::placeholder{
 <button id="nav-reports" onclick="openAdminWorkspace('reports')">รายงาน</button>
 <button id="nav-staff" onclick="openAdminWorkspace('staff')">พนักงาน</button>
 <button id="nav-settings" onclick="openAdminWorkspace('settings')">ตั้งค่า</button>
-<a href="employee.html?v=63">หน้าพนักงาน</a>
+<a href="employee.html?v=64">หน้าพนักงาน</a>
 <button onclick="loadData().then(()=>openAdminWorkspace(currentWorkspace||'home'))">รีเฟรชข้อมูล</button>
 <button onclick="window.print()">Export PDF</button>
 <button onclick="logoutAdmin()">ออกจากระบบ</button>
@@ -1019,7 +1038,7 @@ input.kms2MonthText::placeholder{
     <div class="toolBox"><h3>🐣 ตู้ฟัก</h3><div class="notice">ใช้สำหรับตรวจสอบตู้ที่ถูกบันทึกในตารางเวร</div></div>
     <div class="toolBox"><h3>💾 สำรองข้อมูล</h3><button onclick="downloadBackupJSON()">ดาวน์โหลด Backup</button><button class="print" onclick="downloadMonthlyCSV()">Export CSV เดือนนี้</button></div>
     <div class="toolBox"><h3>🧾 ประวัติการแก้ไข</h3><button class="gray" onclick="renderAuditLog()">ดูประวัติ</button><div id="settingsAuditMirror" class="small">ดูประวัติได้จากเครื่องมือจัดเวร</div></div>
-    <div class="toolBox"><h3>ℹ️ เกี่ยวกับระบบ</h3><div class="notice">KMS2 Professional Workspace v63<br>เชื่อมต่อ Google Sheets + GitHub Pages + PWA</div></div>
+    <div class="toolBox"><h3>ℹ️ เกี่ยวกับระบบ</h3><div class="notice">KMS2 Professional Workspace v64<br>เชื่อมต่อ Google Sheets + GitHub Pages + PWA</div></div>
   </div>
 </div>
 </div>
@@ -1663,7 +1682,7 @@ renderRoleUI();setTodayBase();loadData().then(()=>openAdminWorkspace("home"));
 <script>if ("serviceWorker" in navigator) {navigator.serviceWorker.register("./service-worker.js");}</script>
 
 <script>
-/* KMS2 v63 Admin grouped request helper */
+/* KMS2 v64 Admin grouped request helper */
 window.kms2GroupRequestsV52 = true;
 
 function kms2RequestGroupKeyV52(r){
@@ -1692,12 +1711,12 @@ function kms2GroupRequestsForDisplayV52(list){
 
 
 <script>
-/* KMS2 v63 Admin display helper */
+/* KMS2 v64 Admin display helper */
 window.kms2SingleRequestApprovalV53 = true;
 </script>
 
 <script>
-/* KMS2 v63 Clean Request Metadata Display */
+/* KMS2 v64 Clean Request Metadata Display */
 (function(){
   function cleanMeta(){
     const targets = document.querySelectorAll("#pendingRequestBox, #requestTable, .card, td, .chip, .notice");
@@ -1725,7 +1744,7 @@ window.kms2SingleRequestApprovalV53 = true;
 
 
 <script>
-/* KMS2 v63 Admin Clean Request Display */
+/* KMS2 v64 Admin Clean Request Display */
 (function(){
   function cleanHtml(html){
     html = String(html || "");
@@ -1759,7 +1778,7 @@ window.kms2SingleRequestApprovalV53 = true;
 
 
 <script>
-/* KMS2 v63 Month Picker Stability Fix */
+/* KMS2 v64 Month Picker Stability Fix */
 (function(){
   function pad(n){ return String(n).padStart(2,"0"); }
   function currentMonth(){
@@ -1779,7 +1798,7 @@ window.kms2SingleRequestApprovalV53 = true;
     // Keep native picker when supported
     input.addEventListener("click", () => {
       try{
-        if(typeof input.showPicker === "function") input/* showPicker disabled v63 */;
+        if(typeof input.showPicker === "function") input/* showPicker disabled v64 */;
       }catch(e){}
     });
 
@@ -1826,7 +1845,7 @@ window.kms2SingleRequestApprovalV53 = true;
 
 
 <script>
-/* KMS2 v63 Month Input Text Mode Fix
+/* KMS2 v64 Month Input Text Mode Fix
    แก้ปัญหา input type=month เด้ง/เลือกไม่ได้ใน Chrome บางเครื่อง โดยใช้ text mode + ปุ่มเลือกเดือน */
 (function(){
   function pad(n){ return String(n).padStart(2,"0"); }
@@ -1948,7 +1967,7 @@ window.kms2SingleRequestApprovalV53 = true;
 
 
 <script>
-/* KMS2 v63 Date/Month Hard Fix */
+/* KMS2 v64 Date/Month Hard Fix */
 (function(){
   function pad(n){return String(n).padStart(2,"0");}
   function today(){const d=new Date();return `${d.getFullYear()}-${pad(d.getMonth()+1)}-${pad(d.getDate())}`;}
@@ -2012,6 +2031,119 @@ window.kms2SingleRequestApprovalV53 = true;
     return list.filter(Boolean).sort();
   };
   document.addEventListener("DOMContentLoaded",function(){fixAll();setTimeout(fixAll,200);setTimeout(fixAll,900);setInterval(fixAll,1500);});
+})();
+</script>
+
+
+<script>
+/* KMS2 v64 Date/Month Click Prompt Fix */
+(function(){
+  function pad(n){return String(n).padStart(2,"0");}
+  function today(){const d=new Date();return `${d.getFullYear()}-${pad(d.getMonth()+1)}-${pad(d.getDate())}`;}
+  function thisMonth(){return today().slice(0,7);}
+  function fixYear(y){y=Number(y);if(!Number.isFinite(y))return new Date().getFullYear();if(y<100)y+=2000;if(y>=2600)y-=633;else if(y>2400)y-=543;return y;}
+  function normDate(v,baseMonth){
+    v=String(v||"").trim().replace(/[.]/g,"/").replace(/\s+/g,""); if(!v)return "";
+    if(/^\d{4}-\d{2}-\d{2}$/.test(v))return v;
+    let m=v.match(/^(\d{1,2})[\/\-](\d{1,2})[\/\-](\d{2,4})$/); if(m)return `${fixYear(m[3])}-${pad(m[2])}-${pad(m[1])}`;
+    m=v.match(/^(\d{4})[\/\-](\d{1,2})[\/\-](\d{1,2})$/); if(m)return `${fixYear(m[1])}-${pad(m[2])}-${pad(m[3])}`;
+    m=v.match(/^(\d{1,2})[\/\-](\d{1,2})$/); if(m){const b=(baseMonth||thisMonth()).slice(0,7);return `${b.slice(0,4)}-${pad(m[2])}-${pad(m[1])}`;}
+    m=v.match(/^(\d{1,2})$/); if(m){const b=(baseMonth||thisMonth()).slice(0,7);return `${b}-${pad(m[1])}`;}
+    return "";
+  }
+  function normMonth(v){
+    v=String(v||"").trim().replace(/[.]/g,"/").replace(/\s+/g,""); if(!v)return "";
+    if(/^\d{4}-\d{2}$/.test(v))return v;
+    let m=v.match(/^(\d{1,2})[\/\-](\d{4})$/); if(m)return `${fixYear(m[2])}-${pad(m[1])}`;
+    m=v.match(/^(\d{4})[\/\-](\d{1,2})$/); if(m)return `${fixYear(m[1])}-${pad(m[2])}`;
+    m=v.match(/^(\d{1,2})[\/\-](\d{2})$/); if(m)return `${fixYear(m[2])}-${pad(m[1])}`;
+    return "";
+  }
+  function isMonthEl(el){const id=(el.id||"").toLowerCase();const name=(el.name||"").toLowerCase();const ph=(el.placeholder||"").toLowerCase();return el.dataset.kms2Kind==="month"||id.includes("month")||name.includes("month")||ph.includes("yyyy-mm");}
+  function isDateEl(el){const id=(el.id||"").toLowerCase();const name=(el.name||"").toLowerCase();const ph=(el.placeholder||"").toLowerCase();return el.dataset.kms2Kind==="date"||id.includes("date")||id.includes("day")||name.includes("date")||ph.includes("yyyy-mm-dd");}
+
+  function openPrompt(el,kind){
+    if(kind==="month"){
+      const now=normMonth(el.value)||thisMonth();
+      const v=prompt("ใส่เดือนรูปแบบ YYYY-MM เช่น 2026-06", now);
+      if(v===null)return;
+      const nv=normMonth(v);
+      if(!nv)return alert("กรุณาใส่เดือนรูปแบบ YYYY-MM เช่น 2026-06");
+      el.value=nv;
+    }else{
+      const now=normDate(el.value)||today();
+      const v=prompt("ใส่วันที่รูปแบบ YYYY-MM-DD เช่น 2026-06-22", now);
+      if(v===null)return;
+      const nv=normDate(v,now.slice(0,7));
+      if(!nv)return alert("กรุณาใส่วันที่รูปแบบ YYYY-MM-DD เช่น 2026-06-22");
+      el.value=nv;
+    }
+    el.dispatchEvent(new Event("input",{bubbles:true}));
+    el.dispatchEvent(new Event("change",{bubbles:true}));
+  }
+
+  function wrap(el,kind){
+    if(el.parentElement && el.parentElement.classList.contains("kms2PickerWrap"))return;
+    const w=document.createElement("div");w.className="kms2PickerWrap";el.parentNode.insertBefore(w,el);w.appendChild(el);
+    const b=document.createElement("button");b.type="button";b.className="kms2PickerBtn";b.textContent="📅";b.setAttribute("aria-label","เลือกวันหรือเดือน");
+    b.addEventListener("mousedown",function(ev){ev.preventDefault();ev.stopPropagation();});
+    b.addEventListener("click",function(ev){ev.preventDefault();ev.stopPropagation();openPrompt(el,kind);});
+    w.appendChild(b);
+  }
+
+  function fixOne(el,kind){
+    if(!el)return;
+    try{el.type="text";}catch(e){}
+    el.dataset.kms2Kind=kind;
+    el.classList.add(kind==="month"?"kms2MonthText":"kms2DateText");
+    el.autocomplete="off";el.inputMode="numeric";
+    if(!el.dataset.kms2InitialFixed){
+      el.dataset.kms2InitialFixed="yes";
+      if(kind==="month"){el.placeholder="YYYY-MM เช่น 2026-06"; if(!normMonth(el.value)) el.value="";}
+      else{el.placeholder="YYYY-MM-DD เช่น 2026-06-22"; if(!normDate(el.value)) el.value="";}
+    }
+    wrap(el,kind);
+    if(el.dataset.kms2ClickPromptBound==="yes")return;
+    el.dataset.kms2ClickPromptBound="yes";
+    el.addEventListener("dblclick",function(ev){ev.preventDefault();openPrompt(el,kind);});
+    el.addEventListener("keydown",function(ev){
+      if(ev.key==="Enter"){ev.preventDefault();openPrompt(el,kind);}
+    });
+    el.addEventListener("blur",function(){
+      if(kind==="month"){const nv=normMonth(el.value);if(nv)el.value=nv;}
+      else{const nv=normDate(el.value);if(nv)el.value=nv;}
+    });
+  }
+
+  function fixAll(){
+    document.querySelectorAll("input").forEach(function(el){
+      const t=(el.getAttribute("type")||"").toLowerCase();
+      if(t==="date"||el.dataset.kms2Kind==="date"||isDateEl(el))fixOne(el,"date");
+      else if(t==="month"||el.dataset.kms2Kind==="month"||isMonthEl(el))fixOne(el,"month");
+    });
+  }
+
+  window.kms2NormalizeDateV64=normDate;
+  window.kms2NormalizeMonthV64=normMonth;
+  window.kms2FixAllDateMonthV64=fixAll;
+
+  window.makeDateList=function(startRaw,endRaw,extraRaw){
+    const list=[];const add=d=>{if(d&&!list.includes(d))list.push(d);};
+    const start=normDate(startRaw)||"";const end=normDate(endRaw,(start||today()).slice(0,7))||start;
+    if(start&&end){
+      const [sy,sm,sd]=start.split("-").map(Number);const [ey,em,ed]=end.split("-").map(Number);
+      const s=new Date(sy,sm-1,sd);const e=new Date(ey,em-1,ed);
+      if(!Number.isNaN(s.getTime())&&!Number.isNaN(e.getTime())&&e>=s){
+        for(let d=new Date(s);d<=e;d.setDate(d.getDate()+1))add(`${d.getFullYear()}-${pad(d.getMonth()+1)}-${pad(d.getDate())}`);
+      }else{add(start);add(end);}
+    }else if(start)add(start);
+    String(extraRaw||"").split(/[\n,，\s]+/).map(x=>x.trim()).filter(Boolean).forEach(x=>add(normDate(x,(start||end||today()).slice(0,7))));
+    return list.filter(Boolean).sort();
+  };
+
+  document.addEventListener("DOMContentLoaded",function(){
+    fixAll();setTimeout(fixAll,200);setTimeout(fixAll,900);setInterval(fixAll,1500);
+  });
 })();
 </script>
 

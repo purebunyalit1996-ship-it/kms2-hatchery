@@ -1,4 +1,4 @@
-KMS2 v63 DateMonth HardFix
+KMS2 v64 DateMonth HardFix
 
 แก้ด่วน:
 - ปิด native date/month picker ทั้งระบบ เพราะกดแล้วเด้ง
@@ -9,6 +9,6 @@ KMS2 v63 DateMonth HardFix
 - แก้ทั้ง Admin และ Employee
 
 URL:
-login.html?v=63
-index.html?v=63
-employee.html?v=63
+login.html?v=64
+index.html?v=64
+employee.html?v=64
