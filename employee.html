@@ -5,17 +5,18 @@
 <meta name="theme-color" content="#0f5132">
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
-<title>KMS2 Workspace v67 หน้าพนักงาน</title>
-<!-- KMS2 v67 Mobile Layout Fix -->
-<!-- KMS2 v67 Recovery Stable -->
-<!-- KMS2 v67 Month Input Text Mode Fix -->
-<!-- KMS2 v67 Month Picker Stability Fix -->
-<!-- KMS2 v67 Clean Sheet + Request Display -->
-<!-- KMS2 v67 Leave Date + Input Visual Fix -->
-<!-- KMS2 v67 Single Request Approval -->
-<!-- KMS2 v67 Grouped Request -->
-<!-- KMS2 v67 Employee Free Date NoBlock -->
-<!-- KMS2 v67 Employee Free Date Cache Fix -->
+<title>KMS2 Workspace v68 หน้าพนักงาน</title>
+<!-- KMS2 v68 UI Pro Max CSS Only -->
+<!-- KMS2 v68 Mobile Layout Fix -->
+<!-- KMS2 v68 Recovery Stable -->
+<!-- KMS2 v68 Month Input Text Mode Fix -->
+<!-- KMS2 v68 Month Picker Stability Fix -->
+<!-- KMS2 v68 Clean Sheet + Request Display -->
+<!-- KMS2 v68 Leave Date + Input Visual Fix -->
+<!-- KMS2 v68 Single Request Approval -->
+<!-- KMS2 v68 Grouped Request -->
+<!-- KMS2 v68 Employee Free Date NoBlock -->
+<!-- KMS2 v68 Employee Free Date Cache Fix -->
 <style>
 *{box-sizing:border-box;font-family:system-ui,sans-serif}
 html,body{margin:0;max-width:100%;overflow-x:hidden;background:#eef3ef;color:#1f2933}
@@ -61,7 +62,7 @@ button{background:#198754;color:white;border:0;font-weight:900;min-height:46px;c
 
 
 /* ===============================
-   KMS2 v33 Mobile Month Input Fix
+   KMS2 v68 Mobile Month Input Fix
    แก้ input เดือน / ปุ่มรายงาน / กล่องที่เกี่ยวข้องกับเดือน
    ให้ไม่ล้นหน้าจอบนมือถือ
    =============================== */
@@ -194,7 +195,7 @@ input[type="month"] {
 
 
 /* ===============================
-   KMS2 v33 Duty Range + Clickable Calendar
+   KMS2 v68 Duty Range + Clickable Calendar
    =============================== */
 .dateRangeHelp{font-size:13px;color:#64748b;margin-top:8px;line-height:1.45}
 .cell{cursor:pointer;transition:.15s ease}
@@ -215,7 +216,7 @@ input[type="month"] {
 }
 
 
-/* KMS2 v34 Substitute View */
+/* KMS2 v68 Substitute View */
 .subDuty{border-left-color:#2563eb!important;background:#eff6ff!important}
 .subLine{display:block;margin-top:4px;color:#1d4ed8;font-weight:900}
 .calendar .cell.hasDuty{background:#f0fdf4;border-color:#86efac}
@@ -223,7 +224,7 @@ input[type="month"] {
 
 
 /* ===============================
-   KMS2 v42 Employee Request Date Mobile Fix
+   KMS2 v68 Employee Request Date Mobile Fix
    แก้ช่อง "วันที่เกี่ยวข้อง" ในหน้าพนักงานไม่ให้ล้นจอมือถือ
    =============================== */
 #section-request,
@@ -315,7 +316,7 @@ input[type="month"] {
 
 
 /* ===============================
-   KMS2 v43 Employee Professional UI
+   KMS2 v68 Employee Professional UI
    =============================== */
 :root{--kms2-primary:#124734;--kms2-bg:#f5f7f6;--kms2-card:#fff;--kms2-border:#dfe7e2;--kms2-text:#17231d;--kms2-muted:#66736d;--kms2-radius:18px}
 body{background:var(--kms2-bg);color:var(--kms2-text);letter-spacing:.01em}
@@ -341,14 +342,14 @@ button{background:var(--kms2-primary);border-radius:13px;box-shadow:0 3px 10px r
 @media(max-width:700px){header h1{font-size:21px}.tabs button{font-size:12px}.card{border-radius:16px}}
 
 
-/* KMS2 v67 Employee Multi-day Request */
+/* KMS2 v68 Employee Multi-day Request */
 .requestDatesBox{min-height:86px;resize:vertical}
 #requestEndDate{min-height:48px!important}
 @media(max-width:700px){.requestDatesBox{min-height:92px}}
 
 
 /* =========================================================
-   KMS2 v67 Factory Control Center UI
+   KMS2 v68 Factory Control Center UI
    Visual-only refactor: keep all IDs, functions, workflow.
    ========================================================= */
 :root{
@@ -461,7 +462,7 @@ tr:hover td{background:#12242c!important;}
 }
 @media(max-width:390px){.statgrid{grid-template-columns:1fr!important}.workspaceNav,.tabs{grid-template-columns:1fr 1fr!important}}
 
-/* KMS2 v67 Date Input Visual Fix */
+/* KMS2 v68 Date Input Visual Fix */
 #requestDate,
 #requestEndDate,
 input[type="date"]{
@@ -490,7 +491,7 @@ input[type="date"]::-webkit-calendar-picker-indicator{
 
 
 
-/* KMS2 v67 Recovery Stable: safe input/select */
+/* KMS2 v68 Recovery Stable: safe input/select */
 input, select, textarea, button{
   pointer-events:auto!important;
 }
@@ -519,7 +520,7 @@ input[type="time"]::-webkit-calendar-picker-indicator{
 }
 
 
-/* KMS2 v67 Mobile Layout Fix: visual only, no logic changes */
+/* KMS2 v68 Mobile Layout Fix: visual only, no logic changes */
 html,body{
   width:100%!important;
   max-width:100%!important;
@@ -718,6 +719,28 @@ table{
   }
 }
 
+
+/* KMS2 v68 UI Pro Max — CSS only */
+:root{--kms2-bg:#050b0f!important;--kms2-panel:#0a1419!important;--kms2-card:#0f2027!important;--kms2-line:#23404b!important;--kms2-text:#eefcf8!important;--kms2-muted:#91aaa7!important;--kms2-neon:#18e08b!important;--kms2-gold:#ffb020!important;--kms2-cyan:#12d6c8!important;--kms2-red:#ff4d4d!important}
+html,body{background:radial-gradient(circle at 18% 0%,rgba(24,224,139,.16),transparent 32%),radial-gradient(circle at 88% 5%,rgba(18,214,200,.10),transparent 28%),linear-gradient(180deg,#06110f 0%,#050b0f 42%,#04080b 100%)!important;color:var(--kms2-text)!important}
+body:before{content:""!important;position:fixed!important;inset:0!important;pointer-events:none!important;background:linear-gradient(rgba(255,255,255,.018) 1px,transparent 1px),linear-gradient(90deg,rgba(255,255,255,.018) 1px,transparent 1px)!important;background-size:34px 34px!important;z-index:-1!important}
+header{background:linear-gradient(180deg,rgba(9,35,29,.98),rgba(5,12,14,.98))!important;border-bottom:1px solid rgba(24,224,139,.16)!important;box-shadow:0 18px 60px rgba(0,0,0,.35)!important}
+header h1{color:#fff!important;text-shadow:0 0 24px rgba(24,224,139,.12)!important}
+header h1:before{content:"KMS2"!important;width:52px!important;height:42px!important;border-radius:12px!important;background:linear-gradient(135deg,#ffb020,#ffd36a)!important;color:#06110f!important;font-weight:1000!important;box-shadow:0 8px 26px rgba(255,176,32,.34),inset 0 1px 0 rgba(255,255,255,.35)!important}
+.card,.workspaceIntro,.toolBox,.stat,.loginBox{background:linear-gradient(180deg,rgba(15,32,39,.94),rgba(8,18,23,.96))!important;border:1px solid rgba(80,126,140,.38)!important;border-radius:18px!important;box-shadow:0 18px 55px rgba(0,0,0,.36)!important}
+h2{color:#f8fffd!important;text-shadow:0 0 18px rgba(24,224,139,.10)!important}
+h2:before{background:linear-gradient(180deg,#ffb020,#18e08b)!important;box-shadow:0 0 18px rgba(255,176,32,.34)!important}
+button,.btn,nav button,.nav button,.tabs button,.topNav button,.menu button{background:linear-gradient(180deg,#21483e,#17362f)!important;border:1px solid rgba(108,168,150,.32)!important;color:#f2fff9!important;box-shadow:inset 0 1px 0 rgba(255,255,255,.09),0 8px 24px rgba(0,0,0,.24)!important;font-weight:900!important}
+button.active,.active,nav button.active,.nav button.active,.tabs button.active{background:linear-gradient(180deg,#ffb020,#f59e0b)!important;color:#06110f!important;border-color:#ffd36a!important;box-shadow:0 12px 34px rgba(255,176,32,.30),inset 0 1px 0 rgba(255,255,255,.34)!important}
+input,select,textarea{background:#071116!important;color:#ecfffb!important;border:1px solid rgba(91,132,145,.42)!important;box-shadow:inset 0 1px 0 rgba(255,255,255,.03)!important}
+input:focus,select:focus,textarea:focus{outline:none!important;border-color:rgba(24,224,139,.72)!important;box-shadow:0 0 0 4px rgba(24,224,139,.12),inset 0 1px 0 rgba(255,255,255,.04)!important}
+.notice{background:linear-gradient(180deg,rgba(10,48,35,.86),rgba(8,33,27,.92))!important;border:1px solid rgba(24,224,139,.28)!important;color:#c6ffe2!important}
+th{background:rgba(17,37,45,.96)!important;color:#cffff0!important;font-weight:950!important}
+tr:hover td{background:rgba(24,224,139,.045)!important}
+.stat strong,.stat .num,.stat .value{color:#18e08b!important;text-shadow:0 0 22px rgba(24,224,139,.16)!important}
+.day,.calendarDay,.dayCell{background:linear-gradient(180deg,#0c1a20,#071116)!important;border:1px solid rgba(80,126,140,.36)!important;box-shadow:inset 0 1px 0 rgba(255,255,255,.03)!important}
+.dutyItem,.shiftItem,.personChip,.chip{background:linear-gradient(90deg,rgba(24,224,139,.22),rgba(18,214,200,.08))!important;border:1px solid rgba(24,224,139,.30)!important;color:#eafff5!important}
+
 </style>
 </head>
 <body>
@@ -797,7 +820,7 @@ table{
   <section id="section-settings" class="section">
     <div class="card">
       <h2>ตั้งค่า</h2>
-      <div class="notice"><b>KMS2 Professional Workspace v67</b><br>หน้าพนักงานสำหรับดูเวร ส่งคำขอ และติดตามสถานะ</div>
+      <div class="notice"><b>KMS2 Professional Workspace v68</b><br>หน้าพนักงานสำหรับดูเวร ส่งคำขอ และติดตามสถานะ</div>
       <br>
       <button onclick="loadData()">รีเฟรชข้อมูล</button>
     </div>
@@ -1118,13 +1141,13 @@ setTodayBase();
 loadData();
 if ("serviceWorker" in navigator) {navigator.serviceWorker.register("./service-worker.js");}
 
-// KMS2 v67 hard override: free-date request validator
+// KMS2 v68 hard override: free-date request validator
 window.kms2FreeDateModeV50 = true;
 
 </script>
 
 <script>
-/* KMS2 v67 NoBlock Request Date Override */
+/* KMS2 v68 NoBlock Request Date Override */
 (function(){
   function pad2x(n){ return String(n).padStart(2,"0"); }
   function fixYearV51(y){
@@ -1195,7 +1218,7 @@ window.kms2FreeDateModeV50 = true;
 
 
 <script>
-/* KMS2 v67 Single Request Row Override */
+/* KMS2 v68 Single Request Row Override */
 (function(){
   function v(id){ return (document.getElementById(id)?.value || "").trim(); }
   function p2(n){ return String(n).padStart(2,"0"); }
@@ -1269,7 +1292,7 @@ window.kms2FreeDateModeV50 = true;
     const groupId = "REQ-" + Date.now();
 
     const dateText = days > 1 ? `${start} ถึง ${end}` : start;
-    // v67: บันทึกลง Google Sheet แบบสะอาด ไม่ใส่ RequestGroup / AllDates
+    // v68: บันทึกลง Google Sheet แบบสะอาด ไม่ใส่ RequestGroup / AllDates
     const detail = [
       detailRaw || "",
       days > 1 ? `คำขอ ${days} วัน: ${dateText}` : `คำขอ 1 วัน: ${start}`
@@ -1316,7 +1339,7 @@ window.kms2FreeDateModeV50 = true;
 
 
 <script>
-/* KMS2 v67 Recovery Stable
+/* KMS2 v68 Recovery Stable
    No interval, no DOM wrapping, no repeated mutation */
 (function(){
   function pad(n){ return String(n).padStart(2,"0"); }
