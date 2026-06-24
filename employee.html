@@ -5,18 +5,20 @@
 <meta name="theme-color" content="#0f5132">
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
-<title>KMS2 Workspace v68 หน้าพนักงาน</title>
-<!-- KMS2 v68 UI Pro Max CSS Only -->
-<!-- KMS2 v68 Mobile Layout Fix -->
-<!-- KMS2 v68 Recovery Stable -->
-<!-- KMS2 v68 Month Input Text Mode Fix -->
-<!-- KMS2 v68 Month Picker Stability Fix -->
-<!-- KMS2 v68 Clean Sheet + Request Display -->
-<!-- KMS2 v68 Leave Date + Input Visual Fix -->
-<!-- KMS2 v68 Single Request Approval -->
-<!-- KMS2 v68 Grouped Request -->
-<!-- KMS2 v68 Employee Free Date NoBlock -->
-<!-- KMS2 v68 Employee Free Date Cache Fix -->
+<title>KMS2 Workspace v70 หน้าพนักงาน</title>
+<!-- KMS2 v70 Substitute Display Fix -->
+<!-- KMS2 v70 Request Range Logic Fix -->
+<!-- KMS2 v70 UI Pro Max CSS Only -->
+<!-- KMS2 v70 Mobile Layout Fix -->
+<!-- KMS2 v70 Recovery Stable -->
+<!-- KMS2 v70 Month Input Text Mode Fix -->
+<!-- KMS2 v70 Month Picker Stability Fix -->
+<!-- KMS2 v70 Clean Sheet + Request Display -->
+<!-- KMS2 v70 Leave Date + Input Visual Fix -->
+<!-- KMS2 v70 Single Request Approval -->
+<!-- KMS2 v70 Grouped Request -->
+<!-- KMS2 v70 Employee Free Date NoBlock -->
+<!-- KMS2 v70 Employee Free Date Cache Fix -->
 <style>
 *{box-sizing:border-box;font-family:system-ui,sans-serif}
 html,body{margin:0;max-width:100%;overflow-x:hidden;background:#eef3ef;color:#1f2933}
@@ -62,7 +64,7 @@ button{background:#198754;color:white;border:0;font-weight:900;min-height:46px;c
 
 
 /* ===============================
-   KMS2 v68 Mobile Month Input Fix
+   KMS2 v70 Mobile Month Input Fix
    แก้ input เดือน / ปุ่มรายงาน / กล่องที่เกี่ยวข้องกับเดือน
    ให้ไม่ล้นหน้าจอบนมือถือ
    =============================== */
@@ -195,7 +197,7 @@ input[type="month"] {
 
 
 /* ===============================
-   KMS2 v68 Duty Range + Clickable Calendar
+   KMS2 v70 Duty Range + Clickable Calendar
    =============================== */
 .dateRangeHelp{font-size:13px;color:#64748b;margin-top:8px;line-height:1.45}
 .cell{cursor:pointer;transition:.15s ease}
@@ -216,7 +218,7 @@ input[type="month"] {
 }
 
 
-/* KMS2 v68 Substitute View */
+/* KMS2 v70 Substitute View */
 .subDuty{border-left-color:#2563eb!important;background:#eff6ff!important}
 .subLine{display:block;margin-top:4px;color:#1d4ed8;font-weight:900}
 .calendar .cell.hasDuty{background:#f0fdf4;border-color:#86efac}
@@ -224,7 +226,7 @@ input[type="month"] {
 
 
 /* ===============================
-   KMS2 v68 Employee Request Date Mobile Fix
+   KMS2 v70 Employee Request Date Mobile Fix
    แก้ช่อง "วันที่เกี่ยวข้อง" ในหน้าพนักงานไม่ให้ล้นจอมือถือ
    =============================== */
 #section-request,
@@ -316,7 +318,7 @@ input[type="month"] {
 
 
 /* ===============================
-   KMS2 v68 Employee Professional UI
+   KMS2 v70 Employee Professional UI
    =============================== */
 :root{--kms2-primary:#124734;--kms2-bg:#f5f7f6;--kms2-card:#fff;--kms2-border:#dfe7e2;--kms2-text:#17231d;--kms2-muted:#66736d;--kms2-radius:18px}
 body{background:var(--kms2-bg);color:var(--kms2-text);letter-spacing:.01em}
@@ -342,14 +344,14 @@ button{background:var(--kms2-primary);border-radius:13px;box-shadow:0 3px 10px r
 @media(max-width:700px){header h1{font-size:21px}.tabs button{font-size:12px}.card{border-radius:16px}}
 
 
-/* KMS2 v68 Employee Multi-day Request */
+/* KMS2 v70 Employee Multi-day Request */
 .requestDatesBox{min-height:86px;resize:vertical}
 #requestEndDate{min-height:48px!important}
 @media(max-width:700px){.requestDatesBox{min-height:92px}}
 
 
 /* =========================================================
-   KMS2 v68 Factory Control Center UI
+   KMS2 v70 Factory Control Center UI
    Visual-only refactor: keep all IDs, functions, workflow.
    ========================================================= */
 :root{
@@ -462,7 +464,7 @@ tr:hover td{background:#12242c!important;}
 }
 @media(max-width:390px){.statgrid{grid-template-columns:1fr!important}.workspaceNav,.tabs{grid-template-columns:1fr 1fr!important}}
 
-/* KMS2 v68 Date Input Visual Fix */
+/* KMS2 v70 Date Input Visual Fix */
 #requestDate,
 #requestEndDate,
 input[type="date"]{
@@ -491,7 +493,7 @@ input[type="date"]::-webkit-calendar-picker-indicator{
 
 
 
-/* KMS2 v68 Recovery Stable: safe input/select */
+/* KMS2 v70 Recovery Stable: safe input/select */
 input, select, textarea, button{
   pointer-events:auto!important;
 }
@@ -520,7 +522,7 @@ input[type="time"]::-webkit-calendar-picker-indicator{
 }
 
 
-/* KMS2 v68 Mobile Layout Fix: visual only, no logic changes */
+/* KMS2 v70 Mobile Layout Fix: visual only, no logic changes */
 html,body{
   width:100%!important;
   max-width:100%!important;
@@ -720,7 +722,7 @@ table{
 }
 
 
-/* KMS2 v68 UI Pro Max — CSS only */
+/* KMS2 v70 UI Pro Max — CSS only */
 :root{--kms2-bg:#050b0f!important;--kms2-panel:#0a1419!important;--kms2-card:#0f2027!important;--kms2-line:#23404b!important;--kms2-text:#eefcf8!important;--kms2-muted:#91aaa7!important;--kms2-neon:#18e08b!important;--kms2-gold:#ffb020!important;--kms2-cyan:#12d6c8!important;--kms2-red:#ff4d4d!important}
 html,body{background:radial-gradient(circle at 18% 0%,rgba(24,224,139,.16),transparent 32%),radial-gradient(circle at 88% 5%,rgba(18,214,200,.10),transparent 28%),linear-gradient(180deg,#06110f 0%,#050b0f 42%,#04080b 100%)!important;color:var(--kms2-text)!important}
 body:before{content:""!important;position:fixed!important;inset:0!important;pointer-events:none!important;background:linear-gradient(rgba(255,255,255,.018) 1px,transparent 1px),linear-gradient(90deg,rgba(255,255,255,.018) 1px,transparent 1px)!important;background-size:34px 34px!important;z-index:-1!important}
@@ -740,6 +742,33 @@ tr:hover td{background:rgba(24,224,139,.045)!important}
 .stat strong,.stat .num,.stat .value{color:#18e08b!important;text-shadow:0 0 22px rgba(24,224,139,.16)!important}
 .day,.calendarDay,.dayCell{background:linear-gradient(180deg,#0c1a20,#071116)!important;border:1px solid rgba(80,126,140,.36)!important;box-shadow:inset 0 1px 0 rgba(255,255,255,.03)!important}
 .dutyItem,.shiftItem,.personChip,.chip{background:linear-gradient(90deg,rgba(24,224,139,.22),rgba(18,214,200,.08))!important;border:1px solid rgba(24,224,139,.30)!important;color:#eafff5!important}
+
+
+/* KMS2 v70 Substitute Display Fix */
+.subDutyCard,.subDutyItem,[data-substitute="true"]{
+  background:linear-gradient(180deg,rgba(255,176,32,.18),rgba(82,52,8,.35))!important;
+  border:1px solid rgba(255,176,32,.72)!important;
+  border-left:6px solid #ffb020!important;
+  box-shadow:0 0 0 3px rgba(255,176,32,.08),0 12px 30px rgba(0,0,0,.28)!important;
+}
+.subDutyBadge{
+  display:inline-flex!important;
+  align-items:center!important;
+  gap:6px!important;
+  width:max-content!important;
+  max-width:100%!important;
+  padding:4px 10px!important;
+  border-radius:999px!important;
+  background:#ffb020!important;
+  color:#06110f!important;
+  font-weight:1000!important;
+  font-size:12px!important;
+  margin-bottom:6px!important;
+}
+.subDutyText{
+  color:#ffe7ad!important;
+  font-weight:900!important;
+}
 
 </style>
 </head>
@@ -820,7 +849,7 @@ tr:hover td{background:rgba(24,224,139,.045)!important}
   <section id="section-settings" class="section">
     <div class="card">
       <h2>ตั้งค่า</h2>
-      <div class="notice"><b>KMS2 Professional Workspace v68</b><br>หน้าพนักงานสำหรับดูเวร ส่งคำขอ และติดตามสถานะ</div>
+      <div class="notice"><b>KMS2 Professional Workspace v70</b><br>หน้าพนักงานสำหรับดูเวร ส่งคำขอ และติดตามสถานะ</div>
       <br>
       <button onclick="loadData()">รีเฟรชข้อมูล</button>
     </div>
@@ -1141,13 +1170,13 @@ setTodayBase();
 loadData();
 if ("serviceWorker" in navigator) {navigator.serviceWorker.register("./service-worker.js");}
 
-// KMS2 v68 hard override: free-date request validator
+// KMS2 v70 hard override: free-date request validator
 window.kms2FreeDateModeV50 = true;
 
 </script>
 
 <script>
-/* KMS2 v68 NoBlock Request Date Override */
+/* KMS2 v70 NoBlock Request Date Override */
 (function(){
   function pad2x(n){ return String(n).padStart(2,"0"); }
   function fixYearV51(y){
@@ -1218,7 +1247,7 @@ window.kms2FreeDateModeV50 = true;
 
 
 <script>
-/* KMS2 v68 Single Request Row Override */
+/* KMS2 v70 Single Request Row Override */
 (function(){
   function v(id){ return (document.getElementById(id)?.value || "").trim(); }
   function p2(n){ return String(n).padStart(2,"0"); }
@@ -1292,7 +1321,7 @@ window.kms2FreeDateModeV50 = true;
     const groupId = "REQ-" + Date.now();
 
     const dateText = days > 1 ? `${start} ถึง ${end}` : start;
-    // v68: บันทึกลง Google Sheet แบบสะอาด ไม่ใส่ RequestGroup / AllDates
+    // v70: บันทึกลง Google Sheet แบบสะอาด ไม่ใส่ RequestGroup / AllDates
     const detail = [
       detailRaw || "",
       days > 1 ? `คำขอ ${days} วัน: ${dateText}` : `คำขอ 1 วัน: ${start}`
@@ -1339,7 +1368,7 @@ window.kms2FreeDateModeV50 = true;
 
 
 <script>
-/* KMS2 v68 Recovery Stable
+/* KMS2 v70 Recovery Stable
    No interval, no DOM wrapping, no repeated mutation */
 (function(){
   function pad(n){ return String(n).padStart(2,"0"); }
@@ -1415,6 +1444,199 @@ window.kms2FreeDateModeV50 = true;
 
     return list.filter(Boolean).sort();
   };
+})();
+</script>
+
+
+<script>
+/* KMS2 v70 Request Range Logic Fix */
+(function(){
+  function el(id){ return document.getElementById(id); }
+  function v(id){ return (el(id)?.value || "").trim(); }
+  function p2(n){ return String(n).padStart(2,"0"); }
+  function localYMD(d){ return `${d.getFullYear()}-${p2(d.getMonth()+1)}-${p2(d.getDate())}`; }
+  function fixYear(y){
+    y=Number(y);
+    if(!Number.isFinite(y)) return new Date().getFullYear();
+    if(y<100) y+=2000;
+    if(y>=2600) y-=633;
+    else if(y>2400) y-=543;
+    return y;
+  }
+  function norm(raw, base){
+    let s=String(raw||"").trim();
+    if(!s) return "";
+    s=s.replace(/[.]/g,"/").replace(/\s+/g,"");
+    let m=s.match(/^(\d{4})[-\/](\d{1,2})[-\/](\d{1,2})$/);
+    if(m) return `${fixYear(m[1])}-${p2(m[2])}-${p2(m[3])}`;
+    m=s.match(/^(\d{1,2})[-\/](\d{1,2})[-\/](\d{2,4})$/);
+    if(m) return `${fixYear(m[3])}-${p2(m[2])}-${p2(m[1])}`;
+    m=s.match(/^(\d{1,2})[-\/](\d{1,2})$/);
+    if(m){
+      const b=(base || v("requestDate") || localYMD(new Date())).slice(0,7);
+      return `${b.slice(0,4)}-${p2(m[2])}-${p2(m[1])}`;
+    }
+    m=s.match(/^(\d{1,2})$/);
+    if(m){
+      const b=(base || v("requestDate") || localYMD(new Date())).slice(0,7);
+      return `${b}-${p2(m[1])}`;
+    }
+    return "";
+  }
+  function makeList(startRaw,endRaw,extraRaw){
+    const list=[]; const add=d=>{ if(d && !list.includes(d)) list.push(d); };
+    let start=norm(startRaw);
+    let end=norm(endRaw, (start||localYMD(new Date())).slice(0,7));
+
+    // ถ้าเลือกวันที่สิ้นสุดไม่ได้จริง ให้ระบบยังรองรับวันที่เพิ่มเติมหลายวัน
+    if(start && end){
+      let [sy,sm,sd]=start.split("-").map(Number);
+      let [ey,em,ed]=end.split("-").map(Number);
+      let sDate=new Date(sy,sm-1,sd), eDate=new Date(ey,em-1,ed);
+      if(eDate < sDate){ const tmp=start; start=end; end=tmp; [sy,sm,sd]=start.split("-").map(Number); [ey,em,ed]=end.split("-").map(Number); sDate=new Date(sy,sm-1,sd); eDate=new Date(ey,em-1,ed); }
+      if(!Number.isNaN(sDate.getTime()) && !Number.isNaN(eDate.getTime())){
+        for(let d=new Date(sDate); d<=eDate; d.setDate(d.getDate()+1)) add(localYMD(d));
+      }
+    }else if(start){ add(start); }
+    else if(end){ add(end); }
+
+    String(extraRaw||"")
+      .split(/[\n,，\s]+/)
+      .map(x=>x.trim())
+      .filter(Boolean)
+      .forEach(x=>add(norm(x,(start||end||localYMD(new Date())).slice(0,7))));
+    return list.sort();
+  }
+  window.makeDateList = makeList;
+
+  window.sendRequest = async function(){
+    const staff=v("requestStaff");
+    const type=v("requestType");
+    const startRaw=v("requestDate");
+    const endRaw=v("requestEndDate");
+    const extraRaw=v("requestExtraDates");
+    const detailRaw=v("requestDetail");
+
+    if(!staff) return alert("กรุณากรอกชื่อพนักงาน");
+
+    const dates=makeList(startRaw,endRaw,extraRaw);
+    if(!dates.length) return alert("กรุณาเลือกวันที่เริ่ม หรือใส่วันที่เพิ่มเติมอย่างน้อย 1 วัน");
+
+    const start=dates[0], end=dates[dates.length-1], days=dates.length;
+    const dateText = days>1 ? `${start} ถึง ${end}` : start;
+    const detail = [
+      detailRaw || "",
+      days>1 ? `คำขอ ${days} วัน: ${dateText}` : `คำขอ 1 วัน: ${start}`
+    ].filter(Boolean).join(" | ");
+
+    try{
+      await jsonp(API_URL+
+        "?action=addRequest"+
+        "&staff="+encodeURIComponent(staff)+
+        "&type="+encodeURIComponent(type)+
+        "&date="+encodeURIComponent(dateText)+
+        "&detail="+encodeURIComponent(detail)
+      );
+      alert(days>1 ? `ส่งคำขอรวม ${days} วันเรียบร้อย` : "ส่งคำขอเรียบร้อย");
+      if(el("requestDetail")) el("requestDetail").value="";
+      if(el("requestExtraDates")) el("requestExtraDates").value="";
+      if(typeof loadData==="function") loadData();
+      if(typeof showSection==="function") showSection("status");
+    }catch(e){
+      console.error(e);
+      alert("ส่งคำขอไม่สำเร็จ");
+    }
+  };
+})();
+</script>
+
+
+<script>
+/* KMS2 v70 Substitute Display Fix
+   แสดง [เวรแทน] ให้ต่างจากเวรปกติ และลดรายการซ้ำใน popup */
+(function(){
+  function isSubText(text){
+    text = String(text || "");
+    return text.includes("[เวรแทน]") || text.includes("เวรแทน") || text.includes("เข้าเวรแทน");
+  }
+  function extractMain(text){
+    const s = String(text || "");
+    let m = s.match(/เวรหลัก\s*:\s*([^|\\n]+)/);
+    return m ? m[1].trim() : "";
+  }
+  function extractSub(text, fallback){
+    const s = String(text || "");
+    let m = s.match(/เวรแทน\s*:\s*([^|\\n]+)/);
+    return m ? m[1].trim() : fallback;
+  }
+  function cleanNote(text){
+    return String(text || "")
+      .replace(/\[เวรแทน\]/g,"")
+      .replace(/เวรหลัก\s*:\s*[^|\\n]+/g,"")
+      .replace(/เวรแทน\s*:\s*[^|\\n]+/g,"")
+      .replace(/เหตุผล\s*:\s*/g,"")
+      .replace(/\|+/g," ")
+      .trim();
+  }
+
+  function enhanceSubstituteDisplay(){
+    const boxes = document.querySelectorAll(".dutyItem,.shiftItem,.personChip,.chip,.card,td,li,div");
+    boxes.forEach(box=>{
+      if(!box || box.dataset.kms2SubChecked === "yes") return;
+      const text = box.innerText || "";
+      if(!isSubText(text)) return;
+
+      box.dataset.kms2SubChecked = "yes";
+      box.dataset.substitute = "true";
+      box.classList.add("subDutyCard");
+
+      // ถ้ายังไม่มี badge ให้ใส่หัวข้อเวรแทน
+      if(!box.querySelector(".subDutyBadge")){
+        const badge = document.createElement("div");
+        badge.className = "subDutyBadge";
+        badge.textContent = "🔁 เวรแทน";
+        box.prepend(badge);
+      }
+
+      // ทำให้ข้อความอ่านง่ายขึ้น แต่ไม่ลบข้อมูลจริง
+      const main = extractMain(text);
+      const sub = extractSub(text, "");
+      if(main || sub){
+        const info = document.createElement("div");
+        info.className = "subDutyText";
+        info.textContent = `${sub ? "ผู้แทน: " + sub : ""}${main ? " | แทน: " + main : ""}`;
+        if(!box.querySelector(".subDutyText")) box.appendChild(info);
+      }
+    });
+  }
+
+  // ลดรายการซ้ำใน modal รายละเอียดวัน: ถ้า text เหมือนกันซ้ำ ให้ซ่อนอันหลัง
+  function hideDuplicateDutyCards(){
+    const cards = Array.from(document.querySelectorAll(".subDutyCard,.dutyItem,.shiftItem,.personChip,.chip"));
+    const seen = new Set();
+    cards.forEach(card=>{
+      const key = (card.innerText || "").replace(/\\s+/g," ").trim();
+      if(!key) return;
+      if(seen.has(key)){
+        card.style.display = "none";
+      }else{
+        seen.add(key);
+      }
+    });
+  }
+
+  window.kms2EnhanceSubstituteDisplayV70 = function(){
+    enhanceSubstituteDisplay();
+    hideDuplicateDutyCards();
+  };
+
+  document.addEventListener("DOMContentLoaded",()=>{
+    setTimeout(window.kms2EnhanceSubstituteDisplayV70,300);
+    setTimeout(window.kms2EnhanceSubstituteDisplayV70,1000);
+  });
+  document.addEventListener("click",()=>{
+    setTimeout(window.kms2EnhanceSubstituteDisplayV70,250);
+  }, true);
 })();
 </script>
 

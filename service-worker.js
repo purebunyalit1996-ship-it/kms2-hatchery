@@ -1,4 +1,4 @@
-const CACHE_NAME = "kms2-ui-promax-cssonly-v68";
+const CACHE_NAME = "kms2-substitute-displayfix-v70";
 self.addEventListener("install", event => { self.skipWaiting(); });
 self.addEventListener("activate", event => {
   event.waitUntil(caches.keys().then(keys => Promise.all(keys.map(k => caches.delete(k)))));
