@@ -1,4 +1,4 @@
-KMS2 v73 Full Stack Request Core Fix
+KMS2 v74 Full Stack Request Core Fix
 
 ไฟล์ในชุดนี้:
 - index.html
@@ -24,9 +24,9 @@ KMS2 v73 Full Stack Request Core Fix
 5. เลือก Execute as: Me และ Who has access: Anyone
 6. ใช้ URL เดิมได้ถ้า redeploy เป็น deployment เดิม หรือถ้าได้ URL ใหม่ให้เปลี่ยน API_URL ใน index.html และ employee.html
 7. เปิดทดสอบ:
-   login.html?v=73
-   index.html?v=73
-   employee.html?v=73
+   login.html?v=74
+   index.html?v=74
+   employee.html?v=74
 
 หมายเหตุ:
 - แถวทดสอบเก่าที่เคยบันทึกผิดใน Google Sheet ต้องลบเองก่อนทดสอบใหม่

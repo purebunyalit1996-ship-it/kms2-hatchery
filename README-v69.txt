@@ -1,4 +1,4 @@
-KMS2 v73 Request + Substitute Logic Fix
+KMS2 v74 Request + Substitute Logic Fix
 
 แก้ไข:
 1) คำขอลาหลายวัน
@@ -13,9 +13,9 @@ KMS2 v73 Request + Substitute Logic Fix
 
 สำคัญ:
 - ข้อมูลเก่าที่บันทึกผิดไว้ใน Google Sheet ต้องลบ/แก้เองก่อนทดสอบใหม่
-- ทดสอบด้วยข้อมูลใหม่หลังอัป v73
+- ทดสอบด้วยข้อมูลใหม่หลังอัป v74
 
 URL:
-login.html?v=73
-index.html?v=73
-employee.html?v=73
+login.html?v=74
+index.html?v=74
+employee.html?v=74

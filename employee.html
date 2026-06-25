@@ -5,23 +5,24 @@
 <meta name="theme-color" content="#0f5132">
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
-<title>KMS2 Workspace v73 หน้าพนักงาน</title>
-<!-- KMS2 v73 Substitute UI Hotfix -->
-<!-- KMS2 v73 Full Stack Request Core Fix -->
-<!-- KMS2 v73 Employee Request Range HardFix -->
-<!-- KMS2 v73 Substitute Display Fix -->
-<!-- KMS2 v73 Request Range Logic Fix -->
-<!-- KMS2 v73 UI Pro Max CSS Only -->
-<!-- KMS2 v73 Mobile Layout Fix -->
-<!-- KMS2 v73 Recovery Stable -->
-<!-- KMS2 v73 Month Input Text Mode Fix -->
-<!-- KMS2 v73 Month Picker Stability Fix -->
-<!-- KMS2 v73 Clean Sheet + Request Display -->
-<!-- KMS2 v73 Leave Date + Input Visual Fix -->
-<!-- KMS2 v73 Single Request Approval -->
-<!-- KMS2 v73 Grouped Request -->
-<!-- KMS2 v73 Employee Free Date NoBlock -->
-<!-- KMS2 v73 Employee Free Date Cache Fix -->
+<title>KMS2 Workspace v74 หน้าพนักงาน</title>
+<!-- KMS2 v74 Remove Substitute Badge Layer -->
+<!-- KMS2 v74 Substitute UI Hotfix -->
+<!-- KMS2 v74 Full Stack Request Core Fix -->
+<!-- KMS2 v74 Employee Request Range HardFix -->
+<!-- KMS2 v74 Substitute Display Fix -->
+<!-- KMS2 v74 Request Range Logic Fix -->
+<!-- KMS2 v74 UI Pro Max CSS Only -->
+<!-- KMS2 v74 Mobile Layout Fix -->
+<!-- KMS2 v74 Recovery Stable -->
+<!-- KMS2 v74 Month Input Text Mode Fix -->
+<!-- KMS2 v74 Month Picker Stability Fix -->
+<!-- KMS2 v74 Clean Sheet + Request Display -->
+<!-- KMS2 v74 Leave Date + Input Visual Fix -->
+<!-- KMS2 v74 Single Request Approval -->
+<!-- KMS2 v74 Grouped Request -->
+<!-- KMS2 v74 Employee Free Date NoBlock -->
+<!-- KMS2 v74 Employee Free Date Cache Fix -->
 <style>
 *{box-sizing:border-box;font-family:system-ui,sans-serif}
 html,body{margin:0;max-width:100%;overflow-x:hidden;background:#eef3ef;color:#1f2933}
@@ -67,7 +68,7 @@ button{background:#198754;color:white;border:0;font-weight:900;min-height:46px;c
 
 
 /* ===============================
-   KMS2 v73 Mobile Month Input Fix
+   KMS2 v74 Mobile Month Input Fix
    แก้ input เดือน / ปุ่มรายงาน / กล่องที่เกี่ยวข้องกับเดือน
    ให้ไม่ล้นหน้าจอบนมือถือ
    =============================== */
@@ -200,7 +201,7 @@ input[type="month"] {
 
 
 /* ===============================
-   KMS2 v73 Duty Range + Clickable Calendar
+   KMS2 v74 Duty Range + Clickable Calendar
    =============================== */
 .dateRangeHelp{font-size:13px;color:#64748b;margin-top:8px;line-height:1.45}
 .cell{cursor:pointer;transition:.15s ease}
@@ -221,7 +222,7 @@ input[type="month"] {
 }
 
 
-/* KMS2 v73 Substitute View */
+/* KMS2 v74 Substitute View */
 .subDuty{border-left-color:#2563eb!important;background:#eff6ff!important}
 .subLine{display:block;margin-top:4px;color:#1d4ed8;font-weight:900}
 .calendar .cell.hasDuty{background:#f0fdf4;border-color:#86efac}
@@ -229,7 +230,7 @@ input[type="month"] {
 
 
 /* ===============================
-   KMS2 v73 Employee Request Date Mobile Fix
+   KMS2 v74 Employee Request Date Mobile Fix
    แก้ช่อง "วันที่เกี่ยวข้อง" ในหน้าพนักงานไม่ให้ล้นจอมือถือ
    =============================== */
 #section-request,
@@ -321,7 +322,7 @@ input[type="month"] {
 
 
 /* ===============================
-   KMS2 v73 Employee Professional UI
+   KMS2 v74 Employee Professional UI
    =============================== */
 :root{--kms2-primary:#124734;--kms2-bg:#f5f7f6;--kms2-card:#fff;--kms2-border:#dfe7e2;--kms2-text:#17231d;--kms2-muted:#66736d;--kms2-radius:18px}
 body{background:var(--kms2-bg);color:var(--kms2-text);letter-spacing:.01em}
@@ -347,14 +348,14 @@ button{background:var(--kms2-primary);border-radius:13px;box-shadow:0 3px 10px r
 @media(max-width:700px){header h1{font-size:21px}.tabs button{font-size:12px}.card{border-radius:16px}}
 
 
-/* KMS2 v73 Employee Multi-day Request */
+/* KMS2 v74 Employee Multi-day Request */
 .requestDatesBox{min-height:86px;resize:vertical}
 #requestEndDate{min-height:48px!important}
 @media(max-width:700px){.requestDatesBox{min-height:92px}}
 
 
 /* =========================================================
-   KMS2 v73 Factory Control Center UI
+   KMS2 v74 Factory Control Center UI
    Visual-only refactor: keep all IDs, functions, workflow.
    ========================================================= */
 :root{
@@ -467,7 +468,7 @@ tr:hover td{background:#12242c!important;}
 }
 @media(max-width:390px){.statgrid{grid-template-columns:1fr!important}.workspaceNav,.tabs{grid-template-columns:1fr 1fr!important}}
 
-/* KMS2 v73 Date Input Visual Fix */
+/* KMS2 v74 Date Input Visual Fix */
 #requestDate,
 #requestEndDate,
 input[type="date"]{
@@ -496,7 +497,7 @@ input[type="date"]::-webkit-calendar-picker-indicator{
 
 
 
-/* KMS2 v73 Recovery Stable: safe input/select */
+/* KMS2 v74 Recovery Stable: safe input/select */
 input, select, textarea, button{
   pointer-events:auto!important;
 }
@@ -525,7 +526,7 @@ input[type="time"]::-webkit-calendar-picker-indicator{
 }
 
 
-/* KMS2 v73 Mobile Layout Fix: visual only, no logic changes */
+/* KMS2 v74 Mobile Layout Fix: visual only, no logic changes */
 html,body{
   width:100%!important;
   max-width:100%!important;
@@ -725,7 +726,7 @@ table{
 }
 
 
-/* KMS2 v73 UI Pro Max — CSS only */
+/* KMS2 v74 UI Pro Max — CSS only */
 :root{--kms2-bg:#050b0f!important;--kms2-panel:#0a1419!important;--kms2-card:#0f2027!important;--kms2-line:#23404b!important;--kms2-text:#eefcf8!important;--kms2-muted:#91aaa7!important;--kms2-neon:#18e08b!important;--kms2-gold:#ffb020!important;--kms2-cyan:#12d6c8!important;--kms2-red:#ff4d4d!important}
 html,body{background:radial-gradient(circle at 18% 0%,rgba(24,224,139,.16),transparent 32%),radial-gradient(circle at 88% 5%,rgba(18,214,200,.10),transparent 28%),linear-gradient(180deg,#06110f 0%,#050b0f 42%,#04080b 100%)!important;color:var(--kms2-text)!important}
 body:before{content:""!important;position:fixed!important;inset:0!important;pointer-events:none!important;background:linear-gradient(rgba(255,255,255,.018) 1px,transparent 1px),linear-gradient(90deg,rgba(255,255,255,.018) 1px,transparent 1px)!important;background-size:34px 34px!important;z-index:-1!important}
@@ -748,24 +749,16 @@ tr:hover td{background:rgba(24,224,139,.045)!important}
 
 
 
-/* KMS2 v73 Substitute UI Hotfix */
-.kms2-substitute{
-  background:linear-gradient(180deg,rgba(255,176,32,.14),rgba(58,37,8,.24))!important;
-  border:1px solid rgba(255,176,32,.55)!important;
-  border-left:5px solid #ffb020!important;
+
+/* KMS2 v74 Emergency Remove Substitute Badge Layer */
+.subDutyCard,.subDutyItem,.kms2-substitute,[data-substitute="true"]{
+  background:inherit!important;
+  border:inherit!important;
+  border-left:inherit!important;
+  box-shadow:inherit!important;
 }
-.kms2-substitute-badge{
-  display:inline-flex!important;
-  align-items:center!important;
-  width:max-content!important;
-  max-width:100%!important;
-  padding:3px 9px!important;
-  border-radius:999px!important;
-  background:#ffb020!important;
-  color:#06110f!important;
-  font-weight:1000!important;
-  font-size:12px!important;
-  margin-bottom:5px!important;
+.subDutyBadge,.subDutyText,.kms2-substitute-badge{
+  display:none!important;
 }
 
 </style>
@@ -847,7 +840,7 @@ tr:hover td{background:rgba(24,224,139,.045)!important}
   <section id="section-settings" class="section">
     <div class="card">
       <h2>ตั้งค่า</h2>
-      <div class="notice"><b>KMS2 Professional Workspace v73</b><br>หน้าพนักงานสำหรับดูเวร ส่งคำขอ และติดตามสถานะ</div>
+      <div class="notice"><b>KMS2 Professional Workspace v74</b><br>หน้าพนักงานสำหรับดูเวร ส่งคำขอ และติดตามสถานะ</div>
       <br>
       <button onclick="loadData()">รีเฟรชข้อมูล</button>
     </div>
@@ -1168,13 +1161,13 @@ setTodayBase();
 loadData();
 if ("serviceWorker" in navigator) {navigator.serviceWorker.register("./service-worker.js");}
 
-// KMS2 v73 hard override: free-date request validator
+// KMS2 v74 hard override: free-date request validator
 window.kms2FreeDateModeV50 = true;
 
 </script>
 
 <script>
-/* KMS2 v73 NoBlock Request Date Override */
+/* KMS2 v74 NoBlock Request Date Override */
 (function(){
   function pad2x(n){ return String(n).padStart(2,"0"); }
   function fixYearV51(y){
@@ -1245,7 +1238,7 @@ window.kms2FreeDateModeV50 = true;
 
 
 <script>
-/* KMS2 v73 Single Request Row Override */
+/* KMS2 v74 Single Request Row Override */
 (function(){
   function v(id){ return (document.getElementById(id)?.value || "").trim(); }
   function p2(n){ return String(n).padStart(2,"0"); }
@@ -1319,7 +1312,7 @@ window.kms2FreeDateModeV50 = true;
     const groupId = "REQ-" + Date.now();
 
     const dateText = days > 1 ? `${start} ถึง ${end}` : start;
-    // v73: บันทึกลง Google Sheet แบบสะอาด ไม่ใส่ RequestGroup / AllDates
+    // v74: บันทึกลง Google Sheet แบบสะอาด ไม่ใส่ RequestGroup / AllDates
     const detail = [
       detailRaw || "",
       days > 1 ? `คำขอ ${days} วัน: ${dateText}` : `คำขอ 1 วัน: ${start}`
@@ -1366,7 +1359,7 @@ window.kms2FreeDateModeV50 = true;
 
 
 <script>
-/* KMS2 v73 Recovery Stable
+/* KMS2 v74 Recovery Stable
    No interval, no DOM wrapping, no repeated mutation */
 (function(){
   function pad(n){ return String(n).padStart(2,"0"); }
@@ -1447,7 +1440,7 @@ window.kms2FreeDateModeV50 = true;
 
 
 <script>
-/* KMS2 v73 Request Range Logic Fix */
+/* KMS2 v74 Request Range Logic Fix */
 (function(){
   function el(id){ return document.getElementById(id); }
   function v(id){ return (el(id)?.value || "").trim(); }
@@ -1553,7 +1546,7 @@ window.kms2FreeDateModeV50 = true;
 
 
 <script>
-/* KMS2 v73 Employee Request Range HardFix
+/* KMS2 v74 Employee Request Range HardFix
    บังคับส่งคำขอหลายวันเป็น 1 แถว โดยอ่านวันที่เริ่ม/สิ้นสุดจากทุก ID ที่เป็นไปได้ */
 (function(){
   function $id(id){ return document.getElementById(id); }
@@ -1671,7 +1664,7 @@ window.kms2FreeDateModeV50 = true;
     const days = daysBetween(start,end);
     const dateText = days > 1 ? `${start} ถึง ${end}` : start;
 
-    // v73: บันทึกลง Sheet เป็น 1 แถวเท่านั้น โดย date เป็นช่วง
+    // v74: บันทึกลง Sheet เป็น 1 แถวเท่านั้น โดย date เป็นช่วง
     const detail = [
       detailRaw,
       days > 1 ? `คำขอ ${days} วัน: ${start} ถึง ${end}` : `คำขอ 1 วัน: ${start}`
@@ -1707,7 +1700,7 @@ window.kms2FreeDateModeV50 = true;
 
 
 <script>
-/* KMS2 v73 Full Stack Request Core Fix - Frontend */
+/* KMS2 v74 Full Stack Request Core Fix - Frontend */
 (function(){
   function byId(id){ return document.getElementById(id); }
   function val(id){ return (byId(id)?.value || "").trim(); }
@@ -1769,58 +1762,13 @@ window.kms2FreeDateModeV50 = true;
       ["requestDetail","detail","requestNote","requestExtraDates","extraDates","leaveExtraDates"].forEach(id=>{ if(byId(id)) byId(id).value=""; });
       if(typeof loadData==="function") await loadData();
       if(typeof showSection==="function") showSection("status");
-    }catch(e){ console.error(e); alert("ส่งคำขอไม่สำเร็จ กรุณาตรวจ Apps Script v73"); }
+    }catch(e){ console.error(e); alert("ส่งคำขอไม่สำเร็จ กรุณาตรวจ Apps Script v74"); }
   };
 })();
 </script>
 
 
-<script>
-/* KMS2 v73 Substitute UI Hotfix
-   จำกัดการใส่ป้ายเวรแทนเฉพาะกล่องรายการ ไม่แตะกล่องแม่ */
-(function(){
-  function isSubText(text){
-    text = String(text || "");
-    return text.includes("[เวรแทน]") || text.includes("เข้าเวรแทน");
-  }
 
-  function markSubstituteItems(){
-    const selectors = [
-      ".dutyItem",
-      ".shiftItem",
-      ".personChip",
-      ".chip"
-    ].join(",");
-
-    document.querySelectorAll(selectors).forEach(item=>{
-      if(!item || item.dataset.kms2SubV73 === "yes") return;
-      const text = item.innerText || "";
-      if(!isSubText(text)) return;
-
-      item.dataset.kms2SubV73 = "yes";
-      item.classList.add("kms2-substitute");
-
-      if(!item.querySelector(".kms2-substitute-badge")){
-        const badge = document.createElement("span");
-        badge.className = "kms2-substitute-badge";
-        badge.textContent = "🔁 เวรแทน";
-        item.prepend(badge);
-      }
-    });
-  }
-
-  document.addEventListener("DOMContentLoaded",()=>{
-    setTimeout(markSubstituteItems,300);
-    setTimeout(markSubstituteItems,1000);
-  });
-
-  document.addEventListener("click",()=>{
-    setTimeout(markSubstituteItems,200);
-  }, true);
-
-  window.kms2SubstituteUIHotfixV73 = markSubstituteItems;
-})();
-</script>
 
 </body>
 </html>
