@@ -1,4 +1,4 @@
-KMS2 v75 Calendar Drag Select — Substitute Select
+KMS2 v76 Calendar Drag Select — Substitute Select
 
 เพิ่ม:
 - เลือกวันจากปฏิทินด้วยการแตะ/ลาก
@@ -14,6 +14,6 @@ KMS2 v75 Calendar Drag Select — Substitute Select
 - ไม่แก้ Google Sheet logic
 
 URL:
-login.html?v=75
-index.html?v=75
-employee.html?v=75
+login.html?v=76
+index.html?v=76
+employee.html?v=76

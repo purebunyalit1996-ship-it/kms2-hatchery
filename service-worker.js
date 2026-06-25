@@ -1,4 +1,4 @@
-const CACHE_NAME = "kms2-calendar-drag-substitute-select-v75";
+const CACHE_NAME = "kms2-calendar-substitute-mode-v76";
 self.addEventListener("install", event => { self.skipWaiting(); });
 self.addEventListener("activate", event => {
   event.waitUntil(caches.keys().then(keys => Promise.all(keys.map(k => caches.delete(k)))));
