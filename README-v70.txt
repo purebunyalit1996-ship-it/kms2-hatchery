@@ -1,4 +1,4 @@
-KMS2 v70 Substitute Display Fix
+KMS2 v71 Substitute Display Fix
 
 แก้ไข:
 - เวรแทนไม่แสดงเหมือนเวรปกติ
@@ -9,10 +9,10 @@ KMS2 v70 Substitute Display Fix
 
 หมายเหตุ:
 - ข้อมูลเก่าที่บันทึกซ้ำใน Google Sheet ยังอยู่เหมือนเดิม
-- v70 แก้การแสดงผลให้แยกเวรแทนชัดขึ้น
+- v71 แก้การแสดงผลให้แยกเวรแทนชัดขึ้น
 - ถ้าต้องการลบรายการซ้ำจริง ต้องลบแถวซ้ำใน Google Sheet
 
 URL:
-login.html?v=70
-index.html?v=70
-employee.html?v=70
+login.html?v=71
+index.html?v=71
+employee.html?v=71
