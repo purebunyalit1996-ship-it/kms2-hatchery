@@ -1,7 +1,7 @@
 {
   "name": "KMS2 ระบบจัดการเวรตู้ฟัก",
   "short_name": "KMS2 Admin",
-  "start_url": "login.html?v=72",
+  "start_url": "login.html?v=73",
   "scope": "./",
   "display": "standalone",
   "background_color": "#050b0f",

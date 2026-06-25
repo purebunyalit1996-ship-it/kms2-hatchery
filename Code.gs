@@ -1,6 +1,6 @@
 
 /************************************************************
- * KMS2 Apps Script v72 — Full Stack Request Core Fix
+ * KMS2 Apps Script v73 — Full Stack Request Core Fix
  * ใช้กับ Google Sheets: พนักงาน, คำขอ, กระเวร, ตารางเวร, บันทึกสถานะ
  * วิธีใช้: วางทับ Code.gs เดิม แล้ว Deploy > New deployment > Web app
  ************************************************************/
