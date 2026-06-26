@@ -1,4 +1,4 @@
-const CACHE_NAME = "kms2-hard-cleanup-unified-substitute-visual-v85";
+const CACHE_NAME = "kms2-unified-calendar-scheduler-v86";
 self.addEventListener("install", event => { self.skipWaiting(); });
 self.addEventListener("activate", event => {
   event.waitUntil(caches.keys().then(keys => Promise.all(keys.map(k => caches.delete(k)))));
