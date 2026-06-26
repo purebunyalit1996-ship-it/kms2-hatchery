@@ -1,4 +1,4 @@
-KMS2 v80 Calendar Substitute Shift + Safe View Mode
+KMS2 v81 Calendar Substitute Shift + Safe View Mode
 
 แก้:
 - เพิ่มช่องเลือกกะเวรใน popup เวรแทนจากปฏิทิน
@@ -7,6 +7,6 @@ KMS2 v80 Calendar Substitute Shift + Safe View Mode
 - หลังบันทึกเสร็จปิดโหมดเลือกอัตโนมัติ
 
 URL:
-login.html?v=80
-index.html?v=80
-employee.html?v=80
+login.html?v=81
+index.html?v=81
+employee.html?v=81
