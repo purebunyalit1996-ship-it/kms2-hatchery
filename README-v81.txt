@@ -1,6 +1,6 @@
-KMS2 v81 Multi-Date Click Select
+KMS2 v82 Multi-Date Click Select
 
-แก้จาก v80:
+แก้จาก v82:
 - ในโหมดเวรแทนจากปฏิทิน สามารถคลิกเลือกวันที่แบบไม่ติดกันได้แล้ว
   เช่น 2026-07-15, 2026-07-20, 2026-07-22
 - คลิกวันที่เดิมอีกครั้ง = ยกเลิกวันนั้น
@@ -9,6 +9,6 @@ KMS2 v81 Multi-Date Click Select
 - หน้าสรุปก่อนบันทึกจะแสดงรายการวันที่ที่เลือกจริง
 
 URL:
-login.html?v=81
-index.html?v=81
-employee.html?v=81
+login.html?v=82
+index.html?v=82
+employee.html?v=82
