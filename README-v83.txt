@@ -1,4 +1,4 @@
-KMS2 v84 Calendar Substitute Machine + Remove Old Form Dependency
+KMS2 v85 Calendar Substitute Machine + Remove Old Form Dependency
 
 แก้ตามที่เพียวแจ้ง:
 - ซ่อนฟอร์มเวรแทนแบบเก่าที่ต้องพิมพ์วันที่เอง
@@ -10,6 +10,6 @@ KMS2 v84 Calendar Substitute Machine + Remove Old Form Dependency
 - ไม่แตะ Apps Script
 
 URL:
-login.html?v=84
-index.html?v=84
-employee.html?v=84
+login.html?v=85
+index.html?v=85
+employee.html?v=85

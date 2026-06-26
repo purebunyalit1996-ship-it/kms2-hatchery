@@ -1,8 +1,8 @@
-KMS2 v84 Hard Remove Old Substitute Form
+KMS2 v85 Hard Remove Old Substitute Form
 
-แก้จาก v83:
-- v83 ยังซ่อนฟอร์มเวรแทนเก่าไม่หมด เพราะเงื่อนไขหา DOM ไม่ตรงกับ HTML จริง
-- v84 เพิ่มตัวซ่อนแบบ hard remove เฉพาะกล่องเวรแทนเก่า
+แก้จาก v85:
+- v85 ยังซ่อนฟอร์มเวรแทนเก่าไม่หมด เพราะเงื่อนไขหา DOM ไม่ตรงกับ HTML จริง
+- v85 เพิ่มตัวซ่อนแบบ hard remove เฉพาะกล่องเวรแทนเก่า
 - ตรวจจากคำสำคัญจริงในกล่อง:
   เวรแทน / เวรแทนโดย / วันที่แทน / ตัวอย่าง: เวรแทนโดย / เวรแทนใช้ได้ทุกคน
 - ซ่อนทั้งกล่องเก่า ไม่ให้ผู้ใช้เห็นและไม่ให้คลิกได้
@@ -10,6 +10,6 @@ KMS2 v84 Hard Remove Old Substitute Form
 - ไม่แตะ Apps Script
 
 URL:
-login.html?v=84
-index.html?v=84
-employee.html?v=84
+login.html?v=85
+index.html?v=85
+employee.html?v=85
