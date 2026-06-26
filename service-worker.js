@@ -1,4 +1,4 @@
-const CACHE_NAME = "kms2-force-calendar-scheduler-bar-v87";
+const CACHE_NAME = "kms2-working-calendar-scheduler-v88";
 self.addEventListener("install", event => { self.skipWaiting(); });
 self.addEventListener("activate", event => {
   event.waitUntil(caches.keys().then(keys => Promise.all(keys.map(k => caches.delete(k)))));

@@ -1,8 +1,8 @@
-KMS2 v87 Force Calendar Scheduler Bar
+KMS2 v88 Force Calendar Scheduler Bar
 
-แก้จาก v86:
-- v86 ปุ่มใหม่อาจไปอยู่ตำแหน่งที่ผู้ใช้ไม่เห็น/ไม่ได้ใช้งาน
-- v87 ทำแถบจัดเวรจากปฏิทินแบบ fixed ด้านล่าง เห็นชัดทุกหน้า Admin
+แก้จาก v88:
+- v88 ปุ่มใหม่อาจไปอยู่ตำแหน่งที่ผู้ใช้ไม่เห็น/ไม่ได้ใช้งาน
+- v88 ทำแถบจัดเวรจากปฏิทินแบบ fixed ด้านล่าง เห็นชัดทุกหน้า Admin
 - เพิ่มปุ่ม:
   - เพิ่มเวร
   - เวรแทน
@@ -18,6 +18,6 @@ KMS2 v87 Force Calendar Scheduler Bar
 - ไม่แตะ Apps Script
 
 URL:
-login.html?v=87
-index.html?v=87
-employee.html?v=87
+login.html?v=88
+index.html?v=88
+employee.html?v=88

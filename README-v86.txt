@@ -1,4 +1,4 @@
-KMS2 v87 Unified Calendar Scheduler
+KMS2 v88 Unified Calendar Scheduler
 
 แก้ตามที่เพียวเสนอ:
 - เพิ่มปุ่ม “เพิ่มเวรจากปฏิทิน”
@@ -12,6 +12,6 @@ KMS2 v87 Unified Calendar Scheduler
 - ลดการพึ่งฟอร์มเก่าและลดการพิมพ์วันที่เอง
 
 URL:
-login.html?v=87
-index.html?v=87
-employee.html?v=87
+login.html?v=88
+index.html?v=88
+employee.html?v=88
