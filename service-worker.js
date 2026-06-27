@@ -1,9 +1,4 @@
-const CACHE_NAME = "kms2-working-calendar-scheduler-v88";
-self.addEventListener("install", event => { self.skipWaiting(); });
-self.addEventListener("activate", event => {
-  event.waitUntil(caches.keys().then(keys => Promise.all(keys.map(k => caches.delete(k)))));
-  self.clients.claim();
-});
-self.addEventListener("fetch", event => {
-  event.respondWith(fetch(event.request, { cache: "no-store" }).catch(() => fetch(event.request)));
-});
+const CACHE_NAME="kms2-v89-fix-scheduler-action-binding";
+self.addEventListener("install",e=>self.skipWaiting());
+self.addEventListener("activate",e=>{e.waitUntil(caches.keys().then(keys=>Promise.all(keys.map(k=>caches.delete(k)))));self.clients.claim();});
+self.addEventListener("fetch",e=>{e.respondWith(fetch(e.request,{cache:"no-store"}).catch(()=>fetch(e.request)));});
