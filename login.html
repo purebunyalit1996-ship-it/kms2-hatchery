@@ -5,9 +5,9 @@
 <meta name="theme-color" content="#0f5132">
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
-<title>KMS2 Login v89 v89</title>
-<!-- KMS2 v89 Remove Substitute Badge Layer -->
-<!-- KMS2 v89 UI Pro Max CSS Only -->
+<title>KMS2 Login v90 v90</title>
+<!-- KMS2 v90 Remove Substitute Badge Layer -->
+<!-- KMS2 v90 UI Pro Max CSS Only -->
 
 <style>
 *{box-sizing:border-box;font-family:system-ui,sans-serif}
@@ -30,7 +30,7 @@ button.gray{background:#64748b}
 }
 
 
-/* KMS2 v89 Login Professional UI */
+/* KMS2 v90 Login Professional UI */
 :root{--kms2-primary:#124734;--kms2-border:#dfe7e2;--kms2-text:#17231d;--kms2-muted:#66736d}
 .loginWrap{background:linear-gradient(135deg,#0d3f2f,#155c43)}
 .loginBox{border:1px solid rgba(255,255,255,.35);box-shadow:0 24px 80px rgba(0,0,0,.24)}
@@ -46,7 +46,7 @@ button.gray{background:#5d6b66}
 
 
 /* =========================================================
-   KMS2 v89 Factory Control Center UI
+   KMS2 v90 Factory Control Center UI
    Visual-only refactor: keep all IDs, functions, workflow.
    ========================================================= */
 :root{
@@ -159,7 +159,7 @@ tr:hover td{background:#12242c!important;}
 }
 @media(max-width:390px){.statgrid{grid-template-columns:1fr!important}.workspaceNav,.tabs{grid-template-columns:1fr 1fr!important}}
 
-/* KMS2 v89 UI Pro Max — CSS only */
+/* KMS2 v90 UI Pro Max — CSS only */
 :root{--kms2-bg:#050b0f!important;--kms2-panel:#0a1419!important;--kms2-card:#0f2027!important;--kms2-line:#23404b!important;--kms2-text:#eefcf8!important;--kms2-muted:#91aaa7!important;--kms2-neon:#18e08b!important;--kms2-gold:#ffb020!important;--kms2-cyan:#12d6c8!important;--kms2-red:#ff4d4d!important}
 html,body{background:radial-gradient(circle at 18% 0%,rgba(24,224,139,.16),transparent 32%),radial-gradient(circle at 88% 5%,rgba(18,214,200,.10),transparent 28%),linear-gradient(180deg,#06110f 0%,#050b0f 42%,#04080b 100%)!important;color:var(--kms2-text)!important}
 body:before{content:""!important;position:fixed!important;inset:0!important;pointer-events:none!important;background:linear-gradient(rgba(255,255,255,.018) 1px,transparent 1px),linear-gradient(90deg,rgba(255,255,255,.018) 1px,transparent 1px)!important;background-size:34px 34px!important;z-index:-1!important}
@@ -204,7 +204,7 @@ tr:hover td{background:rgba(24,224,139,.045)!important}
       <p class="small">เข้าสู่ระบบตามสิทธิ์ผู้ใช้งาน</p>
     </div>
 
-    <button class="gray" onclick="location.href="employee.html?v=89"">
+    <button class="gray" onclick="location.href="employee.html?v=90"">
       ไปหน้าพนักงาน
     </button>
   </div>
@@ -218,12 +218,12 @@ function login(){
   if(u==="admin" && p==="1234"){
     sessionStorage.setItem("kms2Role","admin");
     sessionStorage.setItem("kms2Admin","yes");
-    location.href="index.html?v=89";
+    location.href="index.html?v=90";
   }
   else if(u==="supervisor" && p==="5678"){
     sessionStorage.setItem("kms2Role","supervisor");
     sessionStorage.setItem("kms2Admin","yes");
-    location.href="index.html?v=89";
+    location.href="index.html?v=90";
   }
   else{
     alert("Username หรือ Password ไม่ถูกต้อง");

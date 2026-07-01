@@ -1,4 +1,4 @@
-const CACHE_NAME = "kms2-rebuild-calendar-scheduler-v89";
+const CACHE_NAME = "kms2-direct-form-open-fix-v90";
 self.addEventListener("install", event => { self.skipWaiting(); });
 self.addEventListener("activate", event => {
   event.waitUntil(caches.keys().then(keys => Promise.all(keys.map(k => caches.delete(k)))));
