@@ -1,7 +1,7 @@
 {
-  "name": "KMS2 ระบบจัดการเวรตู้ฟัก",
-  "short_name": "KMS2",
-  "start_url": "employee.html?v=91",
+  "name": "KMS2 หน้าพนักงาน",
+  "short_name": "KMS2 เวร",
+  "start_url": "employee.html?v=89",
   "scope": "./",
   "display": "standalone",
   "background_color": "#050b0f",
